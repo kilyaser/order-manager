@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: order-manager-api
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+  liquibase:
+    change-log: classpath:liquibase/changelog-master.xml
+    enabled: true
+    drop-first: true
