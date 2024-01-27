@@ -56,6 +56,10 @@ public class OrderEntity {
      */
     private BigDecimal currentSum;
     /**
+     * Сумма долга.
+     */
+    private BigDecimal debtSum;
+    /**
      * Статус заказа.
      */
     @Enumerated(STRING)
@@ -69,6 +73,10 @@ public class OrderEntity {
      * Дата завершеня заказа.
      */
     private LocalDateTime completionDate;
+    /**
+     * Признак государственного заказа.
+     */
+    private boolean isGovernmentOrder;
     /**
      *  Дата создания заказа.
      */
