@@ -1,17 +1,18 @@
 package com.profcut.ordermanager.domain.entities.enums;
 
+
 import lombok.Getter;
 
 @Getter
-public enum MasterStatus {
+public enum PreparationState {
 
-    CREATED("Создан"),
-    PROCESSING("Выполняется"),
-    COMPLETED("Завершен");
+    NOT_STARTED("Не начат"),
+    IN_PROCESS("В прогрессе"),
+    DONE("Готов");
 
     private final String description;
 
-    MasterStatus(String description) {
+    PreparationState(String description) {
         this.description = description;
     }
 }

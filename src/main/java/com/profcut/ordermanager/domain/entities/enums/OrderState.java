@@ -1,6 +1,10 @@
 package com.profcut.ordermanager.domain.entities.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum OrderState {
+
     NEW("Новый"),
     IN_WORK("В работе"),
     READY("Готов"),
@@ -8,12 +12,9 @@ public enum OrderState {
     COMPLETED("Завершен"),
     CANCELLED("Отменен");
 
-    private String description;
-    public String getDescription() {
-        return this.description;
-    }
-    private OrderState(String description) {
+    private final String description;
+
+    OrderState(String description) {
         this.description = description;
     }
-
 }
