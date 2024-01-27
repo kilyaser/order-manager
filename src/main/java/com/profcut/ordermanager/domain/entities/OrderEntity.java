@@ -1,8 +1,8 @@
 package com.profcut.ordermanager.domain.entities;
 
 
-import com.profcut.ordermanager.domain.entities.enums.MasterStatus;
-import com.profcut.ordermanager.domain.entities.enums.OrderState;
+import com.profcut.ordermanager.domain.enums.MasterStatus;
+import com.profcut.ordermanager.domain.enums.OrderState;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Enumerated;

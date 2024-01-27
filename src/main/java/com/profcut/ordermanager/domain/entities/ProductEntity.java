@@ -1,8 +1,8 @@
 package com.profcut.ordermanager.domain.entities;
 
-import com.profcut.ordermanager.domain.entities.enums.MachineType;
-import com.profcut.ordermanager.domain.entities.enums.PreparationState;
-import com.profcut.ordermanager.domain.entities.enums.ProductType;
+import com.profcut.ordermanager.domain.enums.MachineType;
+import com.profcut.ordermanager.domain.enums.PreparationState;
+import com.profcut.ordermanager.domain.enums.ProductType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -84,7 +84,7 @@ public class ProductEntity {
      */
     @ManyToOne
     @JoinColumn(name = "technologist_id")
-    private Technologist technologist;
+    private TechnologistEntity technologist;
     /**
      * Заказ.
      */

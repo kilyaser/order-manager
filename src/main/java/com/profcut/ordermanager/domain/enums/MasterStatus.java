@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.domain.entities.enums;
+package com.profcut.ordermanager.domain.enums;
 
 import lombok.Getter;
 

@@ -16,7 +16,7 @@ import java.util.UUID;
 @Entity
 @Accessors(chain = true)
 @Table(name = "technologists")
-public class Technologist {
+public class TechnologistEntity {
     /**
      * Идентификатор технолога.
      */
