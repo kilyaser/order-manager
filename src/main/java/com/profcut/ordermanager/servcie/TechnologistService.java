@@ -2,7 +2,15 @@ package com.profcut.ordermanager.servcie;
 
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 
+import java.util.UUID;
+
 public interface TechnologistService {
 
-    TechnologistEntity findTechnologistByName(String fullName);
+    TechnologistEntity findByName(String fullName);
+
+    TechnologistEntity save(TechnologistEntity technologist);
+
+    TechnologistEntity getById(UUID id);
+
+    void deleteById(UUID id);
 }
