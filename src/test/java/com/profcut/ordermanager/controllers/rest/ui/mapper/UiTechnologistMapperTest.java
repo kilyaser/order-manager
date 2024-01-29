@@ -28,10 +28,9 @@ public class UiTechnologistMapperTest {
         var result = mapper.apply(technologist);
 
         assertNotNull(result);
-        assertEquals(technologist.getId(), id);
+        assertEquals(technologist.getId(), result.getId());
         assertEquals(technologist.getEmail(), result.getEmail());
         assertEquals(technologist.getFullName(), result.getFullName());
         assertEquals(technologist.getPhone(), result.getPhone());
-        System.out.println(result);
     }
 }
