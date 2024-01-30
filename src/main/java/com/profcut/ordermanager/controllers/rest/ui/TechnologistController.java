@@ -2,7 +2,7 @@ package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UiTechnologist;
-import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistCreatorMapper;
+import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.servcie.TechnologistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,7 +28,6 @@ public class TechnologistController {
 
     private final TechnologistService technologistService;
     private final UiTechnologistMapper uiTechnologistMapper;
-    private final UiTechnologistCreatorMapper uiTechnologistCreatorMapper;
 
 
     @GetMapping("/{technologistId}")
@@ -42,10 +42,14 @@ public class TechnologistController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UiTechnologist createTechnologist(@RequestBody CreateTechnologistRequest request) {
-        var technologist = uiTechnologistCreatorMapper.apply(request);
-        var savedTechnologist = technologistService.save(technologist);
-        return uiTechnologistMapper.apply(savedTechnologist);
+    public UiTechnologist createTechnologist(@RequestBody CreateTechnologistRequest createRequest) {
+        return uiTechnologistMapper.apply(technologistService.createTechnologist(createRequest));
+    }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public UiTechnologist updateTechnologist(@RequestBody UpdateTechnologistRequest updateRequest) {
+        return uiTechnologistMapper.apply(technologistService.updateTechnologist(updateRequest));
     }
 
     @DeleteMapping("/{technologistId}")
