@@ -35,7 +35,7 @@ public class TechnologistController {
         return uiTechnologistMapper.apply(technologistService.getById(technologistId));
     }
 
-    @GetMapping("/{fullName}")
+    @GetMapping("/name/{fullName}")
     public UiTechnologist getTechnologistByName(@PathVariable String fullName) {
         return uiTechnologistMapper.apply(technologistService.findByName(fullName));
     }
