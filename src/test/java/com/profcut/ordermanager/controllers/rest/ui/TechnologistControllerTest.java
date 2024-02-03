@@ -3,7 +3,9 @@ package com.profcut.ordermanager.controllers.rest.ui;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.TechnologistFieldsPatch;
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UiTechnologist;
+import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;
@@ -22,8 +24,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -136,5 +140,44 @@ public class TechnologistControllerTest {
 
         verify(technologistService).createTechnologist(any());
         verify(uiTechnologistMapper).apply(any());
+    }
+
+    @Test
+    void should_update_technologist() throws Exception {
+        var id = UUID.randomUUID();
+        var fullName = "new ФИО";
+        var email = "new email";
+        var phone = "0123";
+        var patch = TechnologistFieldsPatch.builder().fullName(fullName)
+                .email(email).phone(phone).build();
+        var updateRequest = new UpdateTechnologistRequest().setId(id).setPatch(patch);
+        var dto = new UiTechnologist().setId(id).setFullName(fullName).setPhone(phone).setEmail(email);
+        var updatedTech = new TechnologistEntity().setId(id).setFullName(fullName).setEmail(email).setPhone(phone);
+
+        when(technologistService.updateTechnologist(updateRequest)).thenReturn(updatedTech);
+        when(uiTechnologistMapper.apply(any())).thenReturn(dto);
+
+        mockMvc.perform(put("/ui/technologists", updateRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(updateRequest)))
+                .andExpectAll(
+                        status().is2xxSuccessful(),
+                        jsonPath("$.id").value(id.toString()),
+                        jsonPath("$.fullName").value(fullName),
+                        jsonPath("$.email").value(email),
+                        jsonPath("$.phone").value(phone)
+                );
+
+        verify(technologistService).updateTechnologist(any());
+        verify(uiTechnologistMapper).apply(any());
+    }
+
+    @Test
+    void should_delete_technologist() throws Exception {
+        var id = UUID.randomUUID();
+
+        mockMvc.perform(delete("/ui/technologists/{technologistId}", id))
+                .andExpect(status().is2xxSuccessful());
+        verify(technologistService).deleteById(any());
     }
 }
