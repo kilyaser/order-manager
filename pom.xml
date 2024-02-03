@@ -21,8 +21,8 @@
 		<springdoc.version>1.7.0</springdoc.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 	</properties>
-	<dependencies>
 
+	<dependencies>
 		<!-- Spring & Frameworks-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -71,7 +71,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -114,5 +113,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
