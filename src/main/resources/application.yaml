@@ -21,6 +21,18 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http:/localhost:8282/realms/OM_order-manager
+
+#      client:
+#        provider:
+#          keycloak:
+#            issuer-uri: http:/localhost:8282/realms/OM_order-manager
+#            user-name-attribute: preferred_username
+#        registration:
+#          keycloak:
+#            client-id: om-backend
+#            authorization-grant-type: authorization_code
+#            scope: openid
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

@@ -1,0 +1,4 @@
+POST http://localhost:8282/realms/OM_order-manager/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=om-backend&client_secret=G31DnDxeeS8WyTHf3qUAtNze9j10eCTT&username=michail&password=michail&grant_type=password
