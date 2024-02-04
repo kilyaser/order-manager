@@ -16,7 +16,11 @@ spring:
     change-log: classpath:liquibase/changelog-master.xml
     enabled: true
     drop-first: true
-
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http:/localhost:8282/realms/OM_order-manager
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

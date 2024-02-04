@@ -2,12 +2,11 @@ package com.profcut.ordermanager.controllers.rest.ui.dto.technologist;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.Email;
 
 @Data
 @Builder
@@ -20,7 +19,7 @@ public class CreateTechnologistRequest {
     maxLength = DataTypes.STRING_LENGTH_MAX)
     private String fullName;
 
-    @Email(regexp = ".+@.+\\..+")
+    @Email(regexp = "^.+@.+\\..+$")
     @Schema(description = "e-mail",
     maxLength = DataTypes.STRING_LENGTH_MAX)
     private String email;
