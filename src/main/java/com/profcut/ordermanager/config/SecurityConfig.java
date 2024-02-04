@@ -13,9 +13,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http
-                .authorizeHttpRequests(c -> c.requestMatchers("/order-manager-api/**", "/actuator/**").permitAll()
+                .authorizeHttpRequests(c -> c.requestMatchers("/order-manager-api", "/index.html",
+                                "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
                         .requestMatchers("/ui/technologists").hasRole("MANAGER")
-                        .anyRequest().permitAll())
+                        .anyRequest().authenticated())
                 .build();
     }
 }
