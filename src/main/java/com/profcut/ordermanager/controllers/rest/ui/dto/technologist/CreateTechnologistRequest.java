@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class CreateTechnologistRequest {
     maxLength = DataTypes.STRING_LENGTH_MAX)
     private String fullName;
 
+    @Email(regexp = ".+@.+\\..+")
     @Schema(description = "e-mail",
     maxLength = DataTypes.STRING_LENGTH_MAX)
     private String email;

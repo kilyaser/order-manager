@@ -4,7 +4,7 @@ import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechn
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UiTechnologist;
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistMapper;
-import com.profcut.ordermanager.servcie.TechnologistService;
+import com.profcut.ordermanager.service.TechnologistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

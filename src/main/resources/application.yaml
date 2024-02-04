@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /order-manager-api
 spring:
   application:
     name: order-manager-api
@@ -13,3 +16,7 @@ spring:
     change-log: classpath:liquibase/changelog-master.xml
     enabled: true
     drop-first: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

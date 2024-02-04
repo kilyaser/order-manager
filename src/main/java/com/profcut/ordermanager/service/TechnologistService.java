@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.servcie;
+package com.profcut.ordermanager.service;
 
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechnologistRequest;

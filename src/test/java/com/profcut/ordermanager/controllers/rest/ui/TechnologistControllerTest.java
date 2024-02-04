@@ -9,7 +9,7 @@ import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechn
 import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;
-import com.profcut.ordermanager.servcie.TechnologistService;
+import com.profcut.ordermanager.service.TechnologistService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

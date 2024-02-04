@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.servcie.impl;
+package com.profcut.ordermanager.service.impl;
 
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.TechnologistFieldsPatch;
@@ -7,8 +7,9 @@ import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistCreator
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;
 import com.profcut.ordermanager.domain.repository.TechnologistRepository;
-import com.profcut.ordermanager.servcie.TechnologistService;
+import com.profcut.ordermanager.service.TechnologistService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 import static java.util.Optional.ofNullable;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TechnologistServiceImpl implements TechnologistService {
@@ -33,6 +35,7 @@ public class TechnologistServiceImpl implements TechnologistService {
     @Override
     @Transactional
     public TechnologistEntity updateTechnologist(UpdateTechnologistRequest updateRequest) {
+        log.info("invoke TechnologistServiceImpl#updateTechnologist with updateRequest: {}", updateRequest);
         var technologistFromDb = getById(updateRequest.getId());
         updateTechnologistByPatch(technologistFromDb, updateRequest.getPatch());
         return technologistRepository.save(technologistFromDb);
@@ -40,6 +43,7 @@ public class TechnologistServiceImpl implements TechnologistService {
 
     @Override
     public TechnologistEntity createTechnologist(CreateTechnologistRequest request) {
+        log.info("invoke TechnologistServiceImpl#createTechnologist with request: {}", request);
         var technologist = uiTechnologistCreatorMapper.apply(request);
         return technologistRepository.save(technologist);
     }
@@ -54,6 +58,7 @@ public class TechnologistServiceImpl implements TechnologistService {
     @Override
     @Transactional
     public void deleteById(UUID id) {
+        log.info("invoke TechnologistServiceImpl#deleteById with id: {}", id);
         technologistRepository.deleteById(id);
     }
 
