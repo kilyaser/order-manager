@@ -64,6 +64,15 @@
         "attributes": {}
       },
       {
+        "id": "9c643492-9233-4764-af25-987d273d54cb",
+        "name": "ROLE_MANAGER",
+        "description": "",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "c3853f18-7924-415f-8c8b-0d28011678cd",
+        "attributes": {}
+      },
+      {
         "id": "6b54c682-a492-41e6-990f-1a47ea9a2f34",
         "name": "default-roles-om_order-manager",
         "description": "${role_default-roles}",
@@ -682,12 +691,17 @@
       "clientId": "om-backend",
       "name": "om-backend",
       "description": "Order manager backend client",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
-      "redirectUris": [],
+      "redirectUris": [
+        "http://localhost:8080/*"
+      ],
       "webOrigins": [],
       "notBefore": 0,
       "bearerOnly": false,
@@ -702,9 +716,10 @@
       "protocol": "openid-connect",
       "attributes": {
         "oidc.ciba.grant.enabled": "false",
-        "oauth2.device.authorization.grant.enabled": "false",
         "client.secret.creation.time": "1707055464",
         "backchannel.logout.session.required": "true",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
         "backchannel.logout.revoke.offline.tokens": "false"
       },
       "authenticationFlowBindingOverrides": {},
