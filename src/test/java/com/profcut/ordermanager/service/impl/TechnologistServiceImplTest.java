@@ -1,6 +1,5 @@
 package com.profcut.ordermanager.service.impl;
 
-import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistCreatorMapper;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;
 import com.profcut.ordermanager.domain.repository.TechnologistRepository;
@@ -20,10 +19,9 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TechnologistServiceImplTest {
+
     @Mock
     TechnologistRepository repository;
-//    @Mock
-//    UiTechnologistCreatorMapper mapper;
     @InjectMocks
     TechnologistServiceImpl technologistService;
 

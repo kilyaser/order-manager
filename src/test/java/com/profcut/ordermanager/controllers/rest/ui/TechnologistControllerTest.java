@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
@@ -24,6 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -33,6 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(TechnologistController.class)
 @Import(ErrorHttpResponseFactory.class)
+@WithMockUser(username = "user")
 public class TechnologistControllerTest {
 
     @MockBean
@@ -128,6 +131,7 @@ public class TechnologistControllerTest {
         when(uiTechnologistMapper.apply(any())).thenReturn(dto);
 
         mockMvc.perform(post("/ui/technologists", createRequest)
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createRequest)))
                 .andExpectAll(
@@ -158,6 +162,7 @@ public class TechnologistControllerTest {
         when(uiTechnologistMapper.apply(any())).thenReturn(dto);
 
         mockMvc.perform(put("/ui/technologists", updateRequest)
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(updateRequest)))
                 .andExpectAll(
@@ -176,7 +181,8 @@ public class TechnologistControllerTest {
     void should_delete_technologist() throws Exception {
         var id = UUID.randomUUID();
 
-        mockMvc.perform(delete("/ui/technologists/{technologistId}", id))
+        mockMvc.perform(delete("/ui/technologists/{technologistId}", id)
+                        .with(csrf()))
                 .andExpect(status().is2xxSuccessful());
         verify(technologistService).deleteById(any());
     }

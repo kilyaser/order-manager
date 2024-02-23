@@ -17,7 +17,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import org.springframework.data.annotation.LastModifiedDate;
@@ -43,10 +43,7 @@ public class OrderEntity {
      */
     @Id
     @EqualsAndHashCode.Include
-    @GeneratedValue(generator = "uuid-hibernate-generator")
-    @GenericGenerator(
-            name = "uuid-hibernate-generator",
-            strategy = "org.hibernate.id.UUIDGenerator")
+    @UuidGenerator
     private UUID orderId;
     /**
      * Номер заказа.

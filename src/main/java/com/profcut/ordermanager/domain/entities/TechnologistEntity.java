@@ -1,12 +1,12 @@
 package com.profcut.ordermanager.domain.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,7 +21,7 @@ public class TechnologistEntity {
      * Идентификатор технолога.
      */
     @Id
-    @GeneratedValue
+    @UuidGenerator
     private UUID id;
     /**
      * Ф.И.О. технолога.

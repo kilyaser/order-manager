@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.UUID;
 
 @RestController
@@ -56,5 +57,11 @@ public class TechnologistController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTechnologist(@PathVariable UUID technologistId) {
         technologistService.deleteById(technologistId);
+    }
+
+    @GetMapping("/principals")
+    public String getPrincipals(Principal principal) {
+        System.out.println(principal.getName());
+        return String.format("Current principal is %s", principal.getName());
     }
 }

@@ -1,12 +1,12 @@
 package com.profcut.ordermanager.domain.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
@@ -20,7 +20,7 @@ public class MaterialEntity {
      * Идентификатор материала.
      */
     @Id
-    @GeneratedValue
+    @UuidGenerator
     private UUID id;
     /**
      * Тип материала.

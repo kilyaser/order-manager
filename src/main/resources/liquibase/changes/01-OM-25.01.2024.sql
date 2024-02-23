@@ -1,3 +1,5 @@
+--liquibase formatted sql
+--changeset kalendarev:OM-25.01.2024 splitStatements:true endDelimiter:;
 create table counterparties
 (
     id              uuid not null primary key,
@@ -76,4 +78,32 @@ create table tasks
     order_id                uuid references orders (order_id),
     created_date            timestamp without time zone,
     modified_date           timestamp without time zone
+);
+
+create table om_users
+(
+    id                      uuid not null primary key,
+    first_name              varchar (50) not null,
+    last_name               varchar (50) not null,
+    birthday                timestamp,
+    email                   varchar (50) not null unique,
+    phone                   varchar (20),
+    is_block                boolean not null default false,
+    is_deleted              boolean not null default false
+);
+
+create table om_roles
+(
+    id                      uuid not null primary key,
+    role                    varchar (50) not null,
+    description             varchar (70)
+);
+
+create table om_user_role
+(
+  user_id uuid,
+  role_id uuid,
+  primary key (user_id, role_id),
+  foreign key (user_id) references om_users (id),
+  foreign key (role_id) references om_roles (id)
 );
