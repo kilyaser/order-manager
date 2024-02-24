@@ -88,6 +88,7 @@ create table om_users
     birthday                timestamp,
     email                   varchar (50) not null unique,
     phone                   varchar (20),
+    password                varchar (20) not null,
     is_block                boolean not null default false,
     is_deleted              boolean not null default false
 );

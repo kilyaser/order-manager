@@ -17,6 +17,11 @@ spring:
     enabled: true
     drop-first: true
 
+jwt:
+  token:
+    secret-key: ${JWT_TOKEN_SECRET_KEY:3B33F445EAB86CEF92C9CBA30B597D8F45DB5C252EDD30BDE90F9CF60E119D27}
+    expired-access: ${JWT_TOKEN_EXPIRED_ACCESS:1440000}
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
