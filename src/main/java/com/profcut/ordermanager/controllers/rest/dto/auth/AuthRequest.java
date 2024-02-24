@@ -1,4 +1,5 @@
-package com.profcut.ordermanager.controllers.rest.ui.dto.technologist;
+package com.profcut.ordermanager.controllers.rest.dto.auth;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class TechnologistFieldsPatch {
+public class AuthRequest {
 
-    private String fullName;
     private String email;
-    private String phone;
+    String password;
 }

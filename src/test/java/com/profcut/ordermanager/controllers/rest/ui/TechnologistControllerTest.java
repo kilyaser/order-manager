@@ -2,13 +2,14 @@ package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.TechnologistFieldsPatch;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UiTechnologist;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistMapper;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.TechnologistFieldsPatch;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.UiTechnologist;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.UpdateTechnologistRequest;
+import com.profcut.ordermanager.controllers.rest.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;
+import com.profcut.ordermanager.security.service.JwtUserService;
 import com.profcut.ordermanager.service.TechnologistService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class TechnologistControllerTest {
     TechnologistService technologistService;
     @MockBean
     UiTechnologistMapper uiTechnologistMapper;
+    @MockBean
+    JwtUserService jwtUserService;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
@@ -52,7 +55,7 @@ public class TechnologistControllerTest {
         var id = UUID.randomUUID();
         when(technologistService.getById(id)).thenThrow(TechnologistNotFoundException.class);
 
-        mockMvc.perform(get("/ui/technologists/{technologistId}", id))
+        mockMvc.perform(get("/api/v1/ui/technologists/{technologistId}", id))
                 .andExpect(status().isNotFound());
 
         verify(uiTechnologistMapper, never()).apply(any());
@@ -66,7 +69,7 @@ public class TechnologistControllerTest {
         when(technologistService.getById(id)).thenReturn(new TechnologistEntity().setId(id));
         when(uiTechnologistMapper.apply(any())).thenReturn(dto);
 
-        mockMvc.perform(get("/ui/technologists/{technologistId}", id))
+        mockMvc.perform(get("/api/v1/ui/technologists/{technologistId}", id))
                 .andExpectAll(
                         status().is2xxSuccessful(),
                         jsonPath("$.id").value(id.toString())
@@ -81,7 +84,7 @@ public class TechnologistControllerTest {
         var fullName = "ФИО";
         when(technologistService.findByName(fullName)).thenThrow(TechnologistNotFoundException.class);
 
-        mockMvc.perform(get("/ui/technologists/name/{fullName}", fullName))
+        mockMvc.perform(get("/api/v1/ui/technologists/name/{fullName}", fullName))
                 .andExpect(status().isNotFound());
 
         verify(uiTechnologistMapper, never()).apply(any());
@@ -97,7 +100,7 @@ public class TechnologistControllerTest {
                 .setId(id).setFullName(fullName));
         when(uiTechnologistMapper.apply(any())).thenReturn(dto);
 
-        mockMvc.perform(get("/ui/technologists/name/{fullName}", fullName))
+        mockMvc.perform(get("/api/v1/ui/technologists/name/{fullName}", fullName))
                 .andExpectAll(
                         status().is2xxSuccessful(),
                         jsonPath("$.id").value(id.toString()),
@@ -130,7 +133,7 @@ public class TechnologistControllerTest {
         when(technologistService.createTechnologist(any())).thenReturn(entity);
         when(uiTechnologistMapper.apply(any())).thenReturn(dto);
 
-        mockMvc.perform(post("/ui/technologists", createRequest)
+        mockMvc.perform(post("/api/v1/ui/technologists", createRequest)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(createRequest)))
@@ -161,7 +164,7 @@ public class TechnologistControllerTest {
         when(technologistService.updateTechnologist(updateRequest)).thenReturn(updatedTech);
         when(uiTechnologistMapper.apply(any())).thenReturn(dto);
 
-        mockMvc.perform(put("/ui/technologists", updateRequest)
+        mockMvc.perform(put("/api/v1/ui/technologists", updateRequest)
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(updateRequest)))
@@ -181,7 +184,7 @@ public class TechnologistControllerTest {
     void should_delete_technologist() throws Exception {
         var id = UUID.randomUUID();
 
-        mockMvc.perform(delete("/ui/technologists/{technologistId}", id)
+        mockMvc.perform(delete("/api/v1/ui/technologists/{technologistId}", id)
                         .with(csrf()))
                 .andExpect(status().is2xxSuccessful());
         verify(technologistService).deleteById(any());

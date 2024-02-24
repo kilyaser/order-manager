@@ -1,9 +1,9 @@
 package com.profcut.ordermanager.controllers.rest.ui;
 
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UiTechnologist;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistMapper;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.UiTechnologist;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.UpdateTechnologistRequest;
+import com.profcut.ordermanager.controllers.rest.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.service.TechnologistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/ui/technologists")
+@RequestMapping("/api/v1/ui/technologists")
 @Tag(name = "technologist-ui-api", description = "Контроллер для получения информации о технологах")
 public class TechnologistController {
 

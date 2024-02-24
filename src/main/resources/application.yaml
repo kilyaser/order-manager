@@ -1,9 +1,9 @@
 server:
   servlet:
-    context-path: /order-manager-api
+    context-path: /order-manager
 spring:
   application:
-    name: order-manager-api
+    name: order-manager
   jpa:
     open-in-view: false
     hibernate:

@@ -1,6 +1,6 @@
-package com.profcut.ordermanager.controllers.rest.ui.mapper;
+package com.profcut.ordermanager.controllers.rest.mapper;
 
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UiTechnologist;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.UiTechnologist;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import org.mapstruct.Mapper;
 

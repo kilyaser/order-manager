@@ -1,9 +1,9 @@
 package com.profcut.ordermanager.service.impl;
 
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.CreateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.TechnologistFieldsPatch;
-import com.profcut.ordermanager.controllers.rest.ui.dto.technologist.UpdateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.ui.mapper.UiTechnologistCreatorMapper;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.TechnologistFieldsPatch;
+import com.profcut.ordermanager.controllers.rest.dto.technologist.UpdateTechnologistRequest;
+import com.profcut.ordermanager.controllers.rest.mapper.UiTechnologistCreatorMapper;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;
 import com.profcut.ordermanager.domain.repository.TechnologistRepository;

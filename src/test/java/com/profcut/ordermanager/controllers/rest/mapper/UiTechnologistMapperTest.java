@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.controllers.rest.ui.mapper;
+package com.profcut.ordermanager.controllers.rest.mapper;
 
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import org.junit.jupiter.api.Test;
