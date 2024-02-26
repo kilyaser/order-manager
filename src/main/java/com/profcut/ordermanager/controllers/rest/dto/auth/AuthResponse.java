@@ -13,6 +13,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AuthResponse {
 
-    @Schema(description = "токен доступа", maxLength = DataTypes.STRING_LENGTH_MAX)
+    @Schema(description = "Токен доступа", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String accessToken;
+
+    @Schema(description = "Токен обновления", maxLength = DataTypes.STRING_LENGTH_MAX)
+    private String refreshToken;
 }

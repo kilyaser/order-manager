@@ -20,25 +20,14 @@ import static io.jsonwebtoken.Jwts.SIG.HS256;
 public class JwtUserService {
 
     @Value("${jwt.token.expired-access}")
-    private long validityAccess;
+    private long jwtExpiration;
+
+    @Value("${jwt.token.expired-refresh}")
+    private long refreshExpiration;
 
     @Value("${jwt.token.secret-key}")
     private String secretKey;
 
-
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
-
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder()
-                .claims(extraClaims)
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + validityAccess))
-                .signWith(getSignInKey(), HS256)
-                .compact();
-    }
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -47,6 +36,30 @@ public class JwtUserService {
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    public String generateToken(UserDetails userDetails) {
+        var authorities = userDetails.getAuthorities();
+        return generateToken(new HashMap<>(Map.of("authority", authorities)), userDetails);
+    }
+
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        return buildToken(extraClaims, userDetails, jwtExpiration);
+    }
+
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
+    }
+
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+        return Jwts
+                .builder()
+                .claims(extraClaims)
+                .subject(userDetails.getUsername())
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(getSignInKey(), HS256)
+                .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {

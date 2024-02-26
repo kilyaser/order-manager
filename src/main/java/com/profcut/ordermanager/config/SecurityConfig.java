@@ -23,12 +23,16 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
+    private static final String[] WHITE_LIST_URL = {"/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/actuator/**",
+            "/api/v1/auth/**"};
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(CsrfConfigurer::disable)
-                .authorizeHttpRequests(c -> c.requestMatchers("/order-manager-api", "/index.html",
-                                "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**").permitAll()
+                .authorizeHttpRequests(c -> c.requestMatchers(WHITE_LIST_URL).permitAll()
                         .requestMatchers("/ui/technologists").hasRole("MANAGER")
                         .anyRequest().authenticated())
                 .sessionManagement(configure -> configure.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -4,12 +4,15 @@ import com.profcut.ordermanager.controllers.rest.dto.auth.AuthRequest;
 import com.profcut.ordermanager.controllers.rest.dto.auth.AuthResponse;
 import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.controllers.rest.mapper.OmUserCreateMapper;
+import com.profcut.ordermanager.domain.exceptions.OmUserNotFoundException;
 import com.profcut.ordermanager.security.domain.model.repository.OmUserRepository;
 import com.profcut.ordermanager.security.service.AuthenticationService;
 import com.profcut.ordermanager.security.service.JwtUserService;
 import com.profcut.ordermanager.security.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final OmUserCreateMapper omUserCreateMapper;
     private final RoleService roleService;
     private final JwtUserService jwtUserService;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public AuthResponse register(RegisterRequest request) {
@@ -32,13 +36,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         omUserRepository.save(user);
         var jwtToken = jwtUserService.generateToken(user);
+        var refreshToken = jwtUserService.generateRefreshToken(user);
         return AuthResponse.builder()
                 .accessToken(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
     @Override
     public AuthResponse authenticate(AuthRequest request) {
-        return null;
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+        var user = omUserRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> OmUserNotFoundException.byEmail(request.getEmail()));
+        var jwtToken = jwtUserService.generateToken(user);
+        var refreshToken = jwtUserService.generateRefreshToken(user);
+        return AuthResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 }
