@@ -39,4 +39,17 @@ public class RegisterRequest {
 
     @ArraySchema(schema = @Schema(description = "Список ролей", maxLength = DataTypes.ARRAY_MAX_ITEMS_VALUE, requiredMode = Schema.RequiredMode.NOT_REQUIRED))
     private Set<OmRole> roles;
+
+    @Override
+    public String toString() {
+        return "RegisterRequest{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", password='" + "********" + '\'' +
+                ", birthday=" + birthday +
+                ", roles=" + roles +
+                '}';
+    }
 }
