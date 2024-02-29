@@ -5,6 +5,7 @@ import com.profcut.ordermanager.controllers.rest.dto.auth.AuthResponse;
 import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.controllers.rest.mapper.OmUserCreateMapper;
 import com.profcut.ordermanager.domain.exceptions.OmUserNotFoundException;
+import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;
 import com.profcut.ordermanager.security.domain.model.repository.OmUserRepository;
 import com.profcut.ordermanager.security.service.AuthenticationService;
 import com.profcut.ordermanager.security.service.JwtUserService;
@@ -29,18 +30,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public AuthResponse register(RegisterRequest request) {
+    public OmUserEntity register(RegisterRequest request) {
         log.info("invoke AuthenticationServiceImpl#register with request: {}", request);
         var user = omUserCreateMapper.apply(request);
         user.setRoles(roleService.findRoles(request.getRoles()));
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        omUserRepository.save(user);
-        var jwtToken = jwtUserService.generateToken(user);
-        var refreshToken = jwtUserService.generateRefreshToken(user);
-        return AuthResponse.builder()
-                .accessToken(jwtToken)
-                .refreshToken(refreshToken)
-                .build();
+        return omUserRepository.save(user);
     }
 
     @Override
