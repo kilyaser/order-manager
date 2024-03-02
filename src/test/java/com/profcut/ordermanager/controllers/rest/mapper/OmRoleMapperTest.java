@@ -21,7 +21,6 @@ public class OmRoleMapperTest {
                 .setDescription("some description");
 
         var result = mapper.apply(role);
-
         assertNotNull(result);
         assertEquals(role.getRole().name(), result.getRole());
     }

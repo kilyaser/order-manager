@@ -7,6 +7,6 @@ public class OmRoleNotFoundException extends EntityNotFoundException{
     }
 
     public static OmRoleNotFoundException byRoleName(String roleName) {
-        return new OmRoleNotFoundException("Не найдена роль с наименованием: " + roleName);
+        return new OmRoleNotFoundException("Не найдена роль с наименованием: %s".formatted(roleName));
     }
 }

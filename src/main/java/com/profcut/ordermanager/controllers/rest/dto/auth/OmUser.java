@@ -56,5 +56,5 @@ public class OmUser {
      * Список ролей пользователя.
      */
     @ArraySchema(schema = @Schema(description = "Список ролей", maxLength = DataTypes.ARRAY_MAX_ITEMS_VALUE, requiredMode = Schema.RequiredMode.NOT_REQUIRED))
-    private Set<OmRoleDto> roles; //TODO: возвращать нужно Set<String> roles;
+    private Set<String> roles;
 }

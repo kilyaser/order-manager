@@ -37,7 +37,6 @@ public class OmUserMapperTest {
                         new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.ROLE_MANAGER),
                         new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.ROLE_CEO)));
         var result = mapper.apply(user);
-
         assertNotNull(result);
         assertThat(result).usingRecursiveComparison()
                 .ignoringFields("password", "isBlock", "isDeleted", "roles")

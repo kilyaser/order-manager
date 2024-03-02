@@ -2,10 +2,11 @@ package com.profcut.ordermanager.security.service.impl;
 
 import com.profcut.ordermanager.controllers.rest.dto.auth.AuthRequest;
 import com.profcut.ordermanager.controllers.rest.dto.auth.AuthResponse;
+import com.profcut.ordermanager.controllers.rest.dto.auth.OmUser;
 import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.controllers.rest.mapper.OmUserCreateMapper;
+import com.profcut.ordermanager.controllers.rest.mapper.OmUserMapper;
 import com.profcut.ordermanager.domain.exceptions.OmUserNotFoundException;
-import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;
 import com.profcut.ordermanager.security.domain.model.repository.OmUserRepository;
 import com.profcut.ordermanager.security.service.AuthenticationService;
 import com.profcut.ordermanager.security.service.JwtUserService;
@@ -28,14 +29,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RoleService roleService;
     private final JwtUserService jwtUserService;
     private final AuthenticationManager authenticationManager;
+    private final OmUserMapper omUserMapper;
 
     @Override
-    public OmUserEntity register(RegisterRequest request) {
+    public OmUser register(RegisterRequest request) {
         log.info("invoke AuthenticationServiceImpl#register with request: {}", request);
         var user = omUserCreateMapper.apply(request);
         user.setRoles(roleService.findRoles(request.getRoles()));
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        return omUserRepository.save(user);
+        user = omUserRepository.save(user);
+        var userDto = omUserMapper.apply(user);
+        return omUserMapper.mapRoles(user, userDto);
     }
 
     @Override

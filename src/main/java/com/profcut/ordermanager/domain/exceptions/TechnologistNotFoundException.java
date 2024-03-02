@@ -9,10 +9,10 @@ public class TechnologistNotFoundException extends EntityNotFoundException {
     }
 
     public static TechnologistNotFoundException byTechnologistName(String fullName) {
-        return new TechnologistNotFoundException("Не найден технолог с Ф.И.О.: " + fullName);
+        return new TechnologistNotFoundException("Не найден технолог с Ф.И.О.: %s".formatted(fullName));
     }
 
     public static TechnologistNotFoundException byTechnologistId(UUID id) {
-        return new TechnologistNotFoundException("Не найден технолог по id: " + id);
+        return new TechnologistNotFoundException("Не найден технолог по id: %s".formatted(id));
     }
 }

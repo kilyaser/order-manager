@@ -7,6 +7,6 @@ public class OmUserNotFoundException extends EntityNotFoundException {
     }
 
     public static OmUserNotFoundException byEmail(String email) {
-        return new OmUserNotFoundException("Не найден пользователь по email: " + email);
+        return new OmUserNotFoundException("Не найден пользователь по email: %s".formatted(email));
     }
 }
