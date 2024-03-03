@@ -25,6 +25,9 @@ public class RegisterRequest {
     @Schema(description = "Фамилия пользователя", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
     private String lastName;
 
+    @Schema(description = "Отчество пользователя", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
+    private String patronymic;
+
     @Schema(description = "email/логин пользователя", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
     private String email;
 
@@ -45,9 +48,10 @@ public class RegisterRequest {
         return "RegisterRequest{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", patronymic='" + patronymic + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", password='" + "********" + '\'' +
+                ", password='" + "******" + '\'' +
                 ", birthday=" + birthday +
                 ", roles=" + roles +
                 '}';

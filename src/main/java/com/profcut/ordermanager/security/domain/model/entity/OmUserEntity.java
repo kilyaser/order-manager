@@ -45,6 +45,10 @@ public class OmUserEntity implements UserDetails {
      */
     private String lastName;
     /**
+     * Отчество пользователя.
+     */
+    private String patronymic;
+    /**
      * Дата рождения пользователя.
      */
     private Date birthday;

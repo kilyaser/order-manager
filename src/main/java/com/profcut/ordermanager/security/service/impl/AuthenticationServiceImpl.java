@@ -18,6 +18,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -54,6 +56,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .orElseThrow(() -> OmUserNotFoundException.byEmail(request.getEmail()));
         var jwtToken = jwtUserService.generateToken(user);
         var refreshToken = jwtUserService.generateRefreshToken(user);
+        return AuthResponse.builder()
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    @Override
+    public AuthResponse refreshToken(Principal principal) {
+        var userEntity = omUserRepository.findByEmail(principal.getName())
+                .orElseThrow(() -> OmUserNotFoundException.byEmail(principal.getName()));
+        var jwtToken = jwtUserService.generateToken(userEntity);
+        var refreshToken = jwtUserService.generateRefreshToken(userEntity);
         return AuthResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)

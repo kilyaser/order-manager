@@ -13,8 +13,6 @@ import java.util.UUID;
 @Repository
 public interface TechnologistRepository extends JpaRepository<TechnologistEntity, UUID> {
 
-    @Query(value = "SELECT t FROM TechnologistEntity t WHERE t.fullName = :fullName")
-    Optional<TechnologistEntity> findTechnologistByName(@Param("fullName") String fullName);
 
     @Query(value = "SELECT t FROM TechnologistEntity t WHERE t.id = :id")
     Optional<TechnologistEntity> findByTechnologistId(@Param("id") UUID id);

@@ -26,13 +26,6 @@ public class TechnologistServiceImpl implements TechnologistService {
     private final UiTechnologistCreatorMapper uiTechnologistCreatorMapper;
 
     @Override
-    @Transactional(readOnly = true)
-    public TechnologistEntity findByName(String fullName) {
-        return technologistRepository.findTechnologistByName(fullName)
-                .orElseThrow(() -> TechnologistNotFoundException.byTechnologistName(fullName));
-    }
-
-    @Override
     @Transactional
     public TechnologistEntity updateTechnologist(UpdateTechnologistRequest updateRequest) {
         log.info("invoke TechnologistServiceImpl#updateTechnologist with updateRequest: {}", updateRequest);
@@ -63,7 +56,9 @@ public class TechnologistServiceImpl implements TechnologistService {
     }
 
     private void updateTechnologistByPatch(TechnologistEntity technologist, TechnologistFieldsPatch patch) {
-        ofNullable(patch.getFullName()).ifPresent(technologist::setFullName);
+        ofNullable(patch.getFirstName()).ifPresent(technologist::setFirstName);
+        ofNullable(patch.getLastName()).ifPresent(technologist::setLastName);
+        ofNullable(patch.getPatronymic()).ifPresent(technologist::setPatronymic);
         ofNullable(patch.getPhone()).ifPresent(technologist::setPhone);
         ofNullable(patch.getEmail()).ifPresent(technologist::setEmail);
     }

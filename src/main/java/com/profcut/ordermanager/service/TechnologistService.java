@@ -8,8 +8,6 @@ import java.util.UUID;
 
 public interface TechnologistService {
 
-    TechnologistEntity findByName(String fullName);
-
     TechnologistEntity updateTechnologist(UpdateTechnologistRequest updateRequest);
 
     TechnologistEntity createTechnologist(CreateTechnologistRequest request);

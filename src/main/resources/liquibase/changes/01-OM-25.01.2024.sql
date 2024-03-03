@@ -38,7 +38,9 @@ create table materials
 create table technologists
 (
     id                  uuid not null primary key,
-    full_name           varchar(75),
+    first_name          varchar(50),
+    last_name           varchar (50) not null,
+    patronymic          varchar (50),
     email               varchar(75),
     phone               varchar(75)
 );
@@ -85,6 +87,7 @@ create table om_users
     id                      uuid not null primary key,
     first_name              varchar (50) not null,
     last_name               varchar (50) not null,
+    patronymic              varchar (50),
     birthday                timestamp,
     email                   varchar (50) not null unique,
     phone                   varchar (20),

@@ -33,6 +33,7 @@ public class OmUserMapperTest {
                 .setPhone("11111111111")
                 .setFirstName("firstName")
                 .setLastName("lastName")
+                .setPatronymic("patronymic")
                 .setRoles(Set.of(
                         new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.ROLE_MANAGER),
                         new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.ROLE_CEO)));

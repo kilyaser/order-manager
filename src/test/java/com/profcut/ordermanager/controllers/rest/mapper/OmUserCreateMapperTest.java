@@ -23,6 +23,7 @@ public class OmUserCreateMapperTest {
         var request = RegisterRequest.builder()
                 .firstName("firstname")
                 .lastName("lastname")
+                .patronymic("patronymic")
                 .email("email")
                 .phone("1111")
                 .password("password")
@@ -33,6 +34,7 @@ public class OmUserCreateMapperTest {
         assertNotNull(result);
         assertEquals(request.getFirstName(), result.getFirstName());
         assertEquals(request.getLastName(), result.getLastName());
+        assertEquals(request.getPatronymic(), result.getPatronymic());
         assertEquals(request.getEmail(), result.getEmail());
         assertEquals(request.getPhone(), result.getPhone());
         assertNull(result.getPassword());

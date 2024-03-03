@@ -36,6 +36,11 @@ public class OmUser {
     @Schema(description = "Фамилия пользователя", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String lastName;
     /**
+     * Отчество пользователя.
+     */
+    @Schema(description = "Отчество пользователя", maxLength = DataTypes.STRING_LENGTH_MAX)
+    private String patronymic;
+    /**
      * Дата рождения пользователя.
      */
     @Schema(description = "Дата рождения пользователя", maxLength = DataTypes.DATE_LENGTH, requiredMode = Schema.RequiredMode.NOT_REQUIRED)

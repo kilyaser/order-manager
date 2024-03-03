@@ -14,7 +14,9 @@ public class UiTechnologistCreatorMapperTest {
     @Test
     void shouldMapAllFields() {
         var request = CreateTechnologistRequest.builder()
-                .fullName("ФИО")
+                .firstName("Name")
+                .lastName("lastName")
+                .firstName("firstName")
                 .email("email")
                 .phone("111")
                 .build();
@@ -23,7 +25,9 @@ public class UiTechnologistCreatorMapperTest {
 
         assertNotNull(technologist);
         assertEquals(request.getPhone(), technologist.getPhone());
-        assertEquals(request.getFullName(), technologist.getFullName());
+        assertEquals(request.getFirstName(), technologist.getFirstName());
+        assertEquals(request.getLastName(), technologist.getLastName());
+        assertEquals(request.getPatronymic(), technologist.getPatronymic());
         assertEquals(request.getEmail(), technologist.getEmail());
     }
 }

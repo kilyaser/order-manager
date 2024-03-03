@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -24,9 +25,17 @@ public class TechnologistEntity {
     @UuidGenerator
     private UUID id;
     /**
-     * Ф.И.О. технолога.
+     * Имя технолога.
      */
-    private String fullName;
+    private String firstName;
+    /**
+     * Фамилия пользователя.
+     */
+    private String lastName;
+    /**
+     * Отчество пользователя.
+     */
+    private String patronymic;
     /**
      * e-mail технолога.
      */
@@ -38,6 +47,7 @@ public class TechnologistEntity {
     /**
      * Перечень изделий.
      */
+    @ToString.Exclude
     @OneToMany(mappedBy = "technologist")
     private Set<ProductEntity> products = new HashSet<>();
 }

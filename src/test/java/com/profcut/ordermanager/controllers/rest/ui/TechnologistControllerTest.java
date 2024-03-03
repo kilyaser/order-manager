@@ -80,53 +80,26 @@ public class TechnologistControllerTest {
     }
 
     @Test
-    void should_return_404_not_found_when_get_technologist_by_name() throws Exception {
-        var fullName = "ФИО";
-        when(technologistService.findByName(fullName)).thenThrow(TechnologistNotFoundException.class);
-
-        mockMvc.perform(get("/api/v1/ui/technologists/name/{fullName}", fullName))
-                .andExpect(status().isNotFound());
-
-        verify(uiTechnologistMapper, never()).apply(any());
-    }
-
-    @Test
-    void should_return_ok_when_get_technologist_by_name() throws Exception {
-        var id = UUID.randomUUID();
-        var fullName = "ФИО";
-        var dto = new UiTechnologist().setId(id).setFullName(fullName);
-
-        when(technologistService.findByName(fullName)).thenReturn(new TechnologistEntity()
-                .setId(id).setFullName(fullName));
-        when(uiTechnologistMapper.apply(any())).thenReturn(dto);
-
-        mockMvc.perform(get("/api/v1/ui/technologists/name/{fullName}", fullName))
-                .andExpectAll(
-                        status().is2xxSuccessful(),
-                        jsonPath("$.id").value(id.toString()),
-                        jsonPath("$.fullName").value(fullName)
-                );
-
-        verify(technologistService).findByName(any());
-        verify(uiTechnologistMapper).apply(any());
-    }
-
-    @Test
     void should_return_created_created_technologist() throws Exception {
         var createRequest = CreateTechnologistRequest.builder()
-                .fullName("Ф.И.О.")
+                .firstName("Name")
+                .lastName("lastName")
+                .patronymic("Patronymic")
                 .email("email")
                 .phone("phone")
                 .build();
         var id = UUID.randomUUID();
         var entity = new TechnologistEntity().setId(id)
-                .setFullName(createRequest.getFullName())
+                .setFirstName(createRequest.getFirstName())
+                .setLastName(createRequest.getLastName())
+                .setPatronymic(createRequest.getPatronymic())
                 .setEmail(createRequest.getEmail())
                 .setPhone(createRequest.getPhone());
         var dto = new UiTechnologist()
                 .setId(id)
-                .setFullName(createRequest.getFullName())
-                .setPhone(createRequest.getFullName())
+                .setFirstName(createRequest.getFirstName())
+                .setLastName(createRequest.getLastName())
+                .setPatronymic(createRequest.getPatronymic())
                 .setEmail(createRequest.getEmail())
                 .setPhone(createRequest.getPhone());
 
@@ -140,7 +113,9 @@ public class TechnologistControllerTest {
                 .andExpectAll(
                         status().is2xxSuccessful(),
                         jsonPath("$.id").value(id.toString()),
-                        jsonPath("$.fullName").value(entity.getFullName()),
+                        jsonPath("$.firstName").value(entity.getFirstName()),
+                        jsonPath("$.lastName").value(entity.getLastName()),
+                        jsonPath("$.patronymic").value(entity.getPatronymic()),
                         jsonPath("$.email").value(entity.getEmail()),
                         jsonPath("$.phone").value(entity.getPhone())
                 );
@@ -152,14 +127,14 @@ public class TechnologistControllerTest {
     @Test
     void should_update_technologist() throws Exception {
         var id = UUID.randomUUID();
-        var fullName = "new ФИО";
+        var firsName = "firstName";
         var email = "new email";
         var phone = "0123";
-        var patch = TechnologistFieldsPatch.builder().fullName(fullName)
+        var patch = TechnologistFieldsPatch.builder().firstName(firsName)
                 .email(email).phone(phone).build();
         var updateRequest = new UpdateTechnologistRequest().setId(id).setPatch(patch);
-        var dto = new UiTechnologist().setId(id).setFullName(fullName).setPhone(phone).setEmail(email);
-        var updatedTech = new TechnologistEntity().setId(id).setFullName(fullName).setEmail(email).setPhone(phone);
+        var dto = new UiTechnologist().setId(id).setFirstName(firsName).setPhone(phone).setEmail(email);
+        var updatedTech = new TechnologistEntity().setId(id).setFirstName(firsName).setEmail(email).setPhone(phone);
 
         when(technologistService.updateTechnologist(updateRequest)).thenReturn(updatedTech);
         when(uiTechnologistMapper.apply(any())).thenReturn(dto);
@@ -171,7 +146,7 @@ public class TechnologistControllerTest {
                 .andExpectAll(
                         status().is2xxSuccessful(),
                         jsonPath("$.id").value(id.toString()),
-                        jsonPath("$.fullName").value(fullName),
+                        jsonPath("$.firstName").value(firsName),
                         jsonPath("$.email").value(email),
                         jsonPath("$.phone").value(phone)
                 );

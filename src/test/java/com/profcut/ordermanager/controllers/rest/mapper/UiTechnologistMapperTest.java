@@ -21,7 +21,9 @@ public class UiTechnologistMapperTest {
         var id = UUID.randomUUID();
         var technologist = new TechnologistEntity()
                 .setId(id)
-                .setFullName("ФИО")
+                .setFirstName("Name")
+                .setLastName("lastName")
+                .setFirstName("firstName")
                 .setEmail("email")
                 .setPhone("111");
 
@@ -30,7 +32,9 @@ public class UiTechnologistMapperTest {
         assertNotNull(result);
         assertEquals(technologist.getId(), result.getId());
         assertEquals(technologist.getEmail(), result.getEmail());
-        assertEquals(technologist.getFullName(), result.getFullName());
+        assertEquals(technologist.getFirstName(), result.getFirstName());
+        assertEquals(technologist.getLastName(), result.getLastName());
+        assertEquals(technologist.getPatronymic(), result.getPatronymic());
         assertEquals(technologist.getPhone(), result.getPhone());
     }
 }
