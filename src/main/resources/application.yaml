@@ -1,6 +1,7 @@
 server:
   servlet:
     context-path: /order-manager
+  port: 8081
 spring:
   application:
     name: order-manager
