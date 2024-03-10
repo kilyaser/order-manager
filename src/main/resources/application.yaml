@@ -6,7 +6,7 @@ spring:
   application:
     name: order-manager
   datasource:
-    url: jdbc:postgresql://localhost:5432/order_manager
+    url: jdbc:postgresql://postgresql:5432/order_manager
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
