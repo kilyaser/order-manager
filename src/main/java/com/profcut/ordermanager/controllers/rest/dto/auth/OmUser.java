@@ -4,7 +4,6 @@ import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -54,7 +53,6 @@ public class OmUser {
     /**
      * Телефон пользователя.
      */
-    @Pattern(regexp = "^\\d{11}$", message = "phone number doesn't match the template")
     @Schema(description = "Телефон пользователя", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String phone;
     /**

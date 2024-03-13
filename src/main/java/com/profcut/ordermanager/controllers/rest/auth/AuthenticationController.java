@@ -7,6 +7,7 @@ import com.profcut.ordermanager.controllers.rest.dto.auth.OmUser;
 import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.security.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class AuthenticationController {
     private final AuthenticationService authService;
 
     @PostMapping("/register")
-    public OmUser register(@RequestBody RegisterRequest request) {
+    public OmUser register(@Valid @RequestBody RegisterRequest request) {
         return authService.register(request);
     }
 
