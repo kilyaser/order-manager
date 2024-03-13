@@ -52,7 +52,8 @@ public class TechnologistControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void should_return_404_not_found_when_get_technologist() throws Exception {
+    @SneakyThrows
+    void should_return_404_not_found_when_get_technologist() {
         var id = UUID.randomUUID();
         when(technologistService.getById(id)).thenThrow(TechnologistNotFoundException.class);
 
