@@ -7,7 +7,6 @@ services:
       POSTGRES_DB: order_manager
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_URL: jdbc:postgresql://localhost:5432/order_manager
     ports:
       - "5432:5432"
     networks:
