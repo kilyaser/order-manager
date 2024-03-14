@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.controllers.rest.mapper;
 
-import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
+import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.security.domain.model.enums.OmRole;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

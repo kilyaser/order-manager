@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.controllers.rest.mapper;
 
-import com.profcut.ordermanager.controllers.rest.dto.auth.OmUser;
+import com.profcut.ordermanager.domain.dto.auth.OmUser;
 import com.profcut.ordermanager.security.domain.model.entity.OmRoleEntity;
 import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;
 import com.profcut.ordermanager.security.domain.model.enums.OmRole;

@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.controllers.rest.mapper;
 
-import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
+import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

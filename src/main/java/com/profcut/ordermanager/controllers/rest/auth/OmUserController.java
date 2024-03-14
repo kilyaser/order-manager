@@ -1,11 +1,11 @@
 package com.profcut.ordermanager.controllers.rest.auth;
 
-
-import com.profcut.ordermanager.controllers.rest.dto.auth.OmUser;
-import com.profcut.ordermanager.controllers.rest.dto.auth.UpdateOmUserRequest;
+import com.profcut.ordermanager.domain.dto.auth.OmUser;
+import com.profcut.ordermanager.domain.dto.auth.UpdateOmUserRequest;
 import com.profcut.ordermanager.controllers.rest.mapper.OmUserMapper;
 import com.profcut.ordermanager.security.service.OmUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ public class OmUserController {
     private final OmUserMapper omUserMapper;
 
     @PutMapping("/change")
-    public OmUser changeOmUser(@RequestBody UpdateOmUserRequest request) {
+    public OmUser changeOmUser(@Valid @RequestBody UpdateOmUserRequest request) {
         return omUserMapper.apply(omUserService.updateOmUser(request));
     }
 }

@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.domain.exceptions;
 
-import com.profcut.ordermanager.controllers.rest.dto.technologist.TechnologistFieldsPatch;
+import com.profcut.ordermanager.domain.dto.technologist.TechnologistFieldsPatch;
 
 public class UpdateTechnologistException extends RuntimeException {
 

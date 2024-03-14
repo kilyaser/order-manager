@@ -2,10 +2,10 @@ package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
-import com.profcut.ordermanager.controllers.rest.dto.technologist.CreateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.dto.technologist.TechnologistFieldsPatch;
-import com.profcut.ordermanager.controllers.rest.dto.technologist.UiTechnologist;
-import com.profcut.ordermanager.controllers.rest.dto.technologist.UpdateTechnologistRequest;
+import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.domain.dto.technologist.TechnologistFieldsPatch;
+import com.profcut.ordermanager.domain.dto.technologist.UiTechnologist;
+import com.profcut.ordermanager.domain.dto.technologist.UpdateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;

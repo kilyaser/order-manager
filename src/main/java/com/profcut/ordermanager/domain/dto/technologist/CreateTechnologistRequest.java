@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.controllers.rest.dto.technologist;
+package com.profcut.ordermanager.domain.dto.technologist;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;

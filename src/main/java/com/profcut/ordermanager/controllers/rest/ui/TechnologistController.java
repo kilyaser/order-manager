@@ -1,8 +1,8 @@
 package com.profcut.ordermanager.controllers.rest.ui;
 
-import com.profcut.ordermanager.controllers.rest.dto.technologist.CreateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.dto.technologist.UiTechnologist;
-import com.profcut.ordermanager.controllers.rest.dto.technologist.UpdateTechnologistRequest;
+import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.domain.dto.technologist.UiTechnologist;
+import com.profcut.ordermanager.domain.dto.technologist.UpdateTechnologistRequest;
 import com.profcut.ordermanager.controllers.rest.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.service.TechnologistService;
 import io.swagger.v3.oas.annotations.tags.Tag;

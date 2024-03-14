@@ -1,7 +1,7 @@
 package com.profcut.ordermanager.service;
 
-import com.profcut.ordermanager.controllers.rest.dto.technologist.CreateTechnologistRequest;
-import com.profcut.ordermanager.controllers.rest.dto.technologist.UpdateTechnologistRequest;
+import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.domain.dto.technologist.UpdateTechnologistRequest;
 import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 
 import java.util.UUID;

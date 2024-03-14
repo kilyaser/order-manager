@@ -1,10 +1,10 @@
 package com.profcut.ordermanager.controllers.rest.auth;
 
 
-import com.profcut.ordermanager.controllers.rest.dto.auth.AuthRequest;
-import com.profcut.ordermanager.controllers.rest.dto.auth.AuthResponse;
-import com.profcut.ordermanager.controllers.rest.dto.auth.OmUser;
-import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
+import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
+import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
+import com.profcut.ordermanager.domain.dto.auth.OmUser;
+import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.security.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -36,7 +36,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
-    @GetMapping("refresh-token")
+    @GetMapping("/refresh-token")
     public ResponseEntity<AuthResponse> refreshToken(Principal principal) {
         return ResponseEntity.ok(authService.refreshToken(principal));
     }

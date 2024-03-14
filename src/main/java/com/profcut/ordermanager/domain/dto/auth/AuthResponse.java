@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.controllers.rest.dto.auth;
+package com.profcut.ordermanager.domain.dto.auth;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;

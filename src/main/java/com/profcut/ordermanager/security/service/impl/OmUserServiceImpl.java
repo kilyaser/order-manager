@@ -1,7 +1,7 @@
 package com.profcut.ordermanager.security.service.impl;
 
-import com.profcut.ordermanager.controllers.rest.dto.auth.OmUserFieldPatch;
-import com.profcut.ordermanager.controllers.rest.dto.auth.UpdateOmUserRequest;
+import com.profcut.ordermanager.domain.dto.auth.OmUserFieldPatch;
+import com.profcut.ordermanager.domain.dto.auth.UpdateOmUserRequest;
 import com.profcut.ordermanager.domain.exceptions.OmUserNotFoundException;
 import com.profcut.ordermanager.domain.exceptions.UpdateOmUserException;
 import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;

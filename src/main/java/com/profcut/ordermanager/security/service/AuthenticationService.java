@@ -1,9 +1,9 @@
 package com.profcut.ordermanager.security.service;
 
-import com.profcut.ordermanager.controllers.rest.dto.auth.AuthRequest;
-import com.profcut.ordermanager.controllers.rest.dto.auth.AuthResponse;
-import com.profcut.ordermanager.controllers.rest.dto.auth.OmUser;
-import com.profcut.ordermanager.controllers.rest.dto.auth.RegisterRequest;
+import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
+import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
+import com.profcut.ordermanager.domain.dto.auth.OmUser;
+import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
 
 import java.security.Principal;
 
