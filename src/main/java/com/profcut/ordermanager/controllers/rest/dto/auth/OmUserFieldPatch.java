@@ -2,6 +2,8 @@ package com.profcut.ordermanager.controllers.rest.dto.auth;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OmUserFieldPatch {
 
-
+    @NotBlank
     @Schema(description = "Имя пользователя", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String firstName;
 
@@ -24,6 +26,7 @@ public class OmUserFieldPatch {
     @Schema(description = "Отчество пользователя", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String patronymic;
 
+    @Email
     @Schema(description = "e-mail пользователя", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String email;
 

@@ -11,6 +11,7 @@ import com.profcut.ordermanager.domain.entities.TechnologistEntity;
 import com.profcut.ordermanager.domain.exceptions.TechnologistNotFoundException;
 import com.profcut.ordermanager.security.service.JwtUserService;
 import com.profcut.ordermanager.service.TechnologistService;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -51,7 +52,8 @@ public class TechnologistControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void should_return_404_not_found_when_get_technologist() throws Exception {
+    @SneakyThrows
+    void should_return_404_not_found_when_get_technologist() {
         var id = UUID.randomUUID();
         when(technologistService.getById(id)).thenThrow(TechnologistNotFoundException.class);
 
@@ -62,7 +64,8 @@ public class TechnologistControllerTest {
     }
 
     @Test
-    void should_return_ok_when_get_technologist() throws Exception {
+    @SneakyThrows
+    void should_return_ok_when_get_technologist() {
         var id = UUID.randomUUID();
         var dto = new UiTechnologist().setId(id);
 
@@ -80,7 +83,8 @@ public class TechnologistControllerTest {
     }
 
     @Test
-    void should_return_created_created_technologist() throws Exception {
+    @SneakyThrows
+    void should_return_created_created_technologist() {
         var createRequest = CreateTechnologistRequest.builder()
                 .firstName("Name")
                 .lastName("lastName")
@@ -125,7 +129,8 @@ public class TechnologistControllerTest {
     }
 
     @Test
-    void should_update_technologist() throws Exception {
+    @SneakyThrows
+    void should_update_technologist() {
         var id = UUID.randomUUID();
         var firsName = "firstName";
         var email = "new email";
@@ -156,7 +161,8 @@ public class TechnologistControllerTest {
     }
 
     @Test
-    void should_delete_technologist() throws Exception {
+    @SneakyThrows
+    void should_delete_technologist() {
         var id = UUID.randomUUID();
 
         mockMvc.perform(delete("/api/v1/ui/technologists/{technologistId}", id)

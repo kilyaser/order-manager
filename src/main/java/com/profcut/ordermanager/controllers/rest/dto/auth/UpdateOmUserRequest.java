@@ -2,6 +2,7 @@ package com.profcut.ordermanager.controllers.rest.dto.auth;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
@@ -17,11 +18,13 @@ public class UpdateOmUserRequest {
     /**
      * id пользователя.
      */
+    @NotNull
     @Schema(description = "id пользователя", maxLength = DataTypes.UUID_LENGTH)
     private UUID id;
     /**
      * Изменяемые поля.
      */
+    @NotNull
     @Schema(description = "Изменяемые поля")
     private OmUserFieldPatch patch;
 }
