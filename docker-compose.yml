@@ -12,14 +12,14 @@ services:
     networks:
       - om-network
 
-  order-manager-api:
-    image: order-manager-api:0.0.1-SNAPSHOT
-    ports:
-      - "8081:8081"
-    networks:
-      - om-network
-    depends_on:
-      - postgresql
+#  order-manager-api:
+#    image: order-manager-api:0.0.1-SNAPSHOT
+#    ports:
+#      - "8081:8081"
+#    networks:
+#      - om-network
+#    depends_on:
+#      - postgresql
 networks:
   om-network:
     driver: bridge
