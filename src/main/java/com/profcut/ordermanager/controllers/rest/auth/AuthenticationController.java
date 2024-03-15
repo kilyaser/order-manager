@@ -1,6 +1,5 @@
 package com.profcut.ordermanager.controllers.rest.auth;
 
-
 import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
 import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
 import com.profcut.ordermanager.domain.dto.auth.OmUser;

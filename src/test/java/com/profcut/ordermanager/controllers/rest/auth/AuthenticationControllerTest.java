@@ -4,10 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
 import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
 import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
-import com.profcut.ordermanager.domain.dto.auth.OmUser;
-import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.security.service.AuthenticationService;
 import com.profcut.ordermanager.security.service.JwtUserService;
+import com.profcut.ordermanager.testData.utils.TestDataHelper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +48,8 @@ public class AuthenticationControllerTest {
     @SneakyThrows
     void register_success() {
         var id = UUID.randomUUID();
-        var request = getDefaultRegisterRequest();
-        var response = getDefaultOmUser(request, id);
+        var request = TestDataHelper.getDefaultRegisterRequest();
+        var response = TestDataHelper.getDefaultOmUser(request, id);
 
         when(authService.register(request)).thenReturn(response);
 
@@ -70,9 +69,9 @@ public class AuthenticationControllerTest {
     @SneakyThrows
     void register_validate_pass_exception() {
         var id = UUID.randomUUID();
-        var request = getDefaultRegisterRequest();
+        var request = TestDataHelper.getDefaultRegisterRequest();
         request.setPassword("wrong_password");
-        var response = getDefaultOmUser(request, id);
+        var response = TestDataHelper.getDefaultOmUser(request, id);
 
         when(authService.register(request)).thenReturn(response);
 
@@ -114,23 +113,5 @@ public class AuthenticationControllerTest {
         mockMvc.perform(get("/api/v1/auth/refresh-token"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));
-    }
-
-    private RegisterRequest getDefaultRegisterRequest() {
-        return RegisterRequest.builder()
-                .firstName("firstName")
-                .lastName("lastName")
-                .email("test@mail.ru")
-                .password("Password1")
-                .build();
-    }
-
-    private OmUser getDefaultOmUser(RegisterRequest request, UUID id) {
-        return OmUser.builder()
-                .id(id)
-                .lastName(request.getLastName())
-                .firstName(request.getFirstName())
-                .email(request.getEmail())
-                .build();
     }
 }

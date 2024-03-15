@@ -2,6 +2,7 @@ package com.profcut.ordermanager.domain.dto.auth;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class UpdateOmUserRequest {
     /**
      * Изменяемые поля.
      */
+    @Valid
     @NotNull
     @Schema(description = "Изменяемые поля")
     private OmUserFieldPatch patch;

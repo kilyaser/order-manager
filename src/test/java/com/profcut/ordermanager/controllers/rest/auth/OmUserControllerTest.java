@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -72,5 +73,43 @@ public class OmUserControllerTest {
 
         verify(omUserService).updateOmUser(request);
         verify(omUserMapper).apply(any(OmUserEntity.class));
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("Ошибка обновления юзера: patch = null")
+    void changeOmUser_exception() {
+        var id = UUID.randomUUID();
+        var request = new UpdateOmUserRequest().setId(id).setPatch(null);
+        when(omUserService.updateOmUser(request)).thenReturn(new OmUserEntity().setId(id));
+
+        mockMvc.perform(put("/api/v1/users/change", request)
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().is4xxClientError());
+
+        verify(omUserService, never()).updateOmUser(request);
+        verify(omUserMapper, never()).apply(any(OmUserEntity.class));
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("Ошибка обновления юзера: incorrect email")
+    void changeOmUser_email_exception() {
+        var id = UUID.randomUUID();
+        var patch = OmUserFieldPatch.builder().lastName("NewName").email("mail.ru").build();
+        var request = new UpdateOmUserRequest().setId(id).setPatch(patch);
+
+        when(omUserService.updateOmUser(request)).thenReturn(new OmUserEntity().setId(id));
+
+        mockMvc.perform(put("/api/v1/users/change", request)
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().is4xxClientError());
+
+        verify(omUserService, never()).updateOmUser(request);
+        verify(omUserMapper, never()).apply(any(OmUserEntity.class));
     }
 }
