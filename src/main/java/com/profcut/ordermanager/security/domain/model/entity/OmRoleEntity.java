@@ -6,6 +6,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Data
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Accessors(chain = true)
 @Table(name = "om_roles")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
