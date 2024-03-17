@@ -16,7 +16,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@Sql("/sql/om-user-test.sql")
+@Sql(value = "/sql/om-user-test.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 @SpringBootTest(classes = ConfigurationTestBeans.class)
 public class OmUserServiceTest {
 
