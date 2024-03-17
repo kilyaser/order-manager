@@ -48,6 +48,10 @@ public class SwaggerConfig {
                 .url("http://62.113.104.3:8081")
                 .description("id address server");
 
-        return List.of(domain, ipServer);
+        final Server local = new Server()
+                .url("http://localhost:8081")
+                .description("localhost server");
+
+        return List.of(domain, ipServer, local);
     }
 }
