@@ -1,4 +1,4 @@
-version: '3.1'
+version: '3.8'
 
 services:
   postgresql:
@@ -11,7 +11,7 @@ services:
       - "5432:5432"
     restart: unless-stopped
     volumes:
-      - ./om-data:/var/lib/postgresql/data/
+      - ./om-data:/var/lib/postgresql/data
     networks:
       - om-network
 
@@ -23,6 +23,10 @@ services:
       - om-network
     depends_on:
       - postgresql
+
+volumes:
+  om-data:
+
 networks:
   om-network:
     driver: bridge
