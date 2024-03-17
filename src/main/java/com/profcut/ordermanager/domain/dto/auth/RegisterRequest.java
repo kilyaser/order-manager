@@ -25,7 +25,7 @@ public class RegisterRequest {
     /**
      * Имя пользователя.
      */
-    @Size(min = 3, max = 50)
+    @Size(min = 2, max = 50)
     @Schema(description = "Имя пользователя", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
     private String firstName;
     /**
@@ -48,7 +48,7 @@ public class RegisterRequest {
     /**
      * Телефон пользователя.
      */
-    @Pattern(regexp = "^\\d{11}$", message = "phone number doesn't match the template")
+    @Pattern(regexp = "^\\+\\d{5,15}$", message = "phone number doesn't match the template")
     @Schema(description = "Телефон пользователя", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String phone;
     /**

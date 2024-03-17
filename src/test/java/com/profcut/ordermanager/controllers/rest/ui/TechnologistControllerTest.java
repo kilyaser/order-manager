@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
+import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultCreateTechnologistRequest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -85,13 +86,7 @@ public class TechnologistControllerTest {
     @Test
     @SneakyThrows
     void should_return_created_created_technologist() {
-        var createRequest = CreateTechnologistRequest.builder()
-                .firstName("Name")
-                .lastName("lastName")
-                .patronymic("Patronymic")
-                .email("email")
-                .phone("phone")
-                .build();
+        var createRequest = getDefaultCreateTechnologistRequest();
         var id = UUID.randomUUID();
         var entity = new TechnologistEntity().setId(id)
                 .setFirstName(createRequest.getFirstName())
@@ -133,8 +128,8 @@ public class TechnologistControllerTest {
     void should_update_technologist() {
         var id = UUID.randomUUID();
         var firsName = "firstName";
-        var email = "new email";
-        var phone = "0123";
+        var email = "test@mail.ru";
+        var phone = "+712345";
         var patch = TechnologistFieldsPatch.builder().firstName(firsName)
                 .email(email).phone(phone).build();
         var updateRequest = new UpdateTechnologistRequest().setId(id).setPatch(patch);

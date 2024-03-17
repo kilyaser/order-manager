@@ -1,9 +1,10 @@
-package com.profcut.ordermanager.testData.utils;
+package com.profcut.ordermanager.testData.utils.helper;
 
 import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
 import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
 import com.profcut.ordermanager.domain.dto.auth.OmUser;
 import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
+import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
 import com.profcut.ordermanager.security.domain.model.entity.OmRoleEntity;
 import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;
 import com.profcut.ordermanager.security.domain.model.enums.OmRole;
@@ -68,6 +69,16 @@ public class TestDataHelper {
         return AuthResponse.builder()
                 .accessToken("accessToken")
                 .refreshToken("refreshToken")
+                .build();
+    }
+
+    public static CreateTechnologistRequest getDefaultCreateTechnologistRequest() {
+        return CreateTechnologistRequest.builder()
+                .firstName("Name")
+                .lastName("lastName")
+                .patronymic("Patronymic")
+                .email("test@email.ru")
+                .phone("+711111")
                 .build();
     }
 }

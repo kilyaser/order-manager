@@ -6,7 +6,7 @@ import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
 import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
 import com.profcut.ordermanager.security.service.AuthenticationService;
 import com.profcut.ordermanager.security.service.JwtUserService;
-import com.profcut.ordermanager.testData.utils.TestDataHelper;
+import com.profcut.ordermanager.testData.utils.helper.TestDataHelper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

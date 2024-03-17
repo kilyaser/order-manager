@@ -17,11 +17,11 @@ import java.security.Principal;
 import java.util.UUID;
 
 import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_MANAGER;
-import static com.profcut.ordermanager.testData.utils.TestDataHelper.getDefaultAuthRequest;
-import static com.profcut.ordermanager.testData.utils.TestDataHelper.getDefaultOmUser;
-import static com.profcut.ordermanager.testData.utils.TestDataHelper.getDefaultOmUserEntity;
-import static com.profcut.ordermanager.testData.utils.TestDataHelper.getDefaultRegisterRequest;
-import static com.profcut.ordermanager.testData.utils.TestDataHelper.getSelectedRole;
+import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultAuthRequest;
+import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultOmUser;
+import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultOmUserEntity;
+import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultRegisterRequest;
+import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getSelectedRole;
 import static java.util.Optional.of;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;

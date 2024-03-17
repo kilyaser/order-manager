@@ -6,6 +6,7 @@ import com.profcut.ordermanager.domain.dto.technologist.UpdateTechnologistReques
 import com.profcut.ordermanager.controllers.rest.mapper.UiTechnologistMapper;
 import com.profcut.ordermanager.service.TechnologistService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,13 +38,13 @@ public class TechnologistController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UiTechnologist createTechnologist(@RequestBody CreateTechnologistRequest createRequest) {
+    public UiTechnologist createTechnologist(@Valid @RequestBody CreateTechnologistRequest createRequest) {
         return uiTechnologistMapper.apply(technologistService.createTechnologist(createRequest));
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public UiTechnologist updateTechnologist(@RequestBody UpdateTechnologistRequest updateRequest) {
+    public UiTechnologist updateTechnologist(@Valid @RequestBody UpdateTechnologistRequest updateRequest) {
         return uiTechnologistMapper.apply(technologistService.updateTechnologist(updateRequest));
     }
 
