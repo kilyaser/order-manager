@@ -5,8 +5,8 @@ spring:
     name: order-manager
   datasource:
     url: jdbc:postgresql://postgresql:5432/order_manager
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    username: ${DB_USERNAME:om_user}
+    password: ${DB_PASSWORD:om_user}
     driver-class-name: org.postgresql.Driver
   jpa:
     open-in-view: false
@@ -20,7 +20,7 @@ spring:
   liquibase:
     change-log: classpath:liquibase/changelog-master.xml
     enabled: true
-    drop-first: false
+    drop-first: true
 
 jwt:
   token:
