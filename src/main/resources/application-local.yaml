@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/order_manager
-    username: postgres
-    password: postgres
+    username: om_user
+    password: om_user
   jpa:
     properties:
       hibernate:
