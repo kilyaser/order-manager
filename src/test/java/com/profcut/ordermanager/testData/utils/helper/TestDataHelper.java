@@ -51,7 +51,7 @@ public class TestDataHelper {
                 .setLastName("lastName")
                 .setPatronymic("patronymic")
                 .setEmail("test@mail.ru")
-                .setPhone("11111111111");
+                .setPhone("+11111111111");
     }
 
     public static Set<OmRoleEntity> getSelectedRole(OmRole role) {

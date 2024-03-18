@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum Constants {
 
-    PASSWORD_UPDATED("Password updated successfully");
+    PASSWORD_UPDATED("Password updated successfully"),
+    PASSWORD_UPDATE_ERROR("Incorrect old or new password");
 
     private final String value;
 

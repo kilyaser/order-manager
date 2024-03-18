@@ -5,10 +5,13 @@ import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
 import com.profcut.ordermanager.controllers.rest.mapper.OmUserMapper;
 import com.profcut.ordermanager.domain.dto.auth.OmUser;
 import com.profcut.ordermanager.domain.dto.auth.OmUserFieldPatch;
+import com.profcut.ordermanager.domain.dto.auth.PasswordUpdateRequest;
 import com.profcut.ordermanager.domain.dto.auth.UpdateOmUserRequest;
+import com.profcut.ordermanager.domain.enums.Constants;
 import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;
 import com.profcut.ordermanager.security.service.JwtUserService;
 import com.profcut.ordermanager.security.service.OmUserService;
+import com.profcut.ordermanager.security.service.PasswordService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,6 +31,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,6 +47,8 @@ public class OmUserControllerTest {
     OmUserService omUserService;
     @MockBean
     OmUserMapper omUserMapper;
+    @MockBean
+    PasswordService passwordService;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
@@ -111,5 +117,67 @@ public class OmUserControllerTest {
 
         verify(omUserService, never()).updateOmUser(request);
         verify(omUserMapper, never()).apply(any(OmUserEntity.class));
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("Успешное обновление пароля")
+    void changePassword() {
+        var updateRequest = PasswordUpdateRequest.builder()
+                .newPassword("NewPass1234")
+                .oldPassword("OldPass4321")
+                .build();
+
+        when(passwordService.updatePassword(updateRequest)).thenReturn(true);
+
+        mockMvc.perform(put("/api/v1/users/password", updateRequest)
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateRequest)))
+                .andExpectAll(
+                        status().is2xxSuccessful(),
+                        content().string(Constants.PASSWORD_UPDATED.getValue()));
+
+        verify(passwordService).updatePassword(updateRequest);
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("Неуспешное обновление пароля")
+    void changePassword_update_failure() {
+        var updateRequest = PasswordUpdateRequest.builder()
+                .newPassword("NewPass1234")
+                .oldPassword("OldPass4321")
+                .build();
+
+        when(passwordService.updatePassword(updateRequest)).thenReturn(false);
+
+        mockMvc.perform(put("/api/v1/users/password", updateRequest)
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateRequest)))
+                .andExpectAll(
+                        status().is2xxSuccessful(),
+                        content().string(Constants.PASSWORD_UPDATE_ERROR.getValue()));
+
+        verify(passwordService).updatePassword(updateRequest);
+    }
+
+    @Test
+    @SneakyThrows
+    @DisplayName("Неуспешное обновление пароля. Ошибка валидации")
+    void changePassword_validate_failure() {
+        var updateRequest = PasswordUpdateRequest.builder()
+                .newPassword("new")
+                .oldPassword("OldPass4321")
+                .build();
+
+        mockMvc.perform(put("/api/v1/users/password", updateRequest)
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updateRequest)))
+                .andExpect(status().is4xxClientError());
+
+        verify(passwordService, never()).updatePassword(updateRequest);
     }
 }
