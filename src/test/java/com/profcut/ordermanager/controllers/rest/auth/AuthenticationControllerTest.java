@@ -88,7 +88,10 @@ public class AuthenticationControllerTest {
     @SneakyThrows
     void authenticate_success() {
         var request = AuthRequest.builder().email("test@email.ru").password("Password1234").build();
-        var response = AuthResponse.builder().accessToken("accessToken").refreshToken("refreshToken").build();
+        var id = UUID.randomUUID();
+        var response = AuthResponse.builder()
+                .userId(id).accessToken("accessToken")
+                .refreshToken("refreshToken").build();
 
         when(authService.authenticate(request)).thenReturn(response);
 
@@ -107,7 +110,10 @@ public class AuthenticationControllerTest {
     @Test
     @SneakyThrows
     void refreshToken_get_new() {
-        var response = AuthResponse.builder().accessToken("accessToken").refreshToken("refreshToken").build();
+        var id = UUID.randomUUID();
+        var response = AuthResponse.builder()
+                .userId(id).accessToken("accessToken")
+                .refreshToken("refreshToken").build();
 
         when(authService.refreshToken(any(Principal.class))).thenReturn(response);
         mockMvc.perform(get("/api/v1/auth/refresh-token"))
