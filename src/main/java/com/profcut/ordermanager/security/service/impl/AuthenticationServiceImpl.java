@@ -57,6 +57,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtUserService.generateToken(user);
         var refreshToken = jwtUserService.generateRefreshToken(user);
         return AuthResponse.builder()
+                .userId(user.getId())
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -69,6 +70,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var jwtToken = jwtUserService.generateToken(userEntity);
         var refreshToken = jwtUserService.generateRefreshToken(userEntity);
         return AuthResponse.builder()
+                .userId(userEntity.getId())
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
