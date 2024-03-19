@@ -15,7 +15,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AuthResponse {
 
-    @Schema(description = "Идентификатор пользоватлея", maxLength = DataTypes.UUID_LENGTH)
+    @Schema(description = "Идентификатор пользователя", maxLength = DataTypes.UUID_LENGTH)
     private UUID userId;
 
     @Schema(description = "Токен доступа", maxLength = DataTypes.STRING_LENGTH_MAX)
