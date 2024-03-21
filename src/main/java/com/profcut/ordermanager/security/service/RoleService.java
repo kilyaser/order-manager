@@ -10,4 +10,6 @@ public interface RoleService {
     OmRoleEntity findByRoleName(OmRole role);
 
     Set<OmRoleEntity> findRoles(Set<OmRole> roles);
+
+    Set<String> findAll();
 }

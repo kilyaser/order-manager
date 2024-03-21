@@ -13,18 +13,18 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_ADMIN;
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_CEO;
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_MANAGER;
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_TECHNOLOGIST;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ADMIN;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.CEO;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.MANAGER;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.TECHNOLOGIST;
 
 public class TestDataHelper {
 
     private static final Map<OmRole, OmRoleEntity> rolesMap = Map.of(
-            ROLE_ADMIN, new OmRoleEntity(UUID.randomUUID(), ROLE_ADMIN, "admin"),
-            ROLE_MANAGER, new OmRoleEntity(UUID.randomUUID(), ROLE_MANAGER, "manager"),
-            ROLE_CEO, new OmRoleEntity(UUID.randomUUID(), ROLE_CEO, "ceo"),
-            ROLE_TECHNOLOGIST, new OmRoleEntity(UUID.randomUUID(), ROLE_TECHNOLOGIST, "technologist")
+            ADMIN, new OmRoleEntity(UUID.randomUUID(), ADMIN, "admin"),
+            MANAGER, new OmRoleEntity(UUID.randomUUID(), MANAGER, "manager"),
+            CEO, new OmRoleEntity(UUID.randomUUID(), CEO, "ceo"),
+            TECHNOLOGIST, new OmRoleEntity(UUID.randomUUID(), TECHNOLOGIST, "technologist")
     );
 
     public static RegisterRequest getDefaultRegisterRequest() {

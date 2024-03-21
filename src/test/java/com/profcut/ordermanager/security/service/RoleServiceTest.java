@@ -13,9 +13,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_ADMIN;
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_CEO;
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_MANAGER;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ADMIN;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.CEO;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.MANAGER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,12 +40,20 @@ public class RoleServiceTest {
 
     @Test
     void fineRoles() {
-        var roles = Set.of(ROLE_ADMIN, ROLE_MANAGER, ROLE_CEO);
+        var roles = Set.of(ADMIN, MANAGER, CEO);
 
         var result = roleService.findRoles(roles);
         var rolesDb = result.stream().map(OmRoleEntity::getRole).collect(Collectors.toSet());
 
         assertEquals(roles.size(), result.size());
         assertTrue(rolesDb.containsAll(roles));
+    }
+
+    @Test
+    void findAll() {
+        var roles = roleService.findAll();
+
+        assertNotNull(roles);
+        assertEquals(4, roles.size());
     }
 }

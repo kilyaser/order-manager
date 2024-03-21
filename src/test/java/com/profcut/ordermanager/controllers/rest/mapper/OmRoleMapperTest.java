@@ -17,7 +17,7 @@ public class OmRoleMapperTest {
     @Test
     void shouldMapAllFields() {
         var role = new OmRoleEntity().setId(UUID.randomUUID())
-                .setRole(OmRole.ROLE_MANAGER)
+                .setRole(OmRole.MANAGER)
                 .setDescription("some description");
 
         var result = mapper.apply(role);

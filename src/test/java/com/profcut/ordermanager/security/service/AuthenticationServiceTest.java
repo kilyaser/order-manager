@@ -16,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.security.Principal;
 import java.util.UUID;
 
-import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ROLE_MANAGER;
+import static com.profcut.ordermanager.security.domain.model.enums.OmRole.MANAGER;
 import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultAuthRequest;
 import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultOmUser;
 import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultOmUserEntity;
@@ -54,11 +54,11 @@ public class AuthenticationServiceTest {
         var id = UUID.randomUUID();
         var request = getDefaultRegisterRequest();
         var omUserEntity = getDefaultOmUserEntity();
-        omUserEntity.setId(id).setRoles(getSelectedRole(ROLE_MANAGER));
+        omUserEntity.setId(id).setRoles(getSelectedRole(MANAGER));
         var omUser = getDefaultOmUser(request, id);
 
         when(omUserCreateMapper.apply(request)).thenReturn(omUserEntity);
-        when(roleService.findRoles(any())).thenReturn(getSelectedRole(ROLE_MANAGER));
+        when(roleService.findRoles(any())).thenReturn(getSelectedRole(MANAGER));
         when(omUserRepository.save(any())).thenReturn(omUserEntity);
         when(omUserMapper.apply(any(OmUserEntity.class))).thenReturn(omUser);
 

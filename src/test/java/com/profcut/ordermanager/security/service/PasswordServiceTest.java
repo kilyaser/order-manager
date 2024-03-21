@@ -32,7 +32,7 @@ public class PasswordServiceTest {
 
     @Test
     @DisplayName("Успешное обновление юзера")
-    public void testUpdatePassword_success() {
+    void testUpdatePassword_success() {
         var request = new PasswordUpdateRequest("oldPassword", "newPassword");
         var user = getDefaultOmUserEntity();
         user.setPassword(passwordEncoder.encode("oldPassword"));
@@ -48,7 +48,7 @@ public class PasswordServiceTest {
 
     @Test
     @DisplayName("Неуспешное обновление юзера")
-    public void testUpdatePassword_failure() {
+    void testUpdatePassword_failure() {
         var request = new PasswordUpdateRequest( "wrongPassword", "newPassword");
         var user = getDefaultOmUserEntity();
         user.setPassword(passwordEncoder.encode("oldPassword"));

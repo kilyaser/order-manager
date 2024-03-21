@@ -3,7 +3,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 insert into om_roles (id, role, description)
-values (uuid_generate_v4(), 'ROLE_ADMIN', 'Администратор'),
-       (uuid_generate_v4(), 'ROLE_MANAGER', 'Менеджер'),
-       (uuid_generate_v4(), 'ROLE_TECHNOLOGIST', 'Технолог'),
-       (uuid_generate_v4(), 'ROLE_CEO', 'Главный управляющй')
+values (uuid_generate_v4(), 'ADMIN', 'Администратор'),
+       (uuid_generate_v4(), 'MANAGER', 'Менеджер'),
+       (uuid_generate_v4(), 'TECHNOLOGIST', 'Технолог'),
+       (uuid_generate_v4(), 'CEO', 'Главный Операционный директор')
