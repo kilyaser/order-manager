@@ -116,6 +116,7 @@ public class AuthenticationControllerTest {
                 .refreshToken("refreshToken").build();
 
         when(authService.refreshToken(any(Principal.class))).thenReturn(response);
+
         mockMvc.perform(get("/api/v1/auth/refresh-token"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));

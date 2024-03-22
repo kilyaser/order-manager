@@ -30,13 +30,13 @@ public class OmUserMapperTest {
         var user = new OmUserEntity()
                 .setId(UUID.randomUUID())
                 .setEmail("test@email.ru")
-                .setPhone("11111111111")
+                .setPhone("+11111111111")
                 .setFirstName("firstName")
                 .setLastName("lastName")
                 .setPatronymic("patronymic")
                 .setRoles(Set.of(
-                        new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.ROLE_MANAGER),
-                        new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.ROLE_CEO)));
+                        new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.MANAGER),
+                        new OmRoleEntity().setId(UUID.randomUUID()).setRole(OmRole.CEO)));
         var result = mapper.apply(user);
         assertNotNull(result);
         assertThat(result).usingRecursiveComparison()

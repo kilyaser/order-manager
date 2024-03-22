@@ -20,7 +20,7 @@ spring:
   liquibase:
     change-log: classpath:liquibase/changelog-master.xml
     enabled: true
-    drop-first: false
+    drop-first: true
 
 jwt:
   token:

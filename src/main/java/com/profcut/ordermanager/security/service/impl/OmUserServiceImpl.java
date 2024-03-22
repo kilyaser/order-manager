@@ -1,7 +1,6 @@
 package com.profcut.ordermanager.security.service.impl;
 
 import com.profcut.ordermanager.domain.dto.auth.OmUserFieldPatch;
-import com.profcut.ordermanager.domain.dto.auth.PasswordUpdateRequest;
 import com.profcut.ordermanager.domain.dto.auth.UpdateOmUserRequest;
 import com.profcut.ordermanager.domain.exceptions.OmUserNotFoundException;
 import com.profcut.ordermanager.domain.exceptions.UpdateOmUserException;
@@ -32,11 +31,6 @@ public class OmUserServiceImpl implements OmUserService {
         var omUserDb = omUserRepository.findById(request.getId()).orElseThrow(() -> OmUserNotFoundException.byId(request.getId()));
         updateOmUserByPatch(omUserDb, request.getPatch());
         return omUserRepository.save(omUserDb);
-    }
-
-    @Override
-    public void changePassword(PasswordUpdateRequest request) {
-        //TODO Реализовать метод
     }
 
     private void updateOmUserByPatch(OmUserEntity entity, OmUserFieldPatch patch) {

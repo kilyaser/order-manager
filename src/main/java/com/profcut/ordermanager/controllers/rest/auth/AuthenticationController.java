@@ -5,6 +5,7 @@ import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
 import com.profcut.ordermanager.domain.dto.auth.OmUser;
 import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
 import com.profcut.ordermanager.security.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,16 +27,19 @@ public class AuthenticationController {
     private final AuthenticationService authService;
 
     @PostMapping("/register")
+    @Operation(description = "Регистрация пользователя.")
     public OmUser register(@Valid @RequestBody RegisterRequest request) {
         return authService.register(request);
     }
 
     @PostMapping("/authenticate")
+    @Operation(description = "Аутентификация пользователя.")
     public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request) {
         return ResponseEntity.ok(authService.authenticate(request));
     }
 
     @GetMapping("/refresh-token")
+    @Operation(description = "Получение нового токена доступа.")
     public ResponseEntity<AuthResponse> refreshToken(Principal principal) {
         return ResponseEntity.ok(authService.refreshToken(principal));
     }

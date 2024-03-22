@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,5 +29,12 @@ public class RoleServiceImpl implements RoleService {
         return omRoleRepository.findRolesByRoleIn(roles)
                 .filter(roleNames -> roleNames.size() == roles.size())
                 .orElseThrow(() -> new OmRoleNotFoundException("Incorrect roles: " + roles));
+    }
+
+    @Override
+    public Set<String> findAll() {
+        return omRoleRepository.findAll().stream()
+                .map(role -> role.getRole().name())
+                .collect(Collectors.toSet());
     }
 }

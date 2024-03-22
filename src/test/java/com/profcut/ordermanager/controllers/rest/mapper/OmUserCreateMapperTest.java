@@ -25,9 +25,9 @@ public class OmUserCreateMapperTest {
                 .lastName("lastname")
                 .patronymic("patronymic")
                 .email("email")
-                .phone("1111")
+                .phone("+1111")
                 .password("password")
-                .roles(Set.of(OmRole.ROLE_MANAGER, OmRole.ROLE_TECHNOLOGIST))
+                .roles(Set.of(OmRole.MANAGER, OmRole.TECHNOLOGIST))
                 .build();
         var result = mapper.apply(request);
 

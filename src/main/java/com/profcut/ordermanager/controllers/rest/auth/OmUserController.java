@@ -7,6 +7,7 @@ import com.profcut.ordermanager.controllers.rest.mapper.OmUserMapper;
 import com.profcut.ordermanager.domain.enums.Constants;
 import com.profcut.ordermanager.security.service.OmUserService;
 import com.profcut.ordermanager.security.service.PasswordService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,11 +28,13 @@ public class OmUserController {
     private final PasswordService passwordService;
 
     @PutMapping("/change")
+    @Operation(description = "Обновление данных пользователя")
     public OmUser changeOmUser(@Valid @RequestBody UpdateOmUserRequest request) {
         return omUserMapper.apply(omUserService.updateOmUser(request));
     }
 
     @PutMapping("/password")
+    @Operation(description = "Изменение пароля.")
     public ResponseEntity<String> changePassword(@Valid @RequestBody PasswordUpdateRequest request) {
         if (passwordService.updatePassword(request)) {
             return ResponseEntity.ok(Constants.PASSWORD_UPDATED.getValue());

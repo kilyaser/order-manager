@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -22,8 +24,23 @@ public class CurrentUserSecurityServiceImpl implements CurrentUserSecurityServic
     }
 
     @Override
+    public Set<String> getOmUserRoles() {
+        return getOmUserEntity().getRoles().stream()
+                .map(role -> role.getRole().name())
+                .collect(Collectors.toSet());
+    }
+
+    @Override
     public OmUserEntity getOmUserEntity() {
         return getUserInfo().orElseThrow(() -> new AccessDeniedException("NO_ACCESS"));
+    }
+
+    @Override
+    public boolean hasAnyRole(Set<String> roles) {
+        var userRoles = getOmUserEntity().getRoles().stream()
+                .map(role -> role.getRole().name())
+                .collect(Collectors.toSet());
+        return roles.stream().anyMatch(userRoles::contains);
     }
 
     private Optional<OmUserEntity> getUserInfo() {
