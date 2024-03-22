@@ -1,5 +1,6 @@
 package com.profcut.ordermanager.domain.dto.technologist;
 
+import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -17,11 +18,13 @@ public class UpdateTechnologistRequest {
     /**
      * id технолога.
      */
+    @Schema(description = "id технолога", maxLength = DataTypes.UUID_LENGTH)
     private UUID id;
     /**
-     * Изменяемые поля.
+     * Изменяемые атрибуты технолога.
      */
     @Valid
     @NotNull
+    @Schema(description = "Обновленные атрибуты технолога")
     private TechnologistFieldsPatch patch;
 }

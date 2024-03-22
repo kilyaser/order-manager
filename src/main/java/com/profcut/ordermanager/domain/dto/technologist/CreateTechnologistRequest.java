@@ -17,21 +17,32 @@ import lombok.NoArgsConstructor;
 @Schema(description = "CreateTechnologistRequest")
 public class CreateTechnologistRequest {
 
+    /**
+     * Имя технолога.
+     */
     @Size(min = 2, max = 50)
     @Schema(description = "Имя технололга", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
     private String firstName;
-
+    /**
+     * Фамилия технолога.
+     */
     @Size(min = 3, max = 50)
     @Schema(description = "Фамилия технолога", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
     private String lastName;
-
+    /**
+     * Отчество технолога.
+     */
     @Schema(description = "Отчество технолога", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String patronymic;
-
+    /**
+     * e-mail технолога.
+     */
     @Email
     @Schema(description = "e-mail", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
     private String email;
-
+    /**
+     * контактный телефон технолога.
+     */
     @Pattern(regexp = "^\\+\\d{5,15}$", message = "Wrong phone number")
     @Schema(description = "Контактный телефон", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String phone;

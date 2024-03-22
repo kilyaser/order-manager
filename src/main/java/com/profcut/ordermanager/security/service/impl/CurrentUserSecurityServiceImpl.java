@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
 public class CurrentUserSecurityServiceImpl implements CurrentUserSecurityService {
 
     @Override
-    public Optional<String> getLogin() {
-        return getUserInfo().map(OmUserEntity::getUsername);
+    public String getLogin() {
+        return getOmUserEntity().getUsername();
     }
 
     @Override

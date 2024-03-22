@@ -18,6 +18,8 @@ create table orders
   bill_number           varchar(75),
   work_folder_link      varchar(255),
   current_sum           numeric(10, 2),
+  is_vat_include        boolean,
+  vat                   numeric(10, 2),
   debt_sum              numeric(10, 2),
   order_state           varchar(75),
   master_status         varchar(75),
@@ -25,6 +27,7 @@ create table orders
   is_government_order   boolean not null default false,
   created_date          timestamp without time zone not null,
   modified_date         timestamp without time zone not null,
+  author                varchar(75),
   is_deleted            boolean not null default false,
   counterparty_id       uuid references counterparties (id)
 );
@@ -33,6 +36,13 @@ create table materials
 (
     id                  uuid not null primary key,
     material_type       varchar(255)
+);
+
+create table cnc_machines
+(
+    id                  uuid not null primary key,
+    machine_type        varchar(75),
+    name                varchar(255)
 );
 
 create table technologists
@@ -47,11 +57,18 @@ create table technologists
 
 create table products
 (
-    product_id              uuid not null primary key,
-    product_name            varchar(255),
+    product_id                uuid not null primary key,
+    product_name              varchar(255)
+);
+
+create table order_items
+(
+    id                      uuid not null primary key,
     quantity                int not null default 0,
     price_per_product       numeric(10, 2),
     total_price             numeric(10, 2),
+    is_vat_include          boolean,
+    vat                     numeric(10, 2),
     product_type            varchar(20),
     is_program_written      boolean not null default false,
     machine_type            varchar(70),
@@ -59,7 +76,8 @@ create table products
     preparation_State       varchar(20),
     material_id             uuid references materials (id),
     technologist_id         uuid references technologists (id),
-    order_id                uuid references orders (order_id)
+    order_id                uuid references orders (order_id),
+    product_id              uuid references products (product_id)
 );
 
 create table payments

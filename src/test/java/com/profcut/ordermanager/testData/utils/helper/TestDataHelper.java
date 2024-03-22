@@ -4,15 +4,33 @@ import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
 import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
 import com.profcut.ordermanager.domain.dto.auth.OmUser;
 import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
+import com.profcut.ordermanager.domain.dto.material.UiMaterial;
+import com.profcut.ordermanager.domain.dto.order.CreateOrderRequest;
+import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
 import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.domain.entities.CounterpartyEntity;
+import com.profcut.ordermanager.domain.entities.MaterialEntity;
+import com.profcut.ordermanager.domain.entities.OrderEntity;
+import com.profcut.ordermanager.domain.entities.OrderItemEntity;
+import com.profcut.ordermanager.domain.entities.PaymentEntity;
+import com.profcut.ordermanager.domain.entities.ProductEntity;
+import com.profcut.ordermanager.domain.enums.MachineType;
+import com.profcut.ordermanager.domain.enums.OrderState;
+import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.security.domain.model.entity.OmRoleEntity;
 import com.profcut.ordermanager.security.domain.model.entity.OmUserEntity;
 import com.profcut.ordermanager.security.domain.model.enums.OmRole;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.Year;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
+import static com.profcut.ordermanager.domain.enums.ProductType.NEW;
 import static com.profcut.ordermanager.security.domain.model.enums.OmRole.ADMIN;
 import static com.profcut.ordermanager.security.domain.model.enums.OmRole.CEO;
 import static com.profcut.ordermanager.security.domain.model.enums.OmRole.MANAGER;
@@ -72,6 +90,15 @@ public class TestDataHelper {
                 .build();
     }
 
+    public static CounterpartyEntity buildDefaultCounterparty(UUID id) {
+        return new CounterpartyEntity()
+                .setId(id)
+                .setFullName("fullName")
+                .setName("name")
+                .setInn("1234567897")
+                .setEmail("email");
+    }
+
     public static CreateTechnologistRequest getDefaultCreateTechnologistRequest() {
         return CreateTechnologistRequest.builder()
                 .firstName("Name")
@@ -80,5 +107,69 @@ public class TestDataHelper {
                 .email("test@email.ru")
                 .phone("+711111")
                 .build();
+    }
+
+    public static CreateOrderRequest getDefaultCreateOrderRequest() {
+        return CreateOrderRequest.builder()
+                .orderName("orderName")
+                .isGovernmentOrder(false)
+                .counterpartyId(UUID.randomUUID())
+                .orderItemRequest(List.of(getDefaultOrderItemRequest()))
+                .build();
+    }
+
+    public static OrderItemRequest getDefaultOrderItemRequest() {
+        return OrderItemRequest.builder()
+                .productId(UUID.randomUUID())
+                .productType(NEW)
+                .quantity(2)
+                .pricePerProduct(BigDecimal.valueOf(3000))
+                .totalPrice(BigDecimal.valueOf(6000))
+                .isVatInclude(false)
+                .isProgramWritten(false)
+                .machineType(MachineType.FIVE_AXIS)
+                .preparationState(PreparationState.NOT_STARTED)
+                .material(new UiMaterial(UUID.randomUUID(), "steel"))
+                .technologistId(UUID.randomUUID())
+                .build();
+    }
+
+    public static OrderItemEntity getDefaultOrderItem() {
+        var item = new OrderItemEntity()
+                .setId(UUID.randomUUID())
+                .setProduct(new ProductEntity()
+                        .setProductId(UUID.randomUUID())
+                        .setProductName("ProductName"))
+                .setQuantity(3)
+                .setProductType(NEW)
+                .setVatInclude(true)
+                .setMachineType(MachineType.FIVE_AXIS)
+                .setPreparationState(PreparationState.NOT_STARTED)
+                .setMaterial(new MaterialEntity()
+                        .setId(UUID.randomUUID())
+                        .setMaterialType("metal"))
+                .setPricePerProduct(BigDecimal.valueOf(1500));
+        item.calculateTotalPrice();
+        item.calculateVat();
+        return item;
+    }
+
+    public static OrderEntity buildDefaultOrder() {
+        return new OrderEntity()
+                .setOrderId(UUID.randomUUID())
+                .setOrderNumber("%s-%s".formatted(Year.now(), new Random().nextInt(100)))
+                .setOrderName("test order")
+                .setBillNumber("Счет №%s".formatted(new Random().nextInt(100)))
+                .setOrderState(OrderState.NEW)
+                .setOrderItems(List.of(getDefaultOrderItem()))
+                .setVatInclude(true)
+                .setPayments(Set.of(new PaymentEntity()
+                        .setPaymentId(UUID.randomUUID())
+                        .setModifiedDate(LocalDateTime.now())
+                        .setPaymentSum(BigDecimal.valueOf(1000))))
+                .setCreatedDate(LocalDateTime.now())
+                .recalculateCurrentSum()
+                .calculateVat()
+                .setDebtSum();
     }
 }

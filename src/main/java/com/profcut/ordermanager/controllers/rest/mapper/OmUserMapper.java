@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Mapper
-public interface OmUserMapper extends Function<OmUser, OmUserEntity> {
+public interface OmUserMapper extends Function<OmUserEntity, OmUser> {
 
     @Mapping(target = "roles", ignore = true)
     OmUser apply(OmUserEntity entity);
