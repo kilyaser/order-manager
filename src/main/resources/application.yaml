@@ -1,6 +1,13 @@
+server:
+  port: 8081
 spring:
   application:
-    name: order-manager-api
+    name: order-manager
+  datasource:
+    url: jdbc:postgresql://postgresql:5432/order_manager
+    username: ${DB_USERNAME:om_user}
+    password: ${DB_PASSWORD:om_user}
+    driver-class-name: org.postgresql.Driver
   jpa:
     open-in-view: false
     hibernate:
@@ -9,7 +16,21 @@ spring:
       hibernate:
         format_sql: false
         show_sql: false
+
   liquibase:
     change-log: classpath:liquibase/changelog-master.xml
     enabled: true
     drop-first: true
+
+jwt:
+  token:
+    secret-key: ${JWT_TOKEN_SECRET_KEY:3B33F445EAB86CEF92C9CBA30B597D8F45DB5C252EDD30BDE90F9CF60E119D27}
+    expired-access: ${JWT_TOKEN_EXPIRED_ACCESS:86400000} # a day
+    expired-refresh: ${JWT_TOKEN_EXPIRED_REFRESH:604800000} # 7 days
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+logging:
+  level:
+    org.springframework.security: DEBUG

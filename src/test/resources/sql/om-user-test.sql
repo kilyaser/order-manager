@@ -1,0 +1,2 @@
+insert into om_users(id, first_name, last_name, patronymic, birthday, email, phone, password, is_block, is_deleted)
+values ('54e04691-2fd7-4b9b-9768-754cf022fb38', 'first', 'last', 'patronymic', '1990-10-15', 'test@mail.ru', '11111111111', '$2a$10$676/hXe4/n1J39vfs96/DO8YMt7OnD51iHXHgVlhjPHQ33Nc.He26', 'false', 'false');
