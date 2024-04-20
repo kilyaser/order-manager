@@ -46,10 +46,9 @@ public class CurrentUserSecurityServiceTest {
 
         when(authentication.getPrincipal()).thenReturn(user);
 
-        Optional<String> login = currentUserSecurityService.getLogin();
+        var login = currentUserSecurityService.getLogin();
 
-        assertTrue(login.isPresent());
-        assertEquals(user.getUsername(), login.get());
+        assertEquals(user.getUsername(), login);
     }
 
     @Test

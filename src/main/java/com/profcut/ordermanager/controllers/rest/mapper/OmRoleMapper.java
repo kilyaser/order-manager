@@ -7,8 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.function.Function;
 
 @Mapper
-public interface OmRoleMapper extends Function<OmRoleDto, OmRoleEntity> {
+public interface OmRoleMapper extends Function<OmRoleEntity, OmRoleDto> {
 
     OmRoleDto apply(OmRoleEntity entity);
-
 }

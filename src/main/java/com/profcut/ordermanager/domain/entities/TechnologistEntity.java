@@ -49,5 +49,5 @@ public class TechnologistEntity {
      */
     @ToString.Exclude
     @OneToMany(mappedBy = "technologist")
-    private Set<ProductEntity> products = new HashSet<>();
+    private Set<OrderItemEntity> products = new HashSet<>();
 }

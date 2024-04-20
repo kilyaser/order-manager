@@ -2,7 +2,6 @@ package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
-import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
 import com.profcut.ordermanager.domain.dto.technologist.TechnologistFieldsPatch;
 import com.profcut.ordermanager.domain.dto.technologist.UiTechnologist;
 import com.profcut.ordermanager.domain.dto.technologist.UpdateTechnologistRequest;
@@ -33,6 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,6 +56,7 @@ public class TechnologistControllerTest {
     @SneakyThrows
     void should_return_404_not_found_when_get_technologist() {
         var id = UUID.randomUUID();
+
         when(technologistService.getById(id)).thenThrow(TechnologistNotFoundException.class);
 
         mockMvc.perform(get("/api/v1/ui/technologists/{technologistId}", id))
@@ -111,12 +112,7 @@ public class TechnologistControllerTest {
                         .content(objectMapper.writeValueAsString(createRequest)))
                 .andExpectAll(
                         status().is2xxSuccessful(),
-                        jsonPath("$.id").value(id.toString()),
-                        jsonPath("$.firstName").value(entity.getFirstName()),
-                        jsonPath("$.lastName").value(entity.getLastName()),
-                        jsonPath("$.patronymic").value(entity.getPatronymic()),
-                        jsonPath("$.email").value(entity.getEmail()),
-                        jsonPath("$.phone").value(entity.getPhone())
+                        content().string(objectMapper.writeValueAsString(dto))
                 );
 
         verify(technologistService).createTechnologist(any());
@@ -145,10 +141,7 @@ public class TechnologistControllerTest {
                         .content(objectMapper.writeValueAsBytes(updateRequest)))
                 .andExpectAll(
                         status().is2xxSuccessful(),
-                        jsonPath("$.id").value(id.toString()),
-                        jsonPath("$.firstName").value(firsName),
-                        jsonPath("$.email").value(email),
-                        jsonPath("$.phone").value(phone)
+                        content().string(objectMapper.writeValueAsString(dto))
                 );
 
         verify(technologistService).updateTechnologist(any());
@@ -163,6 +156,7 @@ public class TechnologistControllerTest {
         mockMvc.perform(delete("/api/v1/ui/technologists/{technologistId}", id)
                         .with(csrf()))
                 .andExpect(status().is2xxSuccessful());
+
         verify(technologistService).deleteById(any());
     }
 }
