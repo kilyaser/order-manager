@@ -56,5 +56,5 @@ public class CreateOrderRequest {
      */
     @ArraySchema(schema = @Schema(description = "Список позиций заказа.",
             maxLength = DataTypes.ARRAY_MAX_ITEMS_VALUE))
-    private List<OrderItemRequest> orderItemRequest;
+    private List<OrderItemRequest> itemRequests;
 }

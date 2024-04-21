@@ -24,6 +24,7 @@ import com.profcut.ordermanager.security.domain.model.enums.OmRole;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -114,7 +115,7 @@ public class TestDataHelper {
                 .orderName("orderName")
                 .isGovernmentOrder(false)
                 .counterpartyId(UUID.randomUUID())
-                .orderItemRequest(List.of(getDefaultOrderItemRequest()))
+                .itemRequests(List.of(getDefaultOrderItemRequest()))
                 .build();
     }
 
@@ -129,7 +130,7 @@ public class TestDataHelper {
                 .isProgramWritten(false)
                 .machineType(MachineType.FIVE_AXIS)
                 .preparationState(PreparationState.NOT_STARTED)
-                .material(new UiMaterial(UUID.randomUUID(), "steel"))
+                .materialId(UUID.randomUUID())
                 .technologistId(UUID.randomUUID())
                 .build();
     }
@@ -148,28 +149,29 @@ public class TestDataHelper {
                 .setMaterial(new MaterialEntity()
                         .setId(UUID.randomUUID())
                         .setMaterialType("metal"))
-                .setPricePerProduct(BigDecimal.valueOf(1500));
+                .setPricePerProduct(BigDecimal.valueOf(2000));
         item.calculateTotalPrice();
         item.calculateVat();
         return item;
     }
 
     public static OrderEntity buildDefaultOrder() {
-        return new OrderEntity()
+        var items = new ArrayList<OrderItemEntity>();
+        items.add(getDefaultOrderItem());
+        var order = new OrderEntity()
                 .setOrderId(UUID.randomUUID())
                 .setOrderNumber("%s-%s".formatted(Year.now(), new Random().nextInt(100)))
                 .setOrderName("test order")
                 .setBillNumber("Счет №%s".formatted(new Random().nextInt(100)))
                 .setOrderState(OrderState.NEW)
-                .setOrderItems(List.of(getDefaultOrderItem()))
+                .setOrderItems(items)
                 .setVatInclude(true)
-                .setPayments(Set.of(new PaymentEntity()
-                        .setPaymentId(UUID.randomUUID())
-                        .setModifiedDate(LocalDateTime.now())
-                        .setPaymentSum(BigDecimal.valueOf(1000))))
                 .setCreatedDate(LocalDateTime.now())
-                .recalculateCurrentSum()
-                .calculateVat()
-                .setDebtSum();
+                .recalculateCurrentSum();
+        order.getPayments().add(new PaymentEntity()
+                .setPaymentId(UUID.randomUUID())
+                .setModifiedDate(LocalDateTime.now())
+                .setPaymentSum(BigDecimal.valueOf(1000)));
+        return order;
     }
 }

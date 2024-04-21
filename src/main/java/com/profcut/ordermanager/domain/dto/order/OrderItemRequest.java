@@ -1,8 +1,6 @@
 package com.profcut.ordermanager.domain.dto.order;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
-import com.profcut.ordermanager.domain.dto.material.UiMaterial;
-import com.profcut.ordermanager.domain.dto.product.UiProduct;
 import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
@@ -38,24 +36,22 @@ public class OrderItemRequest {
     /**
      * Количество изделий.
      */
-    @NotNull
     @Schema(description = "Количество изделий.")
     private Integer quantity;
     /**
      * Стоимость за одну позицию.
      */
-    @NotNull
     @Schema(description = "Стоимость за одну позицию.")
     private BigDecimal pricePerProduct;
     /**
      * Стоимсть всей позиции.
      */
-    @NotNull
     @Schema(description = "Стоимсть всей позиции.")
     private BigDecimal totalPrice;
     /**
      * Признак влкючения НДС в стоимость.
      */
+    @Schema(description = "Признак влкючения НДС в стоимость.")
     private boolean isVatInclude;
     /**
      * Признак написания управляющей программы.
@@ -78,10 +74,10 @@ public class OrderItemRequest {
     @Schema(description = "Дата завершения изготовления.")
     private LocalDateTime completionDate;
     /**
-     * Материал детали (изделия).
+     * Id материала детали (изделия).
      */
-    @Schema(description = "Материал детали.")
-    private UiMaterial material;
+    @Schema(description = "Id материала детали.")
+    private UUID materialId;
     /**
      * ID Технолога.
      */

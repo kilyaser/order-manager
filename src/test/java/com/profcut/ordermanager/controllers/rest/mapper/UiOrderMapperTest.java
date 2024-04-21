@@ -30,7 +30,6 @@ public class UiOrderMapperTest {
         var result = mapper.apply(order);
 
         assertNotNull(result);
-        System.out.println(result);
         assertThat(order).usingRecursiveComparison()
                 .ignoringFields("orderItems", "payments", "tasks", "isDeleted", "masterStatus")
                 .isEqualTo(result);

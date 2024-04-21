@@ -14,6 +14,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -105,6 +106,7 @@ public class OrderItemEntity {
      * Заказ.
      */
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "order_id")
     private OrderEntity order;
 
