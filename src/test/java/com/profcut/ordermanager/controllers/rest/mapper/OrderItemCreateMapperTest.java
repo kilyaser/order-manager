@@ -1,8 +1,6 @@
 package com.profcut.ordermanager.controllers.rest.mapper;
 
-import com.profcut.ordermanager.domain.dto.material.UiMaterial;
 import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
-import com.profcut.ordermanager.domain.dto.product.UiProduct;
 import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
@@ -24,7 +22,6 @@ public class OrderItemCreateMapperTest {
 
     @Test
     void shouldMapAllFields() {
-        var uiMaterial = new UiMaterial(UUID.randomUUID(), "material");
         var orderItemReq = OrderItemRequest.builder()
                 .productId(UUID.randomUUID())
                 .productType(ProductType.NEW)
@@ -35,7 +32,7 @@ public class OrderItemCreateMapperTest {
                 .machineType(MachineType.FIVE_AXIS)
                 .preparationState(PreparationState.NOT_STARTED)
                 .completionDate(null)
-                .material(uiMaterial)
+                .materialId(UUID.randomUUID())
                 .technologistId(UUID.randomUUID())
                 .build();
 
@@ -43,7 +40,7 @@ public class OrderItemCreateMapperTest {
 
         assertNotNull(result);
         assertThat(orderItemReq).usingRecursiveComparison()
-                .ignoringFields("technologistId", "productId")
+                .ignoringFields("technologistId", "productId", "materialId")
                 .isEqualTo(result);
     }
 }

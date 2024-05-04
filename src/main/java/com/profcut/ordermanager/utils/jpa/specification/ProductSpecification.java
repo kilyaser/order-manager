@@ -8,6 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 public class ProductSpecification {
 
     public static Specification<ProductEntity> byProductNameLike(String productNamePart) {
-        return ((root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("productName"), "%%%s%%".formatted(productNamePart)));
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("productName"), "%%%s%%".formatted(productNamePart));
     }
 }

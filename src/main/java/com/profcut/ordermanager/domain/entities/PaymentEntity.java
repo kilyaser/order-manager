@@ -7,8 +7,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,6 +26,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "payments")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
 public class PaymentEntity {
     /**
@@ -29,6 +34,7 @@ public class PaymentEntity {
      */
     @Id
     @UuidGenerator
+    @EqualsAndHashCode.Include
     private UUID paymentId;
     /**
      * Контрагент - плательщик.
@@ -40,6 +46,8 @@ public class PaymentEntity {
      * Заказ.
      */
     @ManyToOne
+    @ToString.Exclude
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "order_id")
     private OrderEntity order;
     /**

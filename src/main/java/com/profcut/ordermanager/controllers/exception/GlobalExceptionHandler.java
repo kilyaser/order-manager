@@ -1,6 +1,7 @@
 package com.profcut.ordermanager.controllers.exception;
 
 import com.profcut.ordermanager.domain.exceptions.EntityNotFoundException;
+import com.profcut.ordermanager.domain.exceptions.VatException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException exception) {
         log.error("GlobalExceptionHandler catch AccessDeniedException", exception);
         var error = errorHttpResponseFactory.make(exception, HttpStatus.FORBIDDEN);
+        return ResponseEntity.status(error.getCode()).body(error);
+    }
+
+    @ExceptionHandler(VatException.class)
+    public ResponseEntity<ErrorResponse> handleVatException(VatException exception) {
+        log.error("GlobalExceptionHandler catch VatException", exception);
+        var error = errorHttpResponseFactory.make(exception, HttpStatus.BAD_REQUEST);
         return ResponseEntity.status(error.getCode()).body(error);
     }
 }

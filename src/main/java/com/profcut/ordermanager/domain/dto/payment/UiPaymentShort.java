@@ -1,6 +1,7 @@
 package com.profcut.ordermanager.domain.dto.payment;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
+import com.profcut.ordermanager.domain.dto.counterparty.UiCounterpartyShort;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,5 +37,9 @@ public class UiPaymentShort {
             minLength = DataTypes.DATE_TIME_LENGTH,
             maxLength = DataTypes.DATE_TIME_LENGTH)
     private LocalDateTime paymentDate;
-
+    /**
+     * Контрагент - плательщик.
+     */
+    @Schema(description = "Контрагент - плательщик.")
+    private UiCounterpartyShort counterparty;
 }
