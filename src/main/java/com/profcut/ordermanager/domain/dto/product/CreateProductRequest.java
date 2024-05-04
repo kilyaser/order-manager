@@ -18,6 +18,8 @@ public class CreateProductRequest {
      * Наименование изделия
      */
     @NotNull
-    @Schema(description = "Наименование изделия", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Наименование изделия",
+            maxLength = DataTypes.STRING_LENGTH_MAX,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private String productName;
 }

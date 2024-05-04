@@ -6,7 +6,6 @@ import com.profcut.ordermanager.domain.exceptions.VatCalculationException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,6 +15,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
@@ -42,13 +43,14 @@ import static jakarta.persistence.EnumType.STRING;
 @Table(name = "orders")
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderEntity {
     /**
      * Идентификатор заказа.
      */
     @Id
-    @EqualsAndHashCode.Include
     @UuidGenerator
+    @EqualsAndHashCode.Include
     private UUID orderId;
     /**
      * Номер заказа.
@@ -113,7 +115,8 @@ public class OrderEntity {
     /**
      *  Контрагент заказчик.
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "counterparty_id")
     private CounterpartyEntity counterparty;
     /**
@@ -127,32 +130,37 @@ public class OrderEntity {
     /**
      * Изделия относящиеся к заказу.
      */
+    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "order")
     private List<OrderItemEntity> orderItems = new ArrayList<>();
     /**
      * Платежи по заказу
      */
+    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "order")
     private Set<PaymentEntity> payments = new HashSet<>();
     /**
      * Задачи по заказу.
      */
+    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "order")
     private List<TaskEntity> tasks = new ArrayList<>();
 
     public OrderEntity recalculateCurrentSum() {
         if (orderItems.isEmpty()) {
-            return this;
+            currentSum = BigDecimal.ZERO;
+            return this.calculateVat().calculateDebtSum();
         }
         currentSum = orderItems.stream()
                 .map(product -> product.getPricePerProduct().multiply(BigDecimal.valueOf(product.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return this;
+        return this.calculateVat().calculateDebtSum();
     }
 
     public OrderEntity calculateVat() {
         if (Objects.isNull(currentSum) || currentSum.equals(BigDecimal.ZERO)) {
-            throw VatCalculationException.byCalculateVat();
+            vat = BigDecimal.ZERO;
+            return this;
         }
         if (isVatInclude) {
             vat = currentSum.divide(VAT_DIVIDER, RoundingMode.HALF_UP).multiply(VAT_RATE);
@@ -162,8 +170,9 @@ public class OrderEntity {
         return this;
     }
 
-    public OrderEntity setDebtSum() {
+    public OrderEntity calculateDebtSum() {
         if (payments.isEmpty()) {
+            debtSum = currentSum;
             return this;
         }
         var paymentsSum = payments.stream()

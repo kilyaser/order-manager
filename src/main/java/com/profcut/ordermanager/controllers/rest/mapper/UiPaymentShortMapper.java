@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 import java.util.function.Function;
 
-@Mapper
+@Mapper(uses = UiCounterpartyShortMapper.class)
 public interface UiPaymentShortMapper extends Function<PaymentEntity, UiPaymentShort> {
 
     @Override

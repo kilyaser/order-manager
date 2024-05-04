@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.domain.exceptions;
 
-public class VatCalculationException extends RuntimeException {
+public class VatCalculationException extends VatException {
 
     public VatCalculationException(String message) {
         super(message);

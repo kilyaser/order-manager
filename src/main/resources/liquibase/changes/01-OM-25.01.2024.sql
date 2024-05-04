@@ -76,7 +76,7 @@ create table order_items
     preparation_State       varchar(20),
     material_id             uuid references materials (id),
     technologist_id         uuid references technologists (id),
-    order_id                uuid references orders (order_id),
+    order_id                uuid not null references orders (order_id),
     product_id              uuid references products (product_id)
 );
 

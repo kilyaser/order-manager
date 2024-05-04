@@ -3,7 +3,8 @@ package com.profcut.ordermanager.controllers.rest.mapper;
 import com.profcut.ordermanager.domain.entities.PaymentEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mapstruct.factory.Mappers;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -16,7 +17,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ExtendWith(MockitoExtension.class)
 public class UiPaymentShortMapperTest {
 
-    UiPaymentShortMapper mapper = Mappers.getMapper(UiPaymentShortMapper.class);
+    @Mock
+    UiCounterpartyShortMapper counterpartyShortMapper;
+    @InjectMocks
+    UiPaymentShortMapperImpl mapper ;
 
     @Test
     void shouldMapAllFields() {
