@@ -52,6 +52,10 @@ public class OrderItemEntity {
      */
     private Integer quantity;
     /**
+     * Колличество отгруженных позиций.
+     */
+    private Integer quantityShipped;
+    /**
      * Стоимость на одно изделие.
      */
     private BigDecimal pricePerProduct;

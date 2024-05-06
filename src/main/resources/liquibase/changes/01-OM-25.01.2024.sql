@@ -65,6 +65,7 @@ create table order_items
 (
     id                      uuid not null primary key,
     quantity                int not null default 0,
+    quantity_shipped        int not null default 0,
     price_per_product       numeric(10, 2),
     total_price             numeric(10, 2),
     is_vat_include          boolean,

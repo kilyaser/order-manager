@@ -30,6 +30,8 @@ public class DeleteOrderItemHandlerTest {
     @Mock
     OrderService orderService;
     @Mock
+    EntityManager entityManager;
+    @Mock
     UiOrderMapper mapper;
 
     @InjectMocks
@@ -49,6 +51,7 @@ public class DeleteOrderItemHandlerTest {
         assertThatCode(() -> handler.handle(deleteRequest)).doesNotThrowAnyException();
 
         verify(orderService).findOrderById(any(UUID.class));
+        verify(entityManager).refresh(any(OrderEntity.class));
         verify(orderItemService).deleteOrderItems(any());
         verify(orderService).saveOrder(any(OrderEntity.class));
         verify(mapper).apply(any(OrderEntity.class));

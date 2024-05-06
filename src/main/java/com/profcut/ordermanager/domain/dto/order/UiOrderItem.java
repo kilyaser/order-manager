@@ -38,6 +38,11 @@ public class UiOrderItem {
     @Schema(description = "Колличество изделий.")
     private Integer quantity;
     /**
+     * Колличество отгруженных позиций.
+     */
+    @Schema(description = "Колличество отгруженных позиций.")
+    private Integer quantityShipped;
+    /**
      * Стоимость на одно изделие.
      */
     @Schema(description = "Стоимость на одно изделие.")

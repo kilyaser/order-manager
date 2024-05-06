@@ -83,6 +83,8 @@ public class OrderItemServiceImpl implements OrderItemService {
         ofNullable(patch.getQuantity())
                 .ifPresent(quantity -> item.setQuantity(quantity).calculateTotalPrice());
 
+        ofNullable(patch.getQuantityShipped()).ifPresent(item::setQuantityShipped);
+
         ofNullable(patch.getPricePerProduct())
                 .ifPresent(price -> item.setPricePerProduct(price).calculateTotalPrice());
 

@@ -39,6 +39,11 @@ public class OrderItemRequest {
     @Schema(description = "Количество изделий.")
     private Integer quantity;
     /**
+     * Колличество отгруженных позиций.
+     */
+    @Schema(description = "Колличество отгруженных позиций.")
+    private Integer quantityShipped;
+    /**
      * Стоимость за одну позицию.
      */
     @Schema(description = "Стоимость за одну позицию.")
