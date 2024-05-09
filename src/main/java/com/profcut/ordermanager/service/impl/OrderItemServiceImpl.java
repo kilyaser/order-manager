@@ -98,7 +98,7 @@ public class OrderItemServiceImpl implements OrderItemService {
                 });
 
         ofNullable(patch.getProductType()).ifPresent(item::setProductType);
-        ofNullable(patch.getMachineType()).ifPresent(item::setMachineType);
+        ofNullable(patch.getMachineId()).ifPresent(item::setMachineId);
         ofNullable(patch.getCompletionDate()).ifPresent(item::setCompletionDate);
         ofNullable(patch.getPreparationState()).ifPresent(item::setPreparationState);
 

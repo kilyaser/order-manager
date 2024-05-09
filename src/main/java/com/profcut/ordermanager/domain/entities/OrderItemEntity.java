@@ -81,10 +81,9 @@ public class OrderItemEntity {
      */
     private boolean isProgramWritten;
     /**
-     * Тип станка.
+     * id станка.
      */
-    @Enumerated(EnumType.STRING)
-    private MachineType machineType;
+    private UUID machineId;
     /**
      * Дата завершения изготовления.
      */

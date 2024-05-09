@@ -72,7 +72,7 @@ create table order_items
     vat                     numeric(10, 2),
     product_type            varchar(20),
     is_program_written      boolean not null default false,
-    machine_type            varchar(70),
+    machine_id              uuid,
     completion_date         timestamp without time zone,
     preparation_State       varchar(20),
     material_id             uuid references materials (id),

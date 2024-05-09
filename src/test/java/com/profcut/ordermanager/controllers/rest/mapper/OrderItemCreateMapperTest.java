@@ -30,7 +30,7 @@ public class OrderItemCreateMapperTest {
                 .pricePerProduct(BigDecimal.valueOf(1000))
                 .totalPrice(BigDecimal.valueOf(2).multiply(BigDecimal.valueOf(1000)))
                 .isProgramWritten(true)
-                .machineType(MachineType.FIVE_AXIS)
+                .materialId(UUID.randomUUID())
                 .preparationState(PreparationState.NOT_STARTED)
                 .completionDate(null)
                 .materialId(UUID.randomUUID())

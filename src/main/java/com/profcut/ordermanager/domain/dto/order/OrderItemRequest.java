@@ -1,7 +1,6 @@
 package com.profcut.ordermanager.domain.dto.order;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
-import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -64,10 +63,10 @@ public class OrderItemRequest {
     @Schema(description = "Признак написания управляющей программы.")
     private boolean isProgramWritten;
     /**
-     * Тип станка.
+     * id станка.
      */
-    @Schema(description = "Тип станка.")
-    private MachineType machineType;
+    @Schema(description = "id станка.")
+    private UUID machineId;
     /**
      * Статус готовности изделия.
      */
