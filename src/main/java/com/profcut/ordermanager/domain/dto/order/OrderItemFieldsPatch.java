@@ -36,6 +36,11 @@ public class OrderItemFieldsPatch {
     @Schema(description = "Колличество изделий.")
     private Integer quantity;
     /**
+     * Колличество отгруженных позиций.
+     */
+    @Schema(description = "Колличество отгруженных позиций.")
+    private Integer quantityShipped;
+    /**
      * Стоимость на одно изделие.
      */
     @Schema(description = "Стоимость на одно изделие.")
@@ -51,10 +56,10 @@ public class OrderItemFieldsPatch {
     @Schema(description = "Тип изделия.")
     private ProductType productType;
     /**
-     * Тип станка.
+     * id станка.
      */
-    @Schema(description = "Тип станка.")
-    private MachineType machineType;
+    @Schema(description = "id станка.")
+    private UUID machineId;
     /**
      * Дата завершения изготовления.
      */

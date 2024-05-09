@@ -25,7 +25,6 @@ public class CounterpartyCreateMapperTest {
                 .build();
 
         var result = mapper.apply(request);
-        System.out.println(request);
 
         assertNotNull(result);
         assertThat(result).usingRecursiveComparison()

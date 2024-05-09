@@ -38,6 +38,11 @@ public class UiOrderItem {
     @Schema(description = "Колличество изделий.")
     private Integer quantity;
     /**
+     * Колличество отгруженных позиций.
+     */
+    @Schema(description = "Колличество отгруженных позиций.")
+    private Integer quantityShipped;
+    /**
      * Стоимость на одно изделие.
      */
     @Schema(description = "Стоимость на одно изделие.")
@@ -68,10 +73,10 @@ public class UiOrderItem {
     @Schema(description = "Признак написания управляющей программы.")
     private boolean isProgramWritten;
     /**
-     * Тип станка.
+     * id станка.
      */
-    @Schema(description = "Тип станка.")
-    private MachineType machineType;
+    @Schema(description = "id станка.")
+    private UUID machineId;
     /**
      * Дата завершения изготовления.
      */

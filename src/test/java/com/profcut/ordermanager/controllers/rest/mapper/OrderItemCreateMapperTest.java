@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,7 +30,7 @@ public class OrderItemCreateMapperTest {
                 .pricePerProduct(BigDecimal.valueOf(1000))
                 .totalPrice(BigDecimal.valueOf(2).multiply(BigDecimal.valueOf(1000)))
                 .isProgramWritten(true)
-                .machineType(MachineType.FIVE_AXIS)
+                .materialId(UUID.randomUUID())
                 .preparationState(PreparationState.NOT_STARTED)
                 .completionDate(null)
                 .materialId(UUID.randomUUID())
@@ -40,7 +41,8 @@ public class OrderItemCreateMapperTest {
 
         assertNotNull(result);
         assertThat(orderItemReq).usingRecursiveComparison()
-                .ignoringFields("technologistId", "productId", "materialId")
+                .ignoringFields("technologistId", "productId", "materialId", "quantityShipped")
                 .isEqualTo(result);
+        assertEquals(0, result.getQuantityShipped());
     }
 }

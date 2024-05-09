@@ -52,6 +52,10 @@ public class OrderItemEntity {
      */
     private Integer quantity;
     /**
+     * Колличество отгруженных позиций.
+     */
+    private Integer quantityShipped;
+    /**
      * Стоимость на одно изделие.
      */
     private BigDecimal pricePerProduct;
@@ -77,10 +81,9 @@ public class OrderItemEntity {
      */
     private boolean isProgramWritten;
     /**
-     * Тип станка.
+     * id станка.
      */
-    @Enumerated(EnumType.STRING)
-    private MachineType machineType;
+    private UUID machineId;
     /**
      * Дата завершения изготовления.
      */

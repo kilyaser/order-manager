@@ -4,10 +4,12 @@ import com.profcut.ordermanager.domain.dto.auth.AuthRequest;
 import com.profcut.ordermanager.domain.dto.auth.AuthResponse;
 import com.profcut.ordermanager.domain.dto.auth.OmUser;
 import com.profcut.ordermanager.domain.dto.auth.RegisterRequest;
-import com.profcut.ordermanager.domain.dto.material.UiMaterial;
+import com.profcut.ordermanager.domain.dto.machine.CreateMachineRequest;
+import com.profcut.ordermanager.domain.dto.machine.UiMachine;
 import com.profcut.ordermanager.domain.dto.order.CreateOrderRequest;
 import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
 import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
+import com.profcut.ordermanager.domain.entities.CncMachineEntity;
 import com.profcut.ordermanager.domain.entities.CounterpartyEntity;
 import com.profcut.ordermanager.domain.entities.MaterialEntity;
 import com.profcut.ordermanager.domain.entities.OrderEntity;
@@ -91,6 +93,26 @@ public class TestDataHelper {
                 .build();
     }
 
+    public static CncMachineEntity getDefaultMachine() {
+        return new CncMachineEntity()
+                .setId(UUID.randomUUID())
+                .setMachineType(MachineType.THREE_AXIS)
+                .setName("machineName");
+    }
+
+    public static CreateMachineRequest getDefaultCreateMachineRequest() {
+        return new CreateMachineRequest()
+                .setMachineType(MachineType.THREE_AXIS)
+                .setName("machineName");
+    }
+
+    public static UiMachine getDefaultUiMachine() {
+        return new UiMachine(
+                UUID.randomUUID(),
+                MachineType.THREE_AXIS,
+                "machineName");
+    }
+
     public static CounterpartyEntity buildDefaultCounterparty(UUID id) {
         return new CounterpartyEntity()
                 .setId(id)
@@ -128,7 +150,7 @@ public class TestDataHelper {
                 .totalPrice(BigDecimal.valueOf(6000))
                 .isVatInclude(false)
                 .isProgramWritten(false)
-                .machineType(MachineType.FIVE_AXIS)
+                .materialId(UUID.randomUUID())
                 .preparationState(PreparationState.NOT_STARTED)
                 .materialId(UUID.randomUUID())
                 .technologistId(UUID.randomUUID())
@@ -144,7 +166,7 @@ public class TestDataHelper {
                 .setQuantity(3)
                 .setProductType(NEW)
                 .setVatInclude(true)
-                .setMachineType(MachineType.FIVE_AXIS)
+                .setMachineId(UUID.randomUUID())
                 .setPreparationState(PreparationState.NOT_STARTED)
                 .setMaterial(new MaterialEntity()
                         .setId(UUID.randomUUID())
