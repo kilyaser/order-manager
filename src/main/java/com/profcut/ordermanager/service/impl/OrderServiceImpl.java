@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static com.profcut.ordermanager.domain.enums.MasterStatus.CREATED;
-import static com.profcut.ordermanager.domain.enums.OrderState.NEW;
+import static com.profcut.ordermanager.domain.enums.OrderState.INITIATION_NOT_COMPLETED;
 import static java.util.Optional.ofNullable;
 
 @Slf4j
@@ -49,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
                 .setWorkFolderLink(request.getWorkFolderLink())
                 .setCompletionDate(request.getCompletionDate())
                 .setGovernmentOrder(request.isGovernmentOrder())
-                .setOrderState(NEW)
+                .setOrderState(INITIATION_NOT_COMPLETED)
                 .setMasterStatus(CREATED)
                 .setCompletionDate(request.getCompletionDate())
                 .setCounterparty(counterpartyService.findById(request.getCounterpartyId()))

@@ -20,7 +20,7 @@ public class PaymentChangeEventListener {
         if (event.isDelete()) {
             order.getPayments().removeIf(p -> p.getPaymentId().equals(payment.getPaymentId()));
         } else {
-            payment.setOrder(order);
+//            payment.setOrder(order);
             var existingPayment = order.getPayments().stream()
                     .filter(p -> p.getPaymentId().equals(payment.getPaymentId()))
                     .findFirst();
