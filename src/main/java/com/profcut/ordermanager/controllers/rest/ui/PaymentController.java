@@ -30,7 +30,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/ui/payments")
-@Tag(name = "payment-ui-api", description = "Контроллер для управления позициями заказами")
+@Tag(name = "payment-ui-api", description = "Контроллер для управления платежами контрагента по заказу")
 public class PaymentController {
 
     private final PaymentService paymentService;
