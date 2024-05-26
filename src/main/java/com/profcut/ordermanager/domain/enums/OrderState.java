@@ -5,7 +5,7 @@ import lombok.Getter;
 @Getter
 public enum OrderState {
 
-    NEW("Новый"),
+    INITIATION_NOT_COMPLETED("Не инициирован"),
     IN_WORK("В работе"),
     READY("Готов"),
     SHIPPED("Отгружен заказчику"),

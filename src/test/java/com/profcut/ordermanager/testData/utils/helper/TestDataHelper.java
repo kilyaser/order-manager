@@ -185,7 +185,7 @@ public class TestDataHelper {
                 .setOrderNumber("%s-%s".formatted(Year.now(), new Random().nextInt(100)))
                 .setOrderName("test order")
                 .setBillNumber("Счет №%s".formatted(new Random().nextInt(100)))
-                .setOrderState(OrderState.NEW)
+                .setOrderState(OrderState.INITIATION_NOT_COMPLETED)
                 .setOrderItems(items)
                 .setVatInclude(true)
                 .setCreatedDate(LocalDateTime.now())

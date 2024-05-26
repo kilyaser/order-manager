@@ -81,7 +81,7 @@ public class OrderServiceTest {
         assertThat(captor.getValue())
                 .isInstanceOf(OrderEntity.class)
                 .satisfies(order -> {
-                    assertThat(order.getOrderState()).isEqualTo(OrderState.NEW);
+                    assertThat(order.getOrderState()).isEqualTo(OrderState.INITIATION_NOT_COMPLETED);
                     assertThat(order.getMasterStatus()).isEqualTo(MasterStatus.CREATED);
                     assertThat(order.getOrderName()).isEqualTo(request.getOrderName());
                 });
