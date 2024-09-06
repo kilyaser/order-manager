@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/chockout@v3
+      - uses: actions/chockout@v4
       - name: Set up JDK 17
-        uses: action/setup java@3
+        uses: actions/setup-java@4
         with:
           java-version: '17'
           distribution: 'temurin'
