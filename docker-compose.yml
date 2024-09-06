@@ -9,10 +9,10 @@ services:
       POSTGRES_PASSWORD: om_user
     ports:
       - "5432:5432"
-    restart: unless-stopped
-    volumes:
+#    restart: unless-stopped
+#    volumes:
 #      - ./om-data:/var/lib/postgresql/data
-      - "$PWD/om-data:/var/lib/postgresql/data"
+#      - "$PWD/om-data:/var/lib/postgresql/data"
     networks:
       - om-network
 
