@@ -9,6 +9,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 
 @Data
 @Builder
@@ -33,6 +34,6 @@ public class OmUserFieldPatch {
     @Schema(description = "Контактный телефон пользователя", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String phone;
 
-    @Schema(description = "Дата рождения пользователя", maxLength = DataTypes.STRING_LENGTH_MAX)
-    private String birthday;
+    @Schema(description = "Дата рождения пользователя", maxLength = DataTypes.DATE_TIME_LENGTH)
+    private LocalDate birthday;
 }

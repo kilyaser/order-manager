@@ -6,7 +6,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
-import org.springdoc.core.customizers.OpenApiCustomizer;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -26,6 +26,22 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(buildInfo())
                 .servers(servers());
+    }
+
+    @Bean
+    public GroupedOpenApi authApi() {
+        return GroupedOpenApi.builder()
+                .group("auth-api")
+                .packagesToScan("com.profcut.ordermanager.controllers.rest.auth")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi uiApi() {
+        return GroupedOpenApi.builder()
+                .group("ui-common-api")
+                .packagesToScan("com.profcut.ordermanager.controllers.rest.ui")
+                .build();
     }
 
     private Info buildInfo() {
