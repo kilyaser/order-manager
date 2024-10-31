@@ -26,7 +26,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Accessors(chain = true)
 @Table(name = "payments")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @EntityListeners(AuditingEntityListener.class)
 public class PaymentEntity {
     /**

@@ -1,6 +1,7 @@
 package com.profcut.ordermanager.service.impl;
 
 import com.profcut.ordermanager.controllers.rest.mapper.OrderItemCreateMapper;
+import com.profcut.ordermanager.controllers.rest.mapper.UpdateItemMapper;
 import com.profcut.ordermanager.domain.dto.order.AddOrderItemsRequest;
 import com.profcut.ordermanager.domain.dto.order.OrderItemFieldsPatch;
 import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
@@ -15,9 +16,11 @@ import com.profcut.ordermanager.testData.utils.helper.TestDataHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -50,6 +53,8 @@ public class OrderItemServiceTest {
     TechnologistService technologistService;
     @Mock
     OrderItemCreateMapper orderItemCreateMapper;
+    @Spy
+    UpdateItemMapper updateItemMapper = Mappers.getMapper(UpdateItemMapper.class);
     @InjectMocks
     OrderItemServiceImpl orderItemService;
 
@@ -99,7 +104,7 @@ public class OrderItemServiceTest {
         when(productService.getProductById(any())).thenReturn(product);
         when(orderItemRepository.saveAllAndFlush(any())).thenReturn(order.getOrderItems());
 
-        assertThatCode(() -> orderItemService.createOrderItems(order, addItemReq.getItemsRequest())).doesNotThrowAnyException();
+        assertThatCode(() -> orderItemService.createOrderItems(addItemReq.getItemsRequest())).doesNotThrowAnyException();
 
         verify(orderItemCreateMapper).apply(any());
         verify(productService).getProductById(any());
