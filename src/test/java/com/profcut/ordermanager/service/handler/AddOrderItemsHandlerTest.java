@@ -53,12 +53,12 @@ public class AddOrderItemsHandlerTest {
         var order = buildDefaultOrder();
 
         when(orderService.findOrderById(any())).thenReturn(order);
-        when(orderItemService.createOrderItems(any(OrderEntity.class), any())).thenReturn(List.of(item));
+        when(orderItemService.createOrderItems(any())).thenReturn(List.of(item));
 
         assertThatCode(() -> addOrderItemsHandler.handle(addItemReq)).doesNotThrowAnyException();
 
         verify(orderService).findOrderById(any(UUID.class));
-        verify(orderItemService).createOrderItems(any(OrderEntity.class), any());
+        verify(orderItemService).createOrderItems(any());
         verify(uiOrderMapper).apply(any());
         verify(orderService).saveOrder(any(OrderEntity.class));
     }

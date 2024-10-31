@@ -24,8 +24,8 @@ public class AddOrderItemsHandler {
     public UiOrder handle(AddOrderItemsRequest requests) {
         log.info("invoke AddOrderItemHandler#handle with request: {}", requests);
         var order = orderService.findOrderById(requests.getOrderId());
-        order.getOrderItems().addAll(orderItemService.createOrderItems(order, requests.getItemsRequest()));
-        order.recalculateCurrentSum();
+        var newItems = orderItemService.createOrderItems(requests.getItemsRequest());
+        order.addItems(newItems);
         return uiOrderMapper.apply(orderService.saveOrder(order));
     }
 }

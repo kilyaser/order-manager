@@ -146,6 +146,25 @@ public class OrderEntity {
     @OneToMany(mappedBy = "order")
     private List<TaskEntity> tasks = new ArrayList<>();
 
+    public void addItems(List<OrderItemEntity> items) {
+        items.forEach(item -> {
+            item.setOrder(this);
+            this.orderItems.add(item);
+        });
+        this.recalculateCurrentSum();
+    }
+
+    public void addPayment(PaymentEntity payment) {
+        payment.setOrder(this);
+        payments.add(payment);
+        calculateDebtSum();
+    }
+
+    public void removePayment(PaymentEntity payment) {
+        getPayments().removeIf(p -> p.getPaymentId().equals(payment.getPaymentId()));
+        calculateDebtSum();
+    }
+
     public OrderEntity recalculateCurrentSum() {
         if (orderItems.isEmpty()) {
             currentSum = BigDecimal.ZERO;

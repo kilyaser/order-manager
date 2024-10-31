@@ -1,8 +1,8 @@
 package com.profcut.ordermanager.service.impl;
 
+import com.profcut.ordermanager.controllers.rest.mapper.UpdateOrderByPatchMapper;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
 import com.profcut.ordermanager.domain.dto.order.CreateOrderRequest;
-import com.profcut.ordermanager.domain.dto.order.OrderFieldsPatch;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderRequest;
 import com.profcut.ordermanager.domain.entities.OrderEntity;
 import com.profcut.ordermanager.domain.entities.OrderItemEntity;
@@ -38,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
     private final CurrentUserSecurityService currentUserSecurityService;
     private final CounterpartyService counterpartyService;
     private final OrderItemService orderItemService;
+    private final UpdateOrderByPatchMapper updateOrderByPatchMapper;
 
     @Override
     @Transactional
@@ -55,8 +56,8 @@ public class OrderServiceImpl implements OrderService {
                 .setCounterparty(counterpartyService.findById(request.getCounterpartyId()))
                 .setAuthor(currentUserSecurityService.getLogin());
         var savedOrder = orderRepository.save(order);
-        savedOrder.setOrderItems(orderItemService.createOrderItems(savedOrder, request.getItemRequests()))
-                .recalculateCurrentSum();
+        var items = orderItemService.createOrderItems(request.getItemRequests());
+        savedOrder.addItems(items);
         checkAndChangeItemVat(order.isVatInclude(), order.getOrderItems());
         return orderRepository.saveAndFlush(savedOrder);
     }
@@ -74,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderEntity updateOrder(UpdateOrderRequest request) {
         log.info("invoke OrderServiceImpl#updateOrder by request: {}", request);
         var order = findOrderById(request.getId());
-        updateOrderByPatch(order, request.getPatch());
+        updateOrderByPatchMapper.updateOrder(request.getPatch(), order);
         return orderRepository.save(order);
     }
 
@@ -113,25 +114,6 @@ public class OrderServiceImpl implements OrderService {
         var order = findOrderById(orderId);
         order.setDeleted(true);
         orderRepository.save(order);
-    }
-
-    private void updateOrderByPatch(OrderEntity order, OrderFieldsPatch patch) {
-        ofNullable(patch.getOrderName()).ifPresent(order::setOrderName);
-        ofNullable(patch.getBillNumber()).ifPresent(order::setBillNumber);
-        ofNullable(patch.getCompletionDate()).ifPresent(order::setCompletionDate);
-        ofNullable(patch.getIsGovernmentOrder()).ifPresent(order::setGovernmentOrder);
-        ofNullable(patch.getWorkFolderLink()).ifPresent(order::setWorkFolderLink);
-        ofNullable(patch.getIsVatInclude()).ifPresent(isInclude -> {
-            order.setVatInclude(isInclude);
-            order.getOrderItems().forEach(item -> {
-                item.setVatInclude(isInclude);
-                item.calculateVat();
-            });
-            order.calculateVat();
-        });
-        ofNullable(patch.getCounterpartId()).ifPresent(id -> order.setCounterparty(
-                counterpartyService.findById(id)
-        ));
     }
 
     private void checkAndChangeItemVat(boolean orderVat, List<OrderItemEntity> items) {

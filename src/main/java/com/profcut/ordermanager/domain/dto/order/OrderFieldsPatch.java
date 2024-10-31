@@ -47,9 +47,4 @@ public class OrderFieldsPatch {
      */
     @Schema(description = "Признак влкючения НДС в стоимость.")
     private Boolean isVatInclude;
-    /**
-     * Идентификор заказчика.
-     */
-    @Schema(description = "id заказчика.", maxLength = DataTypes.UUID_LENGTH)
-    private UUID counterpartId;
 }

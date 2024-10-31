@@ -1,5 +1,6 @@
 package com.profcut.ordermanager.service.impl;
 
+import com.profcut.ordermanager.controllers.rest.mapper.UpdateOrderByPatchMapper;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
 import com.profcut.ordermanager.domain.dto.order.OrderFieldsPatch;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderRequest;
@@ -18,9 +19,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.mapstruct.factory.Mappers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -53,6 +56,8 @@ public class OrderServiceTest {
     OrderItemService orderItemService;
     @Mock
     CounterpartyService counterpartyService;
+    @Spy
+    UpdateOrderByPatchMapper mapper = Mappers.getMapper(UpdateOrderByPatchMapper.class);
     @InjectMocks
     OrderServiceImpl orderService;
 
@@ -66,7 +71,7 @@ public class OrderServiceTest {
                 .thenReturn(new CounterpartyEntity().setId(UUID.randomUUID()).setName("name"));
         when(currentUserSecurityService.getLogin()).thenReturn("user@mail.ru");
         when(orderRepository.save(any())).thenReturn(saveOrder);
-        when(orderItemService.createOrderItems(any(), eq(request.getItemRequests()))).thenReturn(List.of(getDefaultOrderItem()));
+        when(orderItemService.createOrderItems(eq(request.getItemRequests()))).thenReturn(List.of(getDefaultOrderItem()));
 
         assertThatCode(() -> orderService.createOrder(request)).doesNotThrowAnyException();
 
@@ -74,7 +79,7 @@ public class OrderServiceTest {
 
         verify(counterpartyService).findById(any(UUID.class));
         verify(currentUserSecurityService).getLogin();
-        verify(orderItemService).createOrderItems(any(), any());
+        verify(orderItemService).createOrderItems(any());
         verify(orderRepository).save(captor.capture());
         verify(orderRepository).saveAndFlush(any());
 
@@ -102,32 +107,26 @@ public class OrderServiceTest {
     @DisplayName("Обновление Заказа")
     void updateOrder() {
         var order = TestDataHelper.buildDefaultOrder();
-        var counterparty = new CounterpartyEntity()
-                .setId(UUID.randomUUID())
-                .setName("newCounterparty");
         var patch = new OrderFieldsPatch()
                 .setOrderName("newOrderName")
                 .setBillNumber("№2024-2")
-                .setIsGovernmentOrder(true)
-                .setCounterpartId(counterparty.getId());
-        var request = new UpdateOrderRequest()
+                .setIsGovernmentOrder(true);
+            var request = new UpdateOrderRequest()
                 .setId(order.getOrderId())
                 .setPatch(patch);
         var captor = ArgumentCaptor.forClass(OrderEntity.class);
 
         when(orderRepository.findOrderById(order.getOrderId())).thenReturn(Optional.of(order));
-        when(counterpartyService.findById(counterparty.getId())).thenReturn(counterparty);
 
         assertThatCode(() -> orderService.updateOrder(request)).doesNotThrowAnyException();
 
         verify(orderRepository).findOrderById(order.getOrderId());
-        verify(counterpartyService).findById(counterparty.getId());
+        verify(mapper).updateOrder(patch, order);
         verify(orderRepository).save(captor.capture());
 
         assertThat(captor.getValue())
                 .isInstanceOf(OrderEntity.class)
                 .satisfies(order1 -> {
-                    assertThat(order.getCounterparty().getId()).isEqualTo(counterparty.getId());
                     assertThat(order.getOrderName()).isEqualTo(patch.getOrderName());
                     assertThat(order.getBillNumber()).isEqualTo(patch.getBillNumber());
                     assertThat(order.isGovernmentOrder()).isEqualTo(patch.getIsGovernmentOrder());
