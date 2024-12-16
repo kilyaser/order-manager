@@ -59,6 +59,7 @@ public class OrderServiceImpl implements OrderService {
         var items = orderItemService.createOrderItems(request.getItemRequests());
         savedOrder.addItems(items);
         checkAndChangeItemVat(order.isVatInclude(), order.getOrderItems());
+        orderItemService.saveAll(items);
         return orderRepository.saveAndFlush(savedOrder);
     }
 

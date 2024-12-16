@@ -46,13 +46,19 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Transactional
     public List<OrderItemEntity> createOrderItems(List<OrderItemRequest> itemRequests) {
         log.info("invoke 'OrderItemServiceImpl#createOrderItems' with itemRequests: {}", itemRequests);
-        var items = itemRequests.stream().map(this::createOrderItem).toList();
-        return orderItemRepository.saveAllAndFlush(items);
+        return itemRequests.stream().map(this::createOrderItem).toList();
     }
 
     @Override
+    @Transactional
     public OrderItemEntity saveItem(OrderItemEntity item) {
         return orderItemRepository.save(item);
+    }
+
+    @Override
+    @Transactional
+    public List<OrderItemEntity> saveAll(List<OrderItemEntity> items) {
+        return orderItemRepository.saveAll(items);
     }
 
     @Override

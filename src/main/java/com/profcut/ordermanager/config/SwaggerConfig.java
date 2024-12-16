@@ -51,6 +51,7 @@ public class SwaggerConfig {
 
         return new Info()
                 .title("order-manager")
+                .version("1.0.0")
                 .description("API order-manager")
                 .contact(contact);
     }
