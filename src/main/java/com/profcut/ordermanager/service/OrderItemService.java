@@ -16,6 +16,8 @@ public interface OrderItemService {
 
     OrderItemEntity saveItem(OrderItemEntity item);
 
+    List<OrderItemEntity> saveAll(List<OrderItemEntity> items);
+
     void updateOrderItem(OrderItemFieldsPatch patch);
 
     void deleteOrderItems(Set<UUID> itemIds);

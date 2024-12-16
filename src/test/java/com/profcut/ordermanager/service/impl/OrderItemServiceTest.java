@@ -88,7 +88,6 @@ public class OrderItemServiceTest {
     @Test
     @DisplayName("Добавление позиции в заказ")
     void createOrderItems() {
-        var order = buildDefaultOrder();
         var addItemReq = new AddOrderItemsRequest()
                 .setOrderId(UUID.randomUUID())
                 .setItemsRequest(List.of(
@@ -102,13 +101,12 @@ public class OrderItemServiceTest {
 
         when(orderItemCreateMapper.apply(any())).thenReturn(item);
         when(productService.getProductById(any())).thenReturn(product);
-        when(orderItemRepository.saveAllAndFlush(any())).thenReturn(order.getOrderItems());
+
 
         assertThatCode(() -> orderItemService.createOrderItems(addItemReq.getItemsRequest())).doesNotThrowAnyException();
 
         verify(orderItemCreateMapper).apply(any());
         verify(productService).getProductById(any());
-        verify(orderItemRepository).saveAllAndFlush(any());
         verify(technologistService, never()).getById(any());
         verify(materialService, never()).findById(any());
     }
