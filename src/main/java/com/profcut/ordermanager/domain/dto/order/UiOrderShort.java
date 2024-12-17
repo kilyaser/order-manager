@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -46,10 +46,15 @@ public class UiOrderShort {
     @Schema(description = "Дата завершеня заказа.",
             minLength = DataTypes.DATE_TIME_LENGTH,
             maxLength = DataTypes.DATE_TIME_LENGTH)
-    private LocalDateTime completionDate;
+    private LocalDate completionDate;
     /**
      * Признак государственного заказа.
      */
     @Schema(description = "Признак государственного заказа")
     private boolean isGovernmentOrder;
+    /**
+     * Наименование контрагента.
+     */
+    @Schema(description = "Наименование контрагента")
+    private String counterpartyName;
 }

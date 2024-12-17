@@ -2,7 +2,6 @@ package com.profcut.ordermanager.domain.entities;
 
 import com.profcut.ordermanager.domain.enums.MasterStatus;
 import com.profcut.ordermanager.domain.enums.OrderState;
-import com.profcut.ordermanager.domain.exceptions.VatCalculationException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Enumerated;
@@ -18,8 +17,8 @@ import lombok.experimental.Accessors;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UuidGenerator;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.data.annotation.CreatedDate;
-
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -43,7 +42,6 @@ import static jakarta.persistence.EnumType.STRING;
 @Table(name = "orders")
 @Accessors(chain = true)
 @EntityListeners(AuditingEntityListener.class)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class OrderEntity {
     /**
      * Идентификатор заказа.
@@ -199,5 +197,21 @@ public class OrderEntity {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         debtSum = currentSum.subtract(paymentsSum);
         return this;
+    }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        OrderEntity that = (OrderEntity) o;
+        return getOrderId() != null && Objects.equals(getOrderId(), that.getOrderId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }
