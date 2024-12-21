@@ -31,7 +31,7 @@ public class UiOrderMapperTest {
 
         assertNotNull(result);
         assertThat(order).usingRecursiveComparison()
-                .ignoringFields("orderItems", "payments", "tasks", "isDeleted", "masterStatus")
+                .ignoringFields("orderItems", "payments", "tasks", "isDeleted", "masterStatus", "createdDate")
                 .isEqualTo(result);
     }
 }

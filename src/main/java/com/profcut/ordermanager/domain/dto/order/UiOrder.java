@@ -14,7 +14,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -60,12 +60,12 @@ public class UiOrder extends UiOrderShort {
      *  Дата создания заказа.
      */
     @Schema(description = "Дата создания заказа.")
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
     /**
      * Дата последнего изменения.
      */
     @Schema(description = "Дата последнего изменения.")
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
     /**
      *  Контрагент заказчик.
      */
