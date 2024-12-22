@@ -152,6 +152,13 @@ public class OrderEntity {
         this.recalculateCurrentSum();
     }
 
+    public void addTask(List<TaskEntity> tasks) {
+        tasks.forEach(task -> {
+            task.setOrder(this);
+            this.tasks.add(task);
+        });
+    }
+
     public void addPayment(PaymentEntity payment) {
         payment.setOrder(this);
         payments.add(payment);
