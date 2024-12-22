@@ -1,35 +1,32 @@
 package com.profcut.ordermanager.domain.dto.task;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Accessors(chain = true)
-@Schema(description = "UiTask")
-public class UiTask {
+@Schema(description = "TaskCompletedRequest")
+public class TaskCompletedRequest {
+
     /**
      * Идентификатор задачи.
      */
-    @Schema(description = "Идентификатор задачи.")
-    private UUID id;
-    /**
-     * Описание задачи.
-     */
-    @Schema(description = "Описание задачи.", maxLength = DataTypes.STRING_LENGTH_MAX)
-    private String description;
+    @NotNull
+    @Schema(description = "Идентификатор задачи.",
+            maxLength = DataTypes.UUID_LENGTH)
+    private UUID taskId;
     /**
      * Признак завершения задачи.
      */
     @Schema(description = "Признак завершения задачи.")
-    @JsonProperty("isCompleted")
-    private boolean isCompleted;
+    private boolean completed;
 }
