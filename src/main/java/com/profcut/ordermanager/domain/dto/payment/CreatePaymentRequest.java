@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -44,5 +45,5 @@ public class CreatePaymentRequest {
      * Дата платежа.
      */
     @Schema(description = "Дата платежа.")
-    private LocalDateTime paymentDate;
+    private LocalDate paymentDate;
 }

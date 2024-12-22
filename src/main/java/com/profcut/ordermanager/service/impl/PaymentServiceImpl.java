@@ -42,7 +42,8 @@ public class PaymentServiceImpl implements PaymentService {
         var payment = new PaymentEntity()
                 .setCounterparty(counterparty)
                 .setPaymentSum(request.getPaymentSum());
-        ofNullable(request.getPaymentDate()).ifPresent(payment::setPaymentDate);
+        ofNullable(request.getPaymentDate())
+                .ifPresent(date -> payment.setPaymentDate(date.atStartOfDay()));
         order.addPayment(payment);
         orderService.saveOrder(order);
         return paymentRepository.save(payment);

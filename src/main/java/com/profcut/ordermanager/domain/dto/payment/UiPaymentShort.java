@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -36,7 +36,7 @@ public class UiPaymentShort {
     @Schema(description = "Дата платежа.",
             minLength = DataTypes.DATE_TIME_LENGTH,
             maxLength = DataTypes.DATE_TIME_LENGTH)
-    private LocalDateTime paymentDate;
+    private LocalDate paymentDate;
     /**
      * Контрагент - плательщик.
      */

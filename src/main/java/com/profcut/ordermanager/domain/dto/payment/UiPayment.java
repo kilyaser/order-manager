@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -34,5 +34,5 @@ public class UiPayment extends UiPaymentShort {
      * Дата последнего изменения.
      */
     @Schema(description = "Дата последнего изменения.")
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
 }
