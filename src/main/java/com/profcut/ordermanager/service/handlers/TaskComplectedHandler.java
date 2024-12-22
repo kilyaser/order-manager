@@ -18,7 +18,6 @@ public class TaskComplectedHandler {
     private final TaskRepository taskRepository;
     private final UiTaskMapper taskMapper;
 
-
     @Transactional
     public UiTask handler(TaskCompletedRequest request) {
         return taskRepository.findById(request.getTaskId())

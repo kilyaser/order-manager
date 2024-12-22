@@ -10,7 +10,6 @@ import java.util.UUID;
 
 public interface TaskRepository extends JpaRepository<TaskEntity, UUID> {
 
-
     @Query(value = "SELECT t FROM TaskEntity t WHERE t.order.orderId = :orderId")
     List<TaskEntity> findAllByOrderId(@Param("orderId") UUID orderId);
 }
