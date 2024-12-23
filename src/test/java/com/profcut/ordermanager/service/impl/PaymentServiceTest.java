@@ -26,7 +26,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -162,7 +162,7 @@ public class PaymentServiceTest {
         var request = new UpdatePaymentRequest().setPaymentId(id)
                 .setPatch(new PaymentFieldsPatch()
                         .setPaymentSum(BigDecimal.valueOf(1000))
-                        .setPaymentDate(LocalDateTime.now()));
+                        .setPaymentDate(LocalDate.now()));
 
         var paymentCaptor = ArgumentCaptor.forClass(PaymentEntity.class);
 

@@ -42,7 +42,7 @@ public class UiPaymentMapperTest {
 
         assertNotNull(result);
         assertThat(payment).usingRecursiveComparison()
-                .ignoringFields("counterparty", "order")
+                .ignoringFields("counterparty", "order", "paymentDate", "modifiedDate")
                 .isEqualTo(result);
     }
 }

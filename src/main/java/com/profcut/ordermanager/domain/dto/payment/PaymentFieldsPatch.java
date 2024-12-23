@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -22,5 +22,5 @@ public class PaymentFieldsPatch {
      * Дата платежа
      */
     @Schema(description = "Дата платежа.")
-    private LocalDateTime paymentDate;
+    private LocalDate paymentDate;
 }
