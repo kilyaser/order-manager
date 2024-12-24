@@ -16,7 +16,6 @@ import lombok.experimental.Accessors;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -87,7 +86,7 @@ public class UiOrder extends UiOrderShort {
      */
     @ArraySchema(schema = @Schema(description = "Платежи по заказу.",
             maxLength = DataTypes.ARRAY_MAX_ITEMS_VALUE))
-    private Set<UiPaymentShort> payments;
+    private List<UiPaymentShort> payments;
     /**
      * Задачи по заказу.
      */
