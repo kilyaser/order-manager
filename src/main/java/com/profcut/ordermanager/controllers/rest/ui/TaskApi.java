@@ -64,7 +64,7 @@ public class TaskApi {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Изменить признак завершения задачи")
-    public UiTask updateTask(@Valid @RequestBody TaskCompletedRequest request) {
+    public UiTask complectedTask(@Valid @RequestBody TaskCompletedRequest request) {
         return complectedHandler.handler(request);
     }
 

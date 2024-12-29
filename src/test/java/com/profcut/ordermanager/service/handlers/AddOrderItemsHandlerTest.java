@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.service.handlers;
 
-import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
+import com.profcut.ordermanager.controllers.rest.mapper.UiOrderItemMapper;
 import com.profcut.ordermanager.domain.dto.order.AddOrderItemsRequest;
 import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
 import com.profcut.ordermanager.domain.entities.OrderEntity;
@@ -20,6 +20,7 @@ import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.buil
 import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultOrderItem;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +32,7 @@ public class AddOrderItemsHandlerTest {
     @Mock
     OrderItemService orderItemService;
     @Mock
-    UiOrderMapper uiOrderMapper;
+    UiOrderItemMapper uiOrderItemMapper;
     @InjectMocks
     AddOrderItemsHandler addOrderItemsHandler;
 
@@ -56,7 +57,7 @@ public class AddOrderItemsHandlerTest {
 
         verify(orderService).findOrderById(any(UUID.class));
         verify(orderItemService).createOrderItems(any());
-        verify(uiOrderMapper).apply(any());
+        verify(uiOrderItemMapper,times(2)).apply(any());
         verify(orderService).saveOrder(any(OrderEntity.class));
     }
 }

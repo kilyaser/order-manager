@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.service.handlers;
 
-import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
+import com.profcut.ordermanager.controllers.rest.mapper.UiOrderItemMapper;
 import com.profcut.ordermanager.domain.dto.order.OrderItemFieldsPatch;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderItemRequest;
 import com.profcut.ordermanager.domain.entities.OrderEntity;
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UpdateOrderItemHandlerTest {
+
     @Mock
     OrderItemService orderItemService;
     @Mock
@@ -32,7 +33,7 @@ public class UpdateOrderItemHandlerTest {
     @Mock
     EntityManager entityManager;
     @Mock
-    UiOrderMapper mapper;
+    UiOrderItemMapper mapper;
     @InjectMocks
     UpdateOrderItemHandler updateOrderItemHandler;
 
@@ -48,14 +49,12 @@ public class UpdateOrderItemHandlerTest {
         var order = TestDataHelper.buildDefaultOrder();
 
         when(orderService.findOrderById(request.getOrderId())).thenReturn(order);
-        when(orderService.saveOrder(any())).thenReturn(order);
 
         assertThatCode(() -> updateOrderItemHandler.handle(request)).doesNotThrowAnyException();
 
         verify(orderService).findOrderById(any(UUID.class));
         verify(orderItemService).updateOrderItem(any(OrderItemFieldsPatch.class));
         verify(entityManager).refresh(any(OrderEntity.class));
-        verify(orderService).saveOrder(any(OrderEntity.class));
-        verify(mapper).apply(any(OrderEntity.class));
+        verify(mapper).apply(any());
     }
 }

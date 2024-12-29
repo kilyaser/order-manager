@@ -2,7 +2,7 @@ package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.profcut.ordermanager.domain.dto.order.AddOrderItemsRequest;
 import com.profcut.ordermanager.domain.dto.order.DeleteOrderItemRequest;
-import com.profcut.ordermanager.domain.dto.order.UiOrder;
+import com.profcut.ordermanager.domain.dto.order.UiOrderItems;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderItemRequest;
 import com.profcut.ordermanager.service.handlers.AddOrderItemsHandler;
 import com.profcut.ordermanager.service.handlers.DeleteOrderItemHandler;
@@ -33,21 +33,21 @@ public class OrderItemApi {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Обновить позиции заказа")
-    public UiOrder updateOrderItems(@Valid @RequestBody UpdateOrderItemRequest request) {
+    public UiOrderItems updateOrderItems(@Valid @RequestBody UpdateOrderItemRequest request) {
         return updateOrderItemHandler.handle(request);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(description = "Добавить позиции в зказа")
-    public UiOrder addOrderItems(@Valid @RequestBody AddOrderItemsRequest request) {
+    public UiOrderItems addOrderItems(@Valid @RequestBody AddOrderItemsRequest request) {
         return addOrderItemsHandler.handle(request);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Удалить позицию заказа")
-    public UiOrder deleteOrderItems(@Valid @RequestBody DeleteOrderItemRequest request) {
-        return deleteOrderItemHandler.handle(request);
+    public void deleteOrderItems(@Valid @RequestBody DeleteOrderItemRequest request) {
+        deleteOrderItemHandler.handle(request);
     }
 }

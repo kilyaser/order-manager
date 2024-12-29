@@ -1,7 +1,7 @@
 package com.profcut.ordermanager.service.handlers;
 
-import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
-import com.profcut.ordermanager.domain.dto.order.UiOrder;
+import com.profcut.ordermanager.controllers.rest.mapper.UiOrderItemMapper;
+import com.profcut.ordermanager.domain.dto.order.UiOrderItems;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderItemRequest;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.service.OrderService;
@@ -18,16 +18,19 @@ public class UpdateOrderItemHandler {
 // TODO: продумать реализацию обновления позиций заказа без ипользования entityManager
     private final OrderService orderService;
     private final OrderItemService orderItemService;
-    private final UiOrderMapper uiOrderMapper;
+    private final UiOrderItemMapper uiOrderItemMapper;
     private final EntityManager entityManager;
 
     @Transactional
-    public UiOrder handle(UpdateOrderItemRequest request) {
+    public UiOrderItems handle(UpdateOrderItemRequest request) {
         log.info("invoke UpdateOrderItemHandler#handle by request: {}", request);
         var order = orderService.findOrderById(request.getOrderId());
         request.getPatch().forEach(orderItemService::updateOrderItem);
         entityManager.refresh(order);
         order.recalculateCurrentSum();
-        return uiOrderMapper.apply(orderService.saveOrder(order));
+        var uiItems = order.getOrderItems().stream()
+                .map(uiOrderItemMapper)
+                .toList();
+        return new UiOrderItems(order.getOrderId(), uiItems);
     }
 }

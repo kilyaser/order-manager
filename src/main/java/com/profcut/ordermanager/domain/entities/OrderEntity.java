@@ -152,6 +152,11 @@ public class OrderEntity {
         this.recalculateCurrentSum();
     }
 
+    public void deleteItems(Set<UUID> removeIdemIds) {
+        getOrderItems().removeIf(item -> removeIdemIds.contains(item.getId()));
+        this.recalculateCurrentSum();
+    }
+
     public void addTask(List<TaskEntity> tasks) {
         tasks.forEach(task -> {
             task.setOrder(this);
