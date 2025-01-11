@@ -2,9 +2,11 @@ package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.profcut.ordermanager.controllers.rest.mapper.UiProductMapper;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
+import com.profcut.ordermanager.domain.dto.filter.SearchRequest;
 import com.profcut.ordermanager.domain.dto.product.CreateProductRequest;
 import com.profcut.ordermanager.domain.dto.filter.FilterRequest;
 import com.profcut.ordermanager.domain.dto.product.UiProduct;
+import com.profcut.ordermanager.domain.dto.product.UiProducts;
 import com.profcut.ordermanager.domain.dto.product.UpdateProductRequest;
 import com.profcut.ordermanager.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,9 +43,18 @@ public class ProductApi {
     }
 
     @PostMapping("/find")
-    @Operation(description = "Поиск изделий по наименованию")
+    @Operation(description = "Поиск изделий по наименованию с пагинацией")
     public Page<UiProduct> findProductByFilter(@RequestBody FilterRequest filter) {
         return productService.findProductByFilter(filter).map(uiProductMapper);
+    }
+
+    @PostMapping("/search")
+    @Operation(description = "Поиск изделий по наименованию")
+    public UiProducts searchProducts(@Valid @RequestBody SearchRequest search) {
+        var uiProducts = productService.getProducts(search).stream()
+                .map(uiProductMapper)
+                .toList();
+        return UiProducts.builder().products(uiProducts).build();
     }
 
     @PostMapping("/page")

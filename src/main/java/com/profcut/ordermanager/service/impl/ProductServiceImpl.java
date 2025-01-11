@@ -2,6 +2,7 @@ package com.profcut.ordermanager.service.impl;
 
 import com.profcut.ordermanager.controllers.rest.mapper.ProductCreateMapper;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
+import com.profcut.ordermanager.domain.dto.filter.SearchRequest;
 import com.profcut.ordermanager.domain.dto.product.CreateProductRequest;
 import com.profcut.ordermanager.domain.dto.product.ProductFieldsPatch;
 import com.profcut.ordermanager.domain.dto.filter.FilterRequest;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 import static java.util.Optional.ofNullable;
@@ -58,6 +60,13 @@ public class ProductServiceImpl implements ProductService {
         var pageable = PageConverter.covertToPageable(filter.getPageRequest());
         var spec = ProductSpecification.byProductNameLike(filter.search);
         return productRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProductEntity> getProducts(SearchRequest search) {
+        var spec = ProductSpecification.byProductNameLike(search.search);
+        return productRepository.findAll(spec);
     }
 
     @Override

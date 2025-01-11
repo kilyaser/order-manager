@@ -12,5 +12,6 @@ public interface OrderItemCreateMapper extends Function<OrderItemRequest, OrderI
 
     @Override
     @Mapping(target = "quantityShipped", defaultValue = "0")
+    @Mapping(target = "preparationState", defaultValue = "NOT_STARTED")
     OrderItemEntity apply(OrderItemRequest orderItemRequest);
 }
