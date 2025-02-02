@@ -146,7 +146,7 @@ public class OrderItemApiTest {
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(deleteRequest)))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         verify(deleteOrderItemHandler).handle(deleteRequest);
     }

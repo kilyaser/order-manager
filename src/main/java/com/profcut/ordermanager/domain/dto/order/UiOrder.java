@@ -43,27 +43,22 @@ public class UiOrder extends UiOrderShort {
     /**
      * Признак влкючения НДС в стоимость.
      */
-    @Schema(description = "Признак влкючения НДС в стоимость.")
+    @Schema(description = "Признак влкючения НДС в стоимость.", requiredMode = Schema.RequiredMode.REQUIRED)
     private boolean isVatInclude;
     /**
      * Сумма НДС.
      */
-    @Schema(description = "Сумма НДС.")
+    @Schema(description = "Сумма НДС.", requiredMode = Schema.RequiredMode.REQUIRED)
     private BigDecimal vat;
     /**
      * Сумма долга.
      */
-    @Schema(description = "Сумма долга.")
+    @Schema(description = "Сумма долга.", requiredMode = Schema.RequiredMode.REQUIRED)
     private BigDecimal debtSum;
-    /**
-     *  Дата создания заказа.
-     */
-    @Schema(description = "Дата создания заказа.")
-    private LocalDate createdDate;
     /**
      * Дата последнего изменения.
      */
-    @Schema(description = "Дата последнего изменения.")
+    @Schema(description = "Дата последнего изменения.", requiredMode = Schema.RequiredMode.REQUIRED)
     private LocalDate modifiedDate;
     /**
      *  Контрагент заказчик.

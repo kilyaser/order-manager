@@ -18,7 +18,7 @@ public class UiMaterial {
     /**
      * Идентификатор материала.
      */
-    @Schema(description = "id материала.", maxLength = DataTypes.UUID_LENGTH)
+    @Schema(description = "id материала.", maxLength = DataTypes.UUID_LENGTH, requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID id;
     /**
      * Тип материала.

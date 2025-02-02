@@ -1,10 +1,10 @@
 package com.profcut.ordermanager.domain.dto.order;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
-import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,11 +34,13 @@ public class OrderItemFieldsPatch {
      * Колличество изделий.
      */
     @Schema(description = "Колличество изделий.")
+    @Min(0)
     private Integer quantity;
     /**
      * Колличество отгруженных позиций.
      */
     @Schema(description = "Колличество отгруженных позиций.")
+    @Min(0)
     private Integer quantityShipped;
     /**
      * Стоимость на одно изделие.

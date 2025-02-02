@@ -21,7 +21,7 @@ public class UiOrderShort {
     /**
      * Идентификор заказа.
      */
-    @Schema(description = "id заказа.", maxLength = DataTypes.UUID_LENGTH)
+    @Schema(description = "id заказа.", maxLength = DataTypes.UUID_LENGTH, requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID orderId;
     /**
      * Номер заказа.
@@ -40,6 +40,11 @@ public class UiOrderShort {
      */
     @Schema(description = "Статус заказа.", maxLength = DataTypes.STRING_LENGTH_MAX)
     private OrderState orderState;
+    /**
+     *  Дата создания заказа.
+     */
+    @Schema(description = "Дата создания заказа.")
+    private LocalDate createdDate;
     /**
      * Дата завершеня заказа.
      */

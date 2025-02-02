@@ -18,16 +18,19 @@ public class UiCounterpartyShort {
     /**
      * Идентификор контрагента.
      */
-    @Schema(description = "id контрагента", maxLength = DataTypes.UUID_LENGTH)
+    @Schema(description = "id контрагента", maxLength = DataTypes.UUID_LENGTH,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID id;
     /**
      * ИНН Контрагента.
      */
-    @Schema(description = "ИНН Контрагента", maxLength = DataTypes.STRING_LENGTH_MAX)
+    @Schema(description = "ИНН Контрагента", maxLength = DataTypes.STRING_LENGTH_MAX,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private String inn;
     /**
      * Краткое наименование контрагента.
      */
-    @Schema(description = "Краткое наименование контрагента", maxLength = DataTypes.STRING_LENGTH_MAX)
+    @Schema(description = "Краткое наименование контрагента", maxLength = DataTypes.STRING_LENGTH_MAX,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
 }

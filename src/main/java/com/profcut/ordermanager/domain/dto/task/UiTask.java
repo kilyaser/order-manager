@@ -19,7 +19,7 @@ public class UiTask {
     /**
      * Идентификатор задачи.
      */
-    @Schema(description = "Идентификатор задачи.")
+    @Schema(description = "Идентификатор задачи.", requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID id;
     /**
      * Описание задачи.

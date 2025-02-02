@@ -7,6 +7,7 @@ import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class UiOrderItem {
     /**
      * Идентификор позиции заказа.
      */
-    @Schema(description = "Идентификор позиции заказа.")
+    @Schema(description = "Идентификор позиции заказа.", requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID id;
     /**
      * Наименование изделия.
@@ -35,42 +36,46 @@ public class UiOrderItem {
     /**
      * Колличество изделий.
      */
-    @Schema(description = "Колличество изделий.")
+    @Schema(description = "Колличество изделий.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Min(0)
     private Integer quantity;
     /**
      * Колличество отгруженных позиций.
      */
-    @Schema(description = "Колличество отгруженных позиций.")
+    @Schema(description = "Колличество отгруженных позиций.", requiredMode = Schema.RequiredMode.REQUIRED)
     private Integer quantityShipped;
     /**
      * Стоимость на одно изделие.
      */
-    @Schema(description = "Стоимость на одно изделие.")
+    @Schema(description = "Стоимость на одно изделие.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Min(0)
     private BigDecimal pricePerProduct;
     /**
      * Общая стоимость изделия.
      */
-    @Schema(description = "Общая стоимость изделия.")
+    @Schema(description = "Общая стоимость изделия.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Min(0)
     private BigDecimal totalPrice;
     /**
      * Признак влкючения НДС в стоимость.
      */
-    @Schema(description = "Признак влкючения НДС в стоимость.")
+    @Schema(description = "Признак влкючения НДС в стоимость.", requiredMode = Schema.RequiredMode.REQUIRED)
     private boolean isVatInclude;
     /**
      * Сумма НДС.
      */
-    @Schema(description = "Сумма НДС.")
+    @Schema(description = "Сумма НДС.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Min(0)
     private BigDecimal vat;
     /**
      * Тип изделия.
      */
-    @Schema(description = "Тип изделия.")
+    @Schema(description = "Тип изделия.", requiredMode = Schema.RequiredMode.REQUIRED)
     private ProductType productType;
     /**
      * Признак написания управляющей программы.
      */
-    @Schema(description = "Признак написания управляющей программы.")
+    @Schema(description = "Признак написания управляющей программы.", requiredMode = Schema.RequiredMode.REQUIRED)
     private boolean isProgramWritten;
     /**
      * id станка.
@@ -85,7 +90,7 @@ public class UiOrderItem {
     /**
      * Статус готовности изделия.
      */
-    @Schema(description = "Статус готовности изделия.")
+    @Schema(description = "Статус готовности изделия.", requiredMode = Schema.RequiredMode.REQUIRED)
     private PreparationState preparationState;
     /**
      * Тип материала.

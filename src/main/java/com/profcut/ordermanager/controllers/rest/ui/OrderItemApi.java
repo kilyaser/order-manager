@@ -45,7 +45,7 @@ public class OrderItemApi {
     }
 
     @DeleteMapping
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(description = "Удалить позицию заказа")
     public void deleteOrderItems(@Valid @RequestBody DeleteOrderItemRequest request) {
         deleteOrderItemHandler.handle(request);

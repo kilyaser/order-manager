@@ -20,7 +20,8 @@ public class UiOrderItems {
     /**
      * Идентификор заказа.
      */
-    @Schema(description = "id заказа.", maxLength = DataTypes.UUID_LENGTH)
+    @Schema(description = "id заказа.", maxLength = DataTypes.UUID_LENGTH,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID orderId;
     /**
      * Изделия относящиеся к заказу.

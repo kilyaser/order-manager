@@ -21,14 +21,15 @@ public class UiPaymentShort {
     /**
      * Идентификатор платежа.
      */
-    @Schema(description = "id платежа.", maxLength = DataTypes.UUID_LENGTH)
+    @Schema(description = "id платежа.", maxLength = DataTypes.UUID_LENGTH, requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID paymentId;
     /**
      * Размер платежа.
      */
     @Schema(description = "Сумма платежа.",
             minimum = DataTypes.MINIMUM_VALUE,
-            maximum = DataTypes.MAXIMUM_LONG_VALUE)
+            maximum = DataTypes.MAXIMUM_LONG_VALUE,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private BigDecimal paymentSum;
     /**
      * Дата платежа.

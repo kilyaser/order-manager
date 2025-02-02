@@ -119,7 +119,7 @@ public class OrderItemEntity {
 
     public void calculateVat() {
         if (Objects.isNull(getTotalPrice()) || getTotalPrice().equals(BigDecimal.ZERO)) {
-            throw VatCalculationException.byCalculateVat();
+            vat = BigDecimal.ZERO;
         }
         if (isVatInclude) {
             vat = getTotalPrice().divide(VAT_DIVIDER, RoundingMode.HALF_UP).multiply(VAT_RATE);
