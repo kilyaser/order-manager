@@ -1,9 +1,7 @@
 package com.profcut.ordermanager.domain.entities;
 
-import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
-import com.profcut.ordermanager.domain.exceptions.VatCalculationException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -11,17 +9,21 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -60,9 +62,13 @@ public class OrderItemEntity {
      */
     private BigDecimal pricePerProduct;
     /**
-     * Общая стоимость изделия.
+     * Общая стоимость изделия без НДС.
      */
     private BigDecimal totalPrice;
+    /**
+     * Общая стоимость изделия c НДС.
+     */
+    private BigDecimal currentSum;
     /**
      * Признак влкючения НДС в стоимость.
      */
@@ -83,7 +89,9 @@ public class OrderItemEntity {
     /**
      * id станка.
      */
-    private UUID machineId;
+    @OneToMany(mappedBy = "orderItem")
+    @Fetch(FetchMode.JOIN)
+    private List<CncMachineEntity> machines;
     /**
      * Дата завершения изготовления.
      */
@@ -100,12 +108,6 @@ public class OrderItemEntity {
     @JoinColumn(name = "material_id")
     private MaterialEntity material;
     /**
-     * Технолог.
-     */
-    @ManyToOne
-    @JoinColumn(name = "technologist_id")
-    private TechnologistEntity technologist;
-    /**
      * Заказ.
      */
     @ManyToOne
@@ -115,6 +117,24 @@ public class OrderItemEntity {
 
     public void calculateTotalPrice() {
         this.totalPrice = this.pricePerProduct.multiply(BigDecimal.valueOf(quantity));
+        calculateVat();
+        calculateCurrentSum();
+    }
+
+    public void addMachine(List<CncMachineEntity> machines) {
+        machines.forEach(machine -> {
+            machine.setOrderItem(this);
+            machine.setOrder(this.order);
+            this.machines.addAll(machines);
+        });
+    }
+
+    public void calculateCurrentSum() {
+        if (isVatInclude) {
+            currentSum = totalPrice;
+        } else  {
+            currentSum = totalPrice.add(vat);
+        }
     }
 
     public void calculateVat() {

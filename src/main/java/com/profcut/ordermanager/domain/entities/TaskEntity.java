@@ -50,6 +50,10 @@ public class TaskEntity {
     @CreatedDate
     private LocalDateTime createdDate;
     /**
+     * Дата завершения задачи
+     */
+    private LocalDateTime completedDate;
+    /**
      * Дата последней модификации.
      */
     @LastModifiedDate

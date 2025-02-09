@@ -29,12 +29,19 @@ public class UiOrderShort {
     @Schema(description = "Номер заказа.", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String orderNumber;
     /**
-     * Сумма заказа действующая.
+     * Сумма заказа действующая c НДС.
      */
-    @Schema(description = "Сумма заказа.",
+    @Schema(description = "Сумма заказа с НДС.",
             minimum = DataTypes.MINIMUM_VALUE,
             maximum = DataTypes.MAXIMUM_LONG_VALUE)
     private BigDecimal currentSum;
+    /**
+     * Сумма заказа действующая без НДС.
+     */
+    @Schema(description = "Сумма заказа без НДС.",
+            minimum = DataTypes.MINIMUM_VALUE,
+            maximum = DataTypes.MAXIMUM_LONG_VALUE)
+    private BigDecimal totalPrice;
     /**
      * Статус заказа.
      */

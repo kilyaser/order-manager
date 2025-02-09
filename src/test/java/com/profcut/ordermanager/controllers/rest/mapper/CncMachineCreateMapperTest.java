@@ -17,14 +17,14 @@ public class CncMachineCreateMapperTest {
 
     @Test
     void shouldMapAllFields() {
-        var request = new CreateMachineRequest().setMachineType(MachineType.THREE_AXIS)
+        var request = new CreateMachineRequest()
+                .setMachineType(MachineType.THREE_AXIS)
                 .setName("machineName");
 
         var result = machineCreateMapper.apply(request);
-
         assertNotNull(result);
         assertThat(result).usingRecursiveComparison()
-                .ignoringFields("id")
+                .ignoringFields("id", "order", "orderItem", "isOccupied")
                 .isEqualTo(request);
     }
 }

@@ -18,6 +18,7 @@ create table orders
   bill_number           varchar(75),
   work_folder_link      varchar(255),
   current_sum           numeric(10, 2),
+  total_price           numeric(10, 2),
   is_vat_include        boolean,
   vat                   numeric(10, 2),
   debt_sum              numeric(10, 2),
@@ -38,23 +39,6 @@ create table materials
     material_type       varchar(255)
 );
 
-create table cnc_machines
-(
-    id                  uuid not null primary key,
-    machine_type        varchar(75),
-    name                varchar(255)
-);
-
-create table technologists
-(
-    id                  uuid not null primary key,
-    first_name          varchar(50),
-    last_name           varchar (50) not null,
-    patronymic          varchar (50),
-    email               varchar(75),
-    phone               varchar(75)
-);
-
 create table products
 (
     product_id                uuid not null primary key,
@@ -68,6 +52,7 @@ create table order_items
     quantity_shipped        int not null default 0,
     price_per_product       numeric(10, 2),
     total_price             numeric(10, 2),
+    current_sum             numeric(10, 2),
     is_vat_include          boolean,
     vat                     numeric(10, 2),
     product_type            varchar(20),
@@ -76,9 +61,18 @@ create table order_items
     completion_date         timestamp without time zone,
     preparation_State       varchar(20),
     material_id             uuid references materials (id),
-    technologist_id         uuid references technologists (id),
     order_id                uuid not null references orders (order_id),
     product_id              uuid references products (product_id)
+);
+
+create table cnc_machines
+(
+    id                  uuid not null primary key,
+    machine_type        varchar(75),
+    name                varchar(255),
+    is_occupied         boolean not null default false,
+    order_id            uuid references orders (order_id),
+    order_item_id       uuid references order_items (id)
 );
 
 create table payments
@@ -98,6 +92,7 @@ create table tasks
     is_completed            boolean not null default false,
     order_id                uuid references orders (order_id),
     created_date            timestamp without time zone,
+    completed_date          timestamp with time zone,
     modified_date           timestamp without time zone
 );
 

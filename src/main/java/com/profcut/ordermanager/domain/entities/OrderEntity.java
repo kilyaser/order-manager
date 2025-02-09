@@ -67,9 +67,13 @@ public class OrderEntity {
      */
     private String workFolderLink;
     /**
-     * Сумма действующая.
+     * Сумма действующая с НДС.
      */
     private BigDecimal currentSum;
+    /**
+     * Сумма действующая без НДС.
+     */
+    private BigDecimal totalPrice;
     /**
      * Признак влкючения НДС в стоимость.
      */
@@ -149,12 +153,12 @@ public class OrderEntity {
             item.setOrder(this);
             this.orderItems.add(item);
         });
-        this.recalculateCurrentSum();
+        this.recalculateOrderSum();
     }
 
     public void deleteItems(Set<UUID> removeIdemIds) {
         getOrderItems().removeIf(item -> removeIdemIds.contains(item.getId()));
-        this.recalculateCurrentSum();
+        this.recalculateOrderSum();
     }
 
     public void addTask(List<TaskEntity> tasks) {
@@ -175,26 +179,37 @@ public class OrderEntity {
         calculateDebtSum();
     }
 
-    public OrderEntity recalculateCurrentSum() {
+    public OrderEntity recalculateOrderSum() {
         if (orderItems.isEmpty()) {
             currentSum = BigDecimal.ZERO;
+            totalPrice = BigDecimal.ZERO;
             return this.calculateVat().calculateDebtSum();
         }
-        currentSum = orderItems.stream()
+        totalPrice = orderItems.stream()
                 .map(product -> product.getPricePerProduct().multiply(BigDecimal.valueOf(product.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return this.calculateVat().calculateDebtSum();
+        calculateVat();
+        calculateCurrentSum();
+        return this.calculateDebtSum();
+    }
+
+    public void calculateCurrentSum() {
+        if (isVatInclude) {
+            currentSum = totalPrice;
+        } else {
+            currentSum = totalPrice.add(vat);
+        }
     }
 
     public OrderEntity calculateVat() {
-        if (Objects.isNull(currentSum) || currentSum.equals(BigDecimal.ZERO)) {
+        if (Objects.isNull(totalPrice) || totalPrice.equals(BigDecimal.ZERO)) {
             vat = BigDecimal.ZERO;
             return this;
         }
         if (isVatInclude) {
-            vat = currentSum.divide(VAT_DIVIDER, RoundingMode.HALF_UP).multiply(VAT_RATE);
+            vat = totalPrice.divide(VAT_DIVIDER, RoundingMode.HALF_UP).multiply(VAT_RATE);
         } else {
-            vat = currentSum.multiply(VAT_RATE);
+            vat = totalPrice.multiply(VAT_RATE);
         }
         return this;
     }

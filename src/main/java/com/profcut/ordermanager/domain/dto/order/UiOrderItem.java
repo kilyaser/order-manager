@@ -1,13 +1,11 @@
 package com.profcut.ordermanager.domain.dto.order;
 
+import com.profcut.ordermanager.domain.dto.machine.UiMachine;
 import com.profcut.ordermanager.domain.dto.material.UiMaterial;
 import com.profcut.ordermanager.domain.dto.product.UiProduct;
-import com.profcut.ordermanager.domain.dto.technologist.UiTechnologist;
-import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +13,7 @@ import lombok.experimental.Accessors;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -37,7 +36,6 @@ public class UiOrderItem {
      * Колличество изделий.
      */
     @Schema(description = "Колличество изделий.", requiredMode = Schema.RequiredMode.REQUIRED)
-    @Min(0)
     private Integer quantity;
     /**
      * Колличество отгруженных позиций.
@@ -48,14 +46,17 @@ public class UiOrderItem {
      * Стоимость на одно изделие.
      */
     @Schema(description = "Стоимость на одно изделие.", requiredMode = Schema.RequiredMode.REQUIRED)
-    @Min(0)
     private BigDecimal pricePerProduct;
     /**
-     * Общая стоимость изделия.
+     * Общая стоимость изделия без НДС.
      */
-    @Schema(description = "Общая стоимость изделия.", requiredMode = Schema.RequiredMode.REQUIRED)
-    @Min(0)
+    @Schema(description = "Общая стоимость изделия без НДС.", requiredMode = Schema.RequiredMode.REQUIRED)
     private BigDecimal totalPrice;
+    /**
+     * Общая стоимость изделия c НДС.
+     */
+    @Schema(description = "Общая стоимость изделия c НДС.", requiredMode = Schema.RequiredMode.REQUIRED)
+    private BigDecimal currentSum;
     /**
      * Признак влкючения НДС в стоимость.
      */
@@ -65,7 +66,6 @@ public class UiOrderItem {
      * Сумма НДС.
      */
     @Schema(description = "Сумма НДС.", requiredMode = Schema.RequiredMode.REQUIRED)
-    @Min(0)
     private BigDecimal vat;
     /**
      * Тип изделия.
@@ -81,7 +81,7 @@ public class UiOrderItem {
      * id станка.
      */
     @Schema(description = "id станка.")
-    private UUID machineId;
+    private List<UiMachine> machines;
     /**
      * Дата завершения изготовления.
      */
@@ -97,9 +97,4 @@ public class UiOrderItem {
      */
     @Schema(description = "Тип материала.")
     private UiMaterial material;
-    /**
-     * Технолог.
-     */
-    @Schema(description = "Технолог.")
-    private UiTechnologist technologist;
 }

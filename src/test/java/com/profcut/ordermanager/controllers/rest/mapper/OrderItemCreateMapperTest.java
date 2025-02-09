@@ -1,7 +1,6 @@
 package com.profcut.ordermanager.controllers.rest.mapper;
 
 import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
-import com.profcut.ordermanager.domain.enums.MachineType;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
 import org.junit.jupiter.api.Test;
@@ -34,14 +33,12 @@ public class OrderItemCreateMapperTest {
                 .preparationState(PreparationState.NOT_STARTED)
                 .completionDate(null)
                 .materialId(UUID.randomUUID())
-                .technologistId(UUID.randomUUID())
                 .build();
 
         var result = mapper.apply(orderItemReq);
-
         assertNotNull(result);
         assertThat(orderItemReq).usingRecursiveComparison()
-                .ignoringFields("technologistId", "productId", "materialId", "quantityShipped")
+                .ignoringFields("productId", "quantityShipped", "materialId", "machineId")
                 .isEqualTo(result);
         assertEquals(0, result.getQuantityShipped());
     }

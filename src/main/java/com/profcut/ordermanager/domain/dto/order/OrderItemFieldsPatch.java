@@ -34,18 +34,19 @@ public class OrderItemFieldsPatch {
      * Колличество изделий.
      */
     @Schema(description = "Колличество изделий.")
-    @Min(0)
+    @Min(value = 0, message = "Колличесвто изделий не может быть меньше 0")
     private Integer quantity;
     /**
      * Колличество отгруженных позиций.
      */
     @Schema(description = "Колличество отгруженных позиций.")
-    @Min(0)
+    @Min(value = 0, message = "олличество отгруженных позиций не может быть меньше 0")
     private Integer quantityShipped;
     /**
      * Стоимость на одно изделие.
      */
     @Schema(description = "Стоимость на одно изделие.")
+    @Min(value = 0, message = "Цена не может быть меньше 0")
     private BigDecimal pricePerProduct;
     /**
      * Признак влкючения НДС в стоимость.
@@ -77,8 +78,4 @@ public class OrderItemFieldsPatch {
      */
     @Schema(description = "Id материала.")
     private UUID materialId;
-    /**
-     * ID технолога.
-     */
-    private UUID technologistId;
 }

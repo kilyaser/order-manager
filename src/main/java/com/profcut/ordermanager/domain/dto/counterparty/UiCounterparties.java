@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.domain.dto.product;
+package com.profcut.ordermanager.domain.dto.counterparty;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -14,12 +14,12 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "UiProducts")
-public class UiProducts {
+@Schema(description = "UiCounterparties")
+public class UiCounterparties {
     /**
-     * Наименование изделия.
+     *  Контрагенты
      */
-    @ArraySchema(schema = @Schema(description = "Список изделий",
+    @ArraySchema(schema = @Schema(description = "Список контрагентов",
             maxLength = DataTypes.ARRAY_MAX_ITEMS_VALUE))
-    private List<UiProduct> products;
+    private List<UiCounterpartyShort> counterparties;
 }

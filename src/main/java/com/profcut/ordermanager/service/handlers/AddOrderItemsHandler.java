@@ -24,6 +24,7 @@ public class AddOrderItemsHandler {
     public UiOrderItems handle(AddOrderItemsRequest requests) {
         log.info("invoke AddOrderItemHandler#handle with request: {}", requests);
         var order = orderService.findOrderById(requests.getOrderId());
+        requests.getItemsRequest().forEach(iRequest -> iRequest.setVatInclude(order.isVatInclude()));
         var newItems = orderItemService.createOrderItems(requests.getItemsRequest());
         order.addItems(newItems);
         orderItemService.saveAll(newItems);

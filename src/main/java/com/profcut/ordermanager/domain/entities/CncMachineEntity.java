@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,4 +36,20 @@ public class CncMachineEntity {
      * Наименование станка с ЧПУ.
      */
     private String name;
+    /**
+     * Признак занятости станка.
+     */
+    private boolean isOccupied;
+    /**
+     * Заказ.
+     */
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderEntity order;
+    /**
+     * Идентификатор позиции заказа.
+     */
+    @ManyToOne
+    @JoinColumn(name = "order_item_id")
+    private OrderItemEntity orderItem;
 }

@@ -17,8 +17,6 @@ public class UiOrderItemMapperTest {
     UiProductMapper uiProductMapper;
     @Mock
     UiMaterialMapper uiMaterialMapper;
-    @Mock
-    UiTechnologistMapper uiTechnologistMapper;
 
     @InjectMocks
     UiOrderItemMapperImpl orderItemMapper;

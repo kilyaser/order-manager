@@ -8,7 +8,6 @@ import com.profcut.ordermanager.domain.dto.machine.CreateMachineRequest;
 import com.profcut.ordermanager.domain.dto.machine.UiMachine;
 import com.profcut.ordermanager.domain.dto.order.CreateOrderRequest;
 import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
-import com.profcut.ordermanager.domain.dto.technologist.CreateTechnologistRequest;
 import com.profcut.ordermanager.domain.entities.CncMachineEntity;
 import com.profcut.ordermanager.domain.entities.CounterpartyEntity;
 import com.profcut.ordermanager.domain.entities.MaterialEntity;
@@ -110,7 +109,10 @@ public class TestDataHelper {
         return new UiMachine(
                 UUID.randomUUID(),
                 MachineType.THREE_AXIS,
-                "machineName");
+                "machineName",
+                false,
+                null,
+                null);
     }
 
     public static CounterpartyEntity buildDefaultCounterparty(UUID id) {
@@ -120,16 +122,6 @@ public class TestDataHelper {
                 .setName("name")
                 .setInn("1234567897")
                 .setEmail("email");
-    }
-
-    public static CreateTechnologistRequest getDefaultCreateTechnologistRequest() {
-        return CreateTechnologistRequest.builder()
-                .firstName("Name")
-                .lastName("lastName")
-                .patronymic("Patronymic")
-                .email("test@email.ru")
-                .phone("+711111")
-                .build();
     }
 
     public static CreateOrderRequest getDefaultCreateOrderRequest() {
@@ -153,7 +145,6 @@ public class TestDataHelper {
                 .materialId(UUID.randomUUID())
                 .preparationState(PreparationState.NOT_STARTED)
                 .materialId(UUID.randomUUID())
-                .technologistId(UUID.randomUUID())
                 .build();
     }
 
@@ -166,14 +157,12 @@ public class TestDataHelper {
                 .setQuantity(3)
                 .setProductType(NEW)
                 .setVatInclude(true)
-                .setMachineId(UUID.randomUUID())
                 .setPreparationState(PreparationState.NOT_STARTED)
                 .setMaterial(new MaterialEntity()
                         .setId(UUID.randomUUID())
                         .setMaterialType("metal"))
                 .setPricePerProduct(BigDecimal.valueOf(2000));
         item.calculateTotalPrice();
-        item.calculateVat();
         return item;
     }
 
@@ -189,7 +178,7 @@ public class TestDataHelper {
                 .setOrderItems(items)
                 .setVatInclude(true)
                 .setCreatedDate(LocalDateTime.now())
-                .recalculateCurrentSum();
+                .recalculateOrderSum();
         order.getPayments().add(new PaymentEntity()
                 .setPaymentId(UUID.randomUUID())
                 .setModifiedDate(LocalDateTime.now())

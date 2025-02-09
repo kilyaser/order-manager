@@ -10,7 +10,6 @@ import com.profcut.ordermanager.domain.repository.OrderItemRepository;
 import com.profcut.ordermanager.service.MaterialService;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.service.ProductService;
-import com.profcut.ordermanager.service.TechnologistService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,6 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final OrderItemRepository orderItemRepository;
     private final ProductService productService;
     private final MaterialService materialService;
-    private final TechnologistService technologistService;
     private final OrderItemCreateMapper orderItemCreateMapper;
     private final UpdateItemMapper updateItemMapper;
 
@@ -68,7 +66,6 @@ public class OrderItemServiceImpl implements OrderItemService {
         var item = findById(patch.getItemId());
         updateItemMapper.updateOrderItem(patch, item);
         setPropertyIfPresent(patch.getProductId(), productService::getProductById, item::setProduct);
-        setPropertyIfPresent(patch.getTechnologistId(), technologistService::getById, item::setTechnologist);
         setPropertyIfPresent(patch.getMachineId(), materialService::findById, item::setMaterial);
         orderItemRepository.save(item);
     }
@@ -91,9 +88,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         var itemEntity = orderItemCreateMapper.apply(itemRequest);
         setPropertyIfPresent(itemRequest.getProductId(), productService::getProductById, itemEntity::setProduct);
         setPropertyIfPresent(itemRequest.getMachineId(), materialService::findById, itemEntity::setMaterial);
-        setPropertyIfPresent(itemRequest.getTechnologistId(), technologistService::getById, itemEntity::setTechnologist);
         itemEntity.calculateTotalPrice();
-        itemEntity.calculateVat();
         return itemEntity;
     }
 

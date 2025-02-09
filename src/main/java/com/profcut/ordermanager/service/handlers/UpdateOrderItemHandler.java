@@ -27,7 +27,7 @@ public class UpdateOrderItemHandler {
         var order = orderService.findOrderById(request.getOrderId());
         request.getPatch().forEach(orderItemService::updateOrderItem);
         entityManager.refresh(order);
-        order.recalculateCurrentSum();
+        order.recalculateOrderSum();
         var uiItems = order.getOrderItems().stream()
                 .map(uiOrderItemMapper)
                 .toList();

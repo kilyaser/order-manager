@@ -20,7 +20,7 @@ public class DeleteOrderItemHandler {
     public void handle(DeleteOrderItemRequest request) {
         orderItemService.deleteOrderItems(request.getDeleteItemIds());
         var order = orderService.findOrderById(request.getOrderId());
-        order.recalculateCurrentSum();
+        order.recalculateOrderSum();
         orderService.saveOrder(order);
     }
 }

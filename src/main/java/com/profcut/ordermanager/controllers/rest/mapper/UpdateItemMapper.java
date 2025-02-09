@@ -16,20 +16,7 @@ public interface UpdateItemMapper {
     void updateOrderItem(OrderItemFieldsPatch source, @MappingTarget OrderItemEntity target);
 
     @AfterMapping
-    default void afterMapping(OrderItemFieldsPatch source, @MappingTarget OrderItemEntity target) {
-        validateVatInclude(source, target);
+    default void afterMapping(@MappingTarget OrderItemEntity target) {
         target.calculateTotalPrice();
-    }
-
-    private void validateVatInclude(OrderItemFieldsPatch source, OrderItemEntity target) {
-        ofNullable(source.getIsVatInclude())
-                .ifPresent(vatInclude -> {
-                    boolean orderVatInclude = target.getOrder().isVatInclude();
-                    if (vatInclude != orderVatInclude) {
-                        throw OrderItemVatMissMatchException.byVatInclude(vatInclude, orderVatInclude, target.getOrder().getOrderId());
-                    }
-                    target.setVatInclude(vatInclude);
-                    target.calculateVat();
-                });
     }
 }

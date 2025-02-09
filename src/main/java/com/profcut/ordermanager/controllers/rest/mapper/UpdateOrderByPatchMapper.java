@@ -21,9 +21,8 @@ public interface UpdateOrderByPatchMapper {
     default void updateItemVat(@MappingTarget OrderEntity target, OrderFieldsPatch source) {
         ofNullable(source.getIsVatInclude()).ifPresent(isInclude -> target.getOrderItems().forEach(item -> {
             item.setVatInclude(isInclude);
-            item.calculateVat();
+            item.calculateTotalPrice();
         }));
-        target.calculateVat();
-        target.recalculateCurrentSum();
+        target.recalculateOrderSum();
     }
 }

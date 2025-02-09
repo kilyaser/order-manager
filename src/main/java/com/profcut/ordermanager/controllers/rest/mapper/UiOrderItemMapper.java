@@ -8,8 +8,7 @@ import java.util.function.Function;
 
 @Mapper(uses = {
         UiProductMapper.class,
-        UiMaterialMapper.class,
-        UiTechnologistMapper.class
+        UiMaterialMapper.class
 })
 public interface UiOrderItemMapper extends Function<OrderItemEntity, UiOrderItem> {
 

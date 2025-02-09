@@ -6,6 +6,7 @@ import com.profcut.ordermanager.domain.dto.counterparty.CreateCounterpartyReques
 import com.profcut.ordermanager.domain.dto.counterparty.UpdateCounterpartyRequest;
 import com.profcut.ordermanager.domain.dto.filter.FilterRequest;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
+import com.profcut.ordermanager.domain.dto.filter.SearchRequest;
 import com.profcut.ordermanager.domain.entities.CounterpartyEntity;
 import com.profcut.ordermanager.domain.exceptions.CounterpartyNotFoundException;
 import com.profcut.ordermanager.domain.repository.CounterpartyRepository;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 import static java.util.Optional.ofNullable;
@@ -43,6 +45,13 @@ public class CounterpartyServiceImpl implements CounterpartyService {
         var pageable = PageConverter.covertToPageable(filter.getPageRequest());
         var spec = CounterpartySpecification.byCounterpartyNameLike(filter.search);
         return counterpartyRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CounterpartyEntity> getCounterparties(SearchRequest searchRequest) {
+        var spec = CounterpartySpecification.byCounterpartyNameLike(searchRequest.search);
+        return counterpartyRepository.findAll(spec);
     }
 
     @Override

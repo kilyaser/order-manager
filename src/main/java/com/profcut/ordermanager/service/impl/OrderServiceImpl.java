@@ -17,6 +17,7 @@ import com.profcut.ordermanager.utils.jpa.specification.OrderSpecification;
 import com.profcut.ordermanager.utils.jpa.specification.PageConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,19 +48,20 @@ public class OrderServiceImpl implements OrderService {
         var order = new OrderEntity()
                 .setOrderNumber(getNextOrderNumber())
                 .setOrderName(ofNullable(request.getOrderName()).orElse(""))
-                .setWorkFolderLink(request.getWorkFolderLink())
                 .setCompletionDate(request.getCompletionDate())
                 .setGovernmentOrder(request.isGovernmentOrder())
+                .setVatInclude(request.isVatInclude())
                 .setOrderState(NEW)
                 .setMasterStatus(CREATED)
-                .setCompletionDate(request.getCompletionDate())
                 .setCounterparty(counterpartyService.findById(request.getCounterpartyId()))
                 .setAuthor(currentUserSecurityService.getLogin());
         var savedOrder = orderRepository.save(order);
-        var items = orderItemService.createOrderItems(request.getItemRequests());
-        savedOrder.addItems(items);
-        checkAndChangeItemVat(order.isVatInclude(), order.getOrderItems());
-        orderItemService.saveAll(items);
+        if (CollectionUtils.isNotEmpty(request.getItemRequests())) {
+            request.getItemRequests().forEach(requestItem -> requestItem.setVatInclude(savedOrder.isVatInclude()));
+            var items = orderItemService.createOrderItems(request.getItemRequests());
+            savedOrder.addItems(items);
+            orderItemService.saveAll(items);
+        }
         return orderRepository.saveAndFlush(savedOrder);
     }
 
@@ -115,14 +117,6 @@ public class OrderServiceImpl implements OrderService {
         var order = findOrderById(orderId);
         order.setDeleted(true);
         orderRepository.save(order);
-    }
-
-    private void checkAndChangeItemVat(boolean orderVat, List<OrderItemEntity> items) {
-        items.stream().filter(item -> item.isVatInclude() != orderVat)
-                .peek(item -> {
-                    item.setVatInclude(orderVat);
-                    item.calculateVat();
-                }).forEach(orderItemService::saveItem);
     }
 
     private String getNextOrderNumber() {

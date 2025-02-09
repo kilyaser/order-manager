@@ -11,7 +11,6 @@ import com.profcut.ordermanager.domain.exceptions.OrderItemNotFoundException;
 import com.profcut.ordermanager.domain.repository.OrderItemRepository;
 import com.profcut.ordermanager.service.MaterialService;
 import com.profcut.ordermanager.service.ProductService;
-import com.profcut.ordermanager.service.TechnologistService;
 import com.profcut.ordermanager.testData.utils.helper.TestDataHelper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.buildDefaultOrder;
 import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultOrderItem;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -49,8 +47,6 @@ public class OrderItemServiceTest {
     ProductService productService;
     @Mock
     MaterialService materialService;
-    @Mock
-    TechnologistService technologistService;
     @Mock
     OrderItemCreateMapper orderItemCreateMapper;
     @Spy
@@ -107,7 +103,6 @@ public class OrderItemServiceTest {
 
         verify(orderItemCreateMapper).apply(any());
         verify(productService).getProductById(any());
-        verify(technologistService, never()).getById(any());
         verify(materialService, never()).findById(any());
     }
 

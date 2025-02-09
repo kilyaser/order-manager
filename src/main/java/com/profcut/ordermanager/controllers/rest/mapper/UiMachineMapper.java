@@ -6,7 +6,10 @@ import org.mapstruct.Mapper;
 
 import java.util.function.Function;
 
-@Mapper
+@Mapper(uses = {
+        UiOrderShortMapper.class,
+        UiOrderItemMapper.class,
+})
 public interface UiMachineMapper extends Function<CncMachineEntity, UiMachine> {
 
     @Override

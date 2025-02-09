@@ -62,7 +62,7 @@ public class CncMachineApiTest {
     @DisplayName("Успешное получени информации по станку по id")
     void getCncMachine() {
         var id = UUID.randomUUID();
-        var uiMachine = new UiMachine(id, MachineType.THREE_AXIS, "machineName");
+        var uiMachine = new UiMachine(id, MachineType.THREE_AXIS, "machineName", false, null, null);
 
         when(cncMachineService.findById(id)).thenReturn(new CncMachineEntity());
         when(uiMachineMapper.apply(any())).thenReturn(uiMachine);

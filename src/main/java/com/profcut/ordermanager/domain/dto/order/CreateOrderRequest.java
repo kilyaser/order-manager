@@ -1,5 +1,6 @@
 package com.profcut.ordermanager.domain.dto.order;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.profcut.ordermanager.common.consts.DataTypes;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,11 +29,6 @@ public class CreateOrderRequest {
             requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private String orderName;
     /**
-     * Ссылка на рабочую директорию с документами по заказу.
-     */
-    @Schema(description = "Ссылка на рабочую директорию", maxLength = DataTypes.STRING_LENGTH_MAX)
-    private String workFolderLink;
-    /**
      * Дата завершеня заказа.
      */
     @Schema(description = "Плановая дата завершения",
@@ -43,13 +39,21 @@ public class CreateOrderRequest {
     /**
      * Признак государственного заказа.
      */
-    @Schema(description = "Признак государственного заказа")
+    @JsonProperty("isGovernmentOrder")
+    @Schema(description = "Признак государственного заказа", requiredMode = Schema.RequiredMode.REQUIRED)
     private boolean isGovernmentOrder;
     /**
-     *  Id контрагента заказчик.
+     * Признак государственного заказа.
+     */
+    @JsonProperty("isVatInclude")
+    @Schema(description = "Признак включения НДС в стоимсть")
+    private boolean isVatInclude;
+    /**
+     * Id контрагента заказчик.
      */
     @NotNull
-    @Schema(description = "Id контрагента заказчик", maxLength = DataTypes.UUID_LENGTH)
+    @Schema(description = "Id контрагента заказчик", maxLength = DataTypes.UUID_LENGTH,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID counterpartyId;
     /**
      * Список позиций заказа.

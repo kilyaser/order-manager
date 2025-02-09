@@ -1,6 +1,5 @@
 package com.profcut.ordermanager.domain.dto.order;
 
-import com.profcut.ordermanager.common.consts.DataTypes;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
 import java.util.UUID;
 
 @Data
@@ -82,9 +80,4 @@ public class OrderItemRequest {
      */
     @Schema(description = "Id материала детали.")
     private UUID materialId;
-    /**
-     * ID Технолога.
-     */
-    @Schema(description = "ID Технолога.", maxLength = DataTypes.UUID_LENGTH)
-    private UUID technologistId;
 }

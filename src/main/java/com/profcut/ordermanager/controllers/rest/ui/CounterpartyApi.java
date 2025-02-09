@@ -3,11 +3,13 @@ package com.profcut.ordermanager.controllers.rest.ui;
 import com.profcut.ordermanager.controllers.rest.mapper.UiCounterpartyMapper;
 import com.profcut.ordermanager.controllers.rest.mapper.UiCounterpartyShortMapper;
 import com.profcut.ordermanager.domain.dto.counterparty.CreateCounterpartyRequest;
+import com.profcut.ordermanager.domain.dto.counterparty.UiCounterparties;
 import com.profcut.ordermanager.domain.dto.counterparty.UiCounterparty;
 import com.profcut.ordermanager.domain.dto.counterparty.UiCounterpartyShort;
 import com.profcut.ordermanager.domain.dto.counterparty.UpdateCounterpartyRequest;
 import com.profcut.ordermanager.domain.dto.filter.FilterRequest;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
+import com.profcut.ordermanager.domain.dto.filter.SearchRequest;
 import com.profcut.ordermanager.service.CounterpartyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,9 +46,18 @@ public class CounterpartyApi {
     }
 
     @PostMapping("/find")
-    @Operation(description = "Поиск контрагентов по наименованию")
+    @Operation(description = "Поиск контрагентов по наименованию с пагинацией")
     public Page<UiCounterpartyShort> findCounterpartyByFilter(@RequestBody FilterRequest filter) {
         return counterpartyService.findCounterpartiesByFilter(filter).map(uiCounterpartyShortMapper);
+    }
+
+    @PostMapping("/search")
+    @Operation(description = "Поиск контрагентов по наименованию")
+    public UiCounterparties searchCounterparty(@RequestBody SearchRequest searchRequest) {
+        var uiCounterparties = counterpartyService.getCounterparties(searchRequest).stream()
+                .map(uiCounterpartyShortMapper)
+                .toList();
+        return new UiCounterparties(uiCounterparties);
     }
 
     @PostMapping("/page")
