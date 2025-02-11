@@ -7,7 +7,9 @@ import org.mapstruct.Mapper;
 
 import java.util.function.Function;
 
-@Mapper
+@Mapper(uses = {
+        UiContractMapper.class
+})
 public interface UiCounterpartyMapper extends Function<CounterpartyEntity, UiCounterparty> {
 
     @Override

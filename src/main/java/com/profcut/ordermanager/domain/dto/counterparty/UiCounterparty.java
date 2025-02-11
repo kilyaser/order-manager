@@ -1,6 +1,8 @@
 package com.profcut.ordermanager.domain.dto.counterparty;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
+import com.profcut.ordermanager.domain.dto.contract.UiContract;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
-import java.util.UUID;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -34,4 +36,10 @@ public class UiCounterparty extends UiCounterpartyShort {
      */
     @Schema(description = "Контактный телефон контрагента.", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String phone;
+    /**
+     * Список контрактов.
+     */
+    @ArraySchema(schema = @Schema(description = "Список контрактов",
+            maxLength = DataTypes.ARRAY_MAX_ITEMS_VALUE))
+    private List<UiContract> contracts;
 }

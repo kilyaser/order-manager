@@ -28,7 +28,7 @@ public class CounterpartyCreateMapperTest {
 
         assertNotNull(result);
         assertThat(result).usingRecursiveComparison()
-                .ignoringFields("orders", "id")
+                .ignoringFields("orders", "id", "contracts")
                 .isEqualTo(request);
     }
 }

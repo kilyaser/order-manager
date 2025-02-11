@@ -63,10 +63,6 @@ public class OrderEntity {
      */
     private String billNumber;
     /**
-     * Ссылка на рабочую папку.
-     */
-    private String workFolderLink;
-    /**
      * Сумма действующая с НДС.
      */
     private BigDecimal currentSum;
@@ -147,6 +143,13 @@ public class OrderEntity {
     @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "order")
     private List<TaskEntity> tasks = new ArrayList<>();
+    /**
+     * Договор.
+     */
+    @ManyToOne
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name = "contract_id")
+    private ContractEntity contract;
 
     public void addItems(List<OrderItemEntity> items) {
         items.forEach(item -> {

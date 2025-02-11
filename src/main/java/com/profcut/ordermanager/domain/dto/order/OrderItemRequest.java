@@ -1,5 +1,6 @@
 package com.profcut.ordermanager.domain.dto.order;
 
+import com.profcut.ordermanager.common.consts.DataTypes;
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,12 +24,14 @@ public class OrderItemRequest {
      * Id изделие (детали).
      */
     @NotNull
-    @Schema(description = "Id изделие (детали)")
+    @Schema(description = "Id изделие (детали)", maxLength = DataTypes.UUID_LENGTH,
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID productId;
     /**
      * Тип изделия.
      */
-    @Schema(description = "Тип изделия.")
+    @Schema(description = "Тип изделия.", maxLength = DataTypes.STRING_LENGTH_MAX,
+            requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     private ProductType productType;
     /**
      * Количество изделий.

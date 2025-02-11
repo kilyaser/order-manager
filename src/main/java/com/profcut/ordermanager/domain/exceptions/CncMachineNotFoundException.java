@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class CncMachineNotFoundException extends EntityNotFoundException {
 
-    public CncMachineNotFoundException(String message) {
+    private CncMachineNotFoundException(String message) {
         super(message);
     }
 

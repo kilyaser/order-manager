@@ -38,11 +38,6 @@ public class OrderFieldsPatch {
     @Schema(description = "Признак государственного заказа")
     private Boolean isGovernmentOrder;
     /**
-     * Ссылка на рабочую папку.
-     */
-    @Schema(description = "Ссылка на рабочую папку.", maxLength = DataTypes.STRING_LENGTH_MAX)
-    private String workFolderLink;
-    /**
      * Признак влкючения НДС в стоимость.
      */
     @Schema(description = "Признак влкючения НДС в стоимость.")

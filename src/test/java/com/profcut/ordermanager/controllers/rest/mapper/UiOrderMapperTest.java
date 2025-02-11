@@ -19,6 +19,8 @@ public class UiOrderMapperTest {
     UiPaymentShortMapper uiPaymentShortMapper;
     @Mock
     UiOrderItemMapper uiOrderItemMapper;
+    @Mock
+    UiContractMapper uiContractMapper;
     @InjectMocks
     UiOrderMapperImpl mapper;
 

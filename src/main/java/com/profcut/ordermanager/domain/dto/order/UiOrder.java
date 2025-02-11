@@ -1,6 +1,7 @@
 package com.profcut.ordermanager.domain.dto.order;
 
 import com.profcut.ordermanager.common.consts.DataTypes;
+import com.profcut.ordermanager.domain.dto.contract.UiContract;
 import com.profcut.ordermanager.domain.dto.counterparty.UiCounterpartyShort;
 import com.profcut.ordermanager.domain.dto.payment.UiPaymentShort;
 import com.profcut.ordermanager.domain.dto.task.UiTask;
@@ -35,11 +36,6 @@ public class UiOrder extends UiOrderShort {
      */
     @Schema(description = "Номер счета.", maxLength = DataTypes.STRING_LENGTH_MAX)
     private String billNumber;
-    /**
-     * Ссылка на рабочую папку.
-     */
-    @Schema(description = "Ссылка на рабочую папку.", maxLength = DataTypes.STRING_LENGTH_MAX)
-    private String workFolderLink;
     /**
      * Признак влкючения НДС в стоимость.
      */
@@ -88,4 +84,9 @@ public class UiOrder extends UiOrderShort {
     @ArraySchema(schema = @Schema(description = "Задачи по заказу.",
             maxLength = DataTypes.ARRAY_MAX_ITEMS_VALUE))
     private List<UiTask> tasks;
+    /**
+     * Договор.
+     */
+    @Schema(description = "Договор")
+    private UiContract contract;
 }

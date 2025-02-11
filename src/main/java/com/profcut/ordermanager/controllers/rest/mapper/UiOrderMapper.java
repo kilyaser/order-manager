@@ -13,7 +13,8 @@ import java.util.function.Function;
 @Mapper(uses = {
         UiCounterpartyShortMapper.class,
         UiOrderItemMapper.class,
-        UiPaymentShortMapper.class
+        UiPaymentShortMapper.class,
+        UiContractMapper.class
 })
 public interface UiOrderMapper extends Function<OrderEntity, UiOrder> {
 

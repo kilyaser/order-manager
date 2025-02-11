@@ -10,13 +10,24 @@ create table counterparties
     phone           varchar(75)
 );
 
+create table contracts
+(
+    contract_id                        uuid not null primary key,
+    contract_number           varchar(70) not null,
+    contract_date             date,
+    start_date                date,
+    end_date                  date,
+    counterparty_id           uuid references counterparties (id),
+    status                    varchar(20),
+    notes                     varchar (255)
+);
+
 create table orders
 (
   order_id              uuid not null primary key,
   order_number          varchar(255),
   order_name            varchar(255),
   bill_number           varchar(75),
-  work_folder_link      varchar(255),
   current_sum           numeric(10, 2),
   total_price           numeric(10, 2),
   is_vat_include        boolean,
@@ -30,7 +41,8 @@ create table orders
   modified_date         timestamp without time zone not null,
   author                varchar(75),
   is_deleted            boolean not null default false,
-  counterparty_id       uuid references counterparties (id)
+  counterparty_id       uuid references counterparties (id),
+  contract_id           uuid references contracts (contract_id)
 );
 
 create table materials
