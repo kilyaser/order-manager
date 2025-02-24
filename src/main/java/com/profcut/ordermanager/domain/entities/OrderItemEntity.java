@@ -2,6 +2,7 @@ package com.profcut.ordermanager.domain.entities;
 
 import com.profcut.ordermanager.domain.enums.PreparationState;
 import com.profcut.ordermanager.domain.enums.ProductType;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -23,8 +24,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.profcut.ordermanager.common.consts.OrderConstant.VAT_DIVIDER;
@@ -46,7 +49,7 @@ public class OrderItemEntity {
     /**
      * Наименование изделия.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private ProductEntity product;
     /**
@@ -91,7 +94,7 @@ public class OrderItemEntity {
      */
     @OneToMany(mappedBy = "orderItem")
     @Fetch(FetchMode.JOIN)
-    private List<CncMachineEntity> machines;
+    private Set<CncMachineEntity> machines = new HashSet<>();
     /**
      * Дата завершения изготовления.
      */
@@ -104,7 +107,7 @@ public class OrderItemEntity {
     /**
      * Тип материала.
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "material_id")
     private MaterialEntity material;
     /**

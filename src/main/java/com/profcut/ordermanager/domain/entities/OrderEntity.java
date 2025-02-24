@@ -25,7 +25,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -130,7 +129,7 @@ public class OrderEntity {
      */
     @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "order")
-    private List<OrderItemEntity> orderItems = new ArrayList<>();
+    private Set<OrderItemEntity> orderItems = new HashSet<>();
     /**
      * Платежи по заказу
      */
@@ -142,7 +141,7 @@ public class OrderEntity {
      */
     @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "order")
-    private List<TaskEntity> tasks = new ArrayList<>();
+    private Set<TaskEntity> tasks = new HashSet<>();
     /**
      * Договор.
      */

@@ -27,11 +27,6 @@ import java.util.List;
 @Schema(description = "UiOrder")
 public class UiOrder extends UiOrderShort {
     /**
-     * Наименование заказа.
-     */
-    @Schema(description = "Наименование заказа.", maxLength = DataTypes.STRING_LENGTH_MAX)
-    private String orderName;
-    /**
      * Номер счета.
      */
     @Schema(description = "Номер счета.", maxLength = DataTypes.STRING_LENGTH_MAX)

@@ -17,7 +17,8 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -68,5 +69,5 @@ public class ContractEntity {
      */
     @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "contract")
-    private List<OrderEntity> orders;
+    private Set<OrderEntity> orders = new HashSet<>();
 }

@@ -24,6 +24,11 @@ public class UiOrderShort {
     @Schema(description = "id заказа.", maxLength = DataTypes.UUID_LENGTH, requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID orderId;
     /**
+     * Наименование заказа.
+     */
+    @Schema(description = "Наименование заказа.", maxLength = DataTypes.STRING_LENGTH_MAX)
+    private String orderName;
+    /**
      * Номер заказа.
      */
     @Schema(description = "Номер заказа.", maxLength = DataTypes.STRING_LENGTH_MAX)

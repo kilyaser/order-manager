@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,10 +52,9 @@ public class ProductApi {
     @PostMapping("/search")
     @Operation(description = "Поиск изделий по наименованию")
     public UiProducts searchProducts(@Valid @RequestBody SearchRequest search) {
-        var uiProducts = productService.getProducts(search).stream()
+        return productService.getProducts(search).stream()
                 .map(uiProductMapper)
-                .toList();
-        return UiProducts.builder().products(uiProducts).build();
+                .collect(Collectors.collectingAndThen(Collectors.toList(), UiProducts::new));
     }
 
     @PostMapping("/page")

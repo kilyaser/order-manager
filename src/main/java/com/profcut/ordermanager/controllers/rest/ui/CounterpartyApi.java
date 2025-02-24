@@ -5,7 +5,6 @@ import com.profcut.ordermanager.controllers.rest.mapper.UiCounterpartyShortMappe
 import com.profcut.ordermanager.domain.dto.counterparty.CreateCounterpartyRequest;
 import com.profcut.ordermanager.domain.dto.counterparty.UiCounterparties;
 import com.profcut.ordermanager.domain.dto.counterparty.UiCounterparty;
-import com.profcut.ordermanager.domain.dto.counterparty.UiCounterpartyShort;
 import com.profcut.ordermanager.domain.dto.counterparty.UpdateCounterpartyRequest;
 import com.profcut.ordermanager.domain.dto.filter.FilterRequest;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,23 +47,22 @@ public class CounterpartyApi {
 
     @PostMapping("/find")
     @Operation(description = "Поиск контрагентов по наименованию с пагинацией")
-    public Page<UiCounterpartyShort> findCounterpartyByFilter(@RequestBody FilterRequest filter) {
-        return counterpartyService.findCounterpartiesByFilter(filter).map(uiCounterpartyShortMapper);
+    public Page<UiCounterparty> findCounterpartyByFilter(@RequestBody FilterRequest filter) {
+        return counterpartyService.findCounterpartiesByFilter(filter).map(uiCounterpartyMapper);
     }
 
     @PostMapping("/search")
     @Operation(description = "Поиск контрагентов по наименованию")
     public UiCounterparties searchCounterparty(@RequestBody SearchRequest searchRequest) {
-        var uiCounterparties = counterpartyService.getCounterparties(searchRequest).stream()
+        return counterpartyService.getCounterparties(searchRequest).stream()
                 .map(uiCounterpartyShortMapper)
-                .toList();
-        return new UiCounterparties(uiCounterparties);
+                .collect(Collectors.collectingAndThen(Collectors.toList(), UiCounterparties::new));
     }
 
     @PostMapping("/page")
     @Operation(description = "Получить страницу контрагентов")
-    public Page<UiCounterpartyShort> getCounterpartyPage(@RequestBody PageRequest request) {
-        return counterpartyService.getCounterpartiesPage(request).map(uiCounterpartyShortMapper);
+    public Page<UiCounterparty> getCounterpartyPage(@RequestBody PageRequest request) {
+        return counterpartyService.getCounterpartiesPage(request).map(uiCounterpartyMapper);
     }
 
     @PostMapping

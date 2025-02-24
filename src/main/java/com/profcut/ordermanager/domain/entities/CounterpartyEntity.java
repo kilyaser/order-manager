@@ -9,12 +9,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.UuidGenerator;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -56,13 +58,14 @@ public class CounterpartyEntity {
      */
     @ToString.Exclude
     @OneToMany(mappedBy = "counterparty")
-    private List<OrderEntity> orders = new ArrayList<>();
+    private Set<OrderEntity> orders = new HashSet<>();
     /**
      * Договора контрагента.
      */
     @ToString.Exclude
+    @Fetch(FetchMode.JOIN)
     @OneToMany(mappedBy = "counterparty")
-    private List<ContractEntity> contracts = new ArrayList<>();
+    private Set<ContractEntity> contracts = new HashSet<>();
 
     @Override
     public final boolean equals(Object o) {
