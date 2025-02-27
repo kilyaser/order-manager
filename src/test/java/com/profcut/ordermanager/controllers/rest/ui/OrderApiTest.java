@@ -145,7 +145,7 @@ public class OrderApiTest {
                 .andExpect(status().is2xxSuccessful());
 
         verify(orderService).findAllOrdersByCounterpartyId(counterpartyId, request);
-        verify(uiOrderShortMapper).apply(any());
+        verify(uiOrderMapper).apply(any());
     }
 
     @Test

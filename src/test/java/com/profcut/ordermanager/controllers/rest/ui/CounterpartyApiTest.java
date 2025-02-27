@@ -107,7 +107,7 @@ public class CounterpartyApiTest {
                 .andExpect(status().is2xxSuccessful());
 
         verify(counterpartyService).findCounterpartiesByFilter(any());
-        verify(shortMapper, times(2)).apply(any());
+        verify(uiCounterpartyMapper, times(2)).apply(any());
     }
 
     @Test
@@ -130,7 +130,7 @@ public class CounterpartyApiTest {
                 .andExpect(status().is2xxSuccessful());
 
         verify(counterpartyService).getCounterpartiesPage(any());
-        verify(shortMapper, times(2)).apply(any());
+        verify(uiCounterpartyMapper, times(2)).apply(any());
     }
 
     @Test

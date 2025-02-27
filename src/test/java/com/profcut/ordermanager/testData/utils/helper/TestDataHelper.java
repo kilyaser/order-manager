@@ -26,6 +26,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -167,7 +168,7 @@ public class TestDataHelper {
     }
 
     public static OrderEntity buildDefaultOrder() {
-        var items = new ArrayList<OrderItemEntity>();
+        var items = new HashSet<OrderItemEntity>();
         items.add(getDefaultOrderItem());
         var order = new OrderEntity()
                 .setOrderId(UUID.randomUUID())

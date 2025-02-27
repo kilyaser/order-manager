@@ -29,7 +29,7 @@ public class UiOrderItemMapperTest {
 
         assertNotNull(result);
         assertThat(orderItem).usingRecursiveComparison()
-                .ignoringFields("order", "technologist", "material", "product")
+                .ignoringFields("order", "technologist", "material", "product", "machines")
                 .isEqualTo(result);
     }
 }

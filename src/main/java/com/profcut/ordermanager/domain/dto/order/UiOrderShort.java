@@ -50,12 +50,12 @@ public class UiOrderShort {
     /**
      * Статус заказа.
      */
-    @Schema(description = "Статус заказа.", maxLength = DataTypes.STRING_LENGTH_MAX)
+    @Schema(description = "Статус заказа.", maxLength = DataTypes.STRING_LENGTH_MAX, requiredMode = Schema.RequiredMode.REQUIRED)
     private OrderState orderState;
     /**
      *  Дата создания заказа.
      */
-    @Schema(description = "Дата создания заказа.")
+    @Schema(description = "Дата создания заказа.", requiredMode = Schema.RequiredMode.REQUIRED)
     private LocalDate createdDate;
     /**
      * Дата завершеня заказа.
@@ -67,11 +67,11 @@ public class UiOrderShort {
     /**
      * Признак государственного заказа.
      */
-    @Schema(description = "Признак государственного заказа")
+    @Schema(description = "Признак государственного заказа", requiredMode = Schema.RequiredMode.REQUIRED)
     private boolean isGovernmentOrder;
     /**
      * Наименование контрагента.
      */
-    @Schema(description = "Наименование контрагента")
+    @Schema(description = "Наименование контрагента", requiredMode = Schema.RequiredMode.REQUIRED)
     private String counterpartyName;
 }

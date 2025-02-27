@@ -56,10 +56,10 @@ public class OrderApi {
     @PostMapping("/{counterpartyId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Получиение всех заказав по Контрегенту")
-    public Page<UiOrderShort> getAllOrdersByCounterparty(@PathVariable UUID counterpartyId,
-                                                         @RequestBody PageRequest pageRequest) {
+    public Page<UiOrder> getAllOrdersByCounterparty(@PathVariable UUID counterpartyId,
+                                                    @RequestBody PageRequest pageRequest) {
         return orderService.findAllOrdersByCounterpartyId(counterpartyId, pageRequest)
-                .map(orderShortMapper);
+                .map(orderMapper);
     }
 
     @PutMapping

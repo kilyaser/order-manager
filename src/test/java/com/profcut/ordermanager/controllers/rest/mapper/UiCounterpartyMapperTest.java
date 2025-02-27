@@ -32,7 +32,7 @@ public class UiCounterpartyMapperTest {
 
         assertNotNull(result);
         assertThat(counterparty).usingRecursiveComparison()
-                .ignoringFields("orders")
+                .ignoringFields("orders", "contracts")
                 .isEqualTo(result);
     }
 }
