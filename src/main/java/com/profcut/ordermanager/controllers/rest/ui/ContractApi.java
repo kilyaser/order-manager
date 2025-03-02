@@ -43,7 +43,7 @@ public class ContractApi {
         return uiContractMapper.apply(contractService.createContract(request));
     }
 
-    @GetMapping("/{counterpartyId}")
+    @GetMapping("/counterparty/{counterpartyId}")
     @Operation(description = "Получить договоры по контрагенты")
     public UiContracts getByCounterparty(@PathVariable("counterpartyId") UUID counterpartyId) {
         return contractService.findByAllCounterpartyId(counterpartyId).stream()

@@ -1,5 +1,6 @@
 package com.profcut.ordermanager.domain.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -64,8 +65,14 @@ public class CounterpartyEntity {
      */
     @ToString.Exclude
     @Fetch(FetchMode.JOIN)
-    @OneToMany(mappedBy = "counterparty")
+    @OneToMany(mappedBy = "counterparty", cascade = CascadeType.ALL)
     private Set<ContractEntity> contracts = new HashSet<>();
+
+    public ContractEntity addContract(ContractEntity contract) {
+        contracts.add(contract);
+        contract.setCounterparty(this);
+        return contract;
+    }
 
     @Override
     public final boolean equals(Object o) {
