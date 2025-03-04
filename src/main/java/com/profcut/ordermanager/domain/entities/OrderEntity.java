@@ -2,6 +2,7 @@ package com.profcut.ordermanager.domain.entities;
 
 import com.profcut.ordermanager.domain.enums.MasterStatus;
 import com.profcut.ordermanager.domain.enums.OrderState;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Enumerated;
@@ -112,8 +113,8 @@ public class OrderEntity {
     /**
      *  Контрагент заказчик.
      */
-    @ManyToOne
     @Fetch(FetchMode.JOIN)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "counterparty_id")
     private CounterpartyEntity counterparty;
     /**

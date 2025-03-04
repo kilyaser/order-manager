@@ -56,6 +56,11 @@ public class CreateOrderRequest {
             requiredMode = Schema.RequiredMode.REQUIRED)
     private UUID counterpartyId;
     /**
+     * Id договора.
+     */
+    @Schema(description = "Id договора", maxLength = DataTypes.UUID_LENGTH)
+    private UUID contractId;
+    /**
      * Список позиций заказа.
      */
     @ArraySchema(schema = @Schema(description = "Список позиций заказа.",

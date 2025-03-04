@@ -11,6 +11,7 @@ import com.profcut.ordermanager.domain.enums.OrderState;
 import com.profcut.ordermanager.domain.exceptions.OrderNotFoundException;
 import com.profcut.ordermanager.domain.repository.OrderRepository;
 import com.profcut.ordermanager.security.service.CurrentUserSecurityService;
+import com.profcut.ordermanager.service.ContractService;
 import com.profcut.ordermanager.service.CounterpartyService;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.testData.utils.helper.TestDataHelper;
@@ -56,6 +57,8 @@ public class OrderServiceTest {
     OrderItemService orderItemService;
     @Mock
     CounterpartyService counterpartyService;
+    @Mock
+    ContractService contractService;
     @Spy
     UpdateOrderByPatchMapper mapper = Mappers.getMapper(UpdateOrderByPatchMapper.class);
     @InjectMocks

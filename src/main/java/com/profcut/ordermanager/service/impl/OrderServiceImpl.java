@@ -5,11 +5,11 @@ import com.profcut.ordermanager.domain.dto.filter.PageRequest;
 import com.profcut.ordermanager.domain.dto.order.CreateOrderRequest;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderRequest;
 import com.profcut.ordermanager.domain.entities.OrderEntity;
-import com.profcut.ordermanager.domain.entities.OrderItemEntity;
 import com.profcut.ordermanager.domain.enums.OrderState;
 import com.profcut.ordermanager.domain.exceptions.OrderNotFoundException;
 import com.profcut.ordermanager.domain.repository.OrderRepository;
 import com.profcut.ordermanager.security.service.CurrentUserSecurityService;
+import com.profcut.ordermanager.service.ContractService;
 import com.profcut.ordermanager.service.CounterpartyService;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.service.OrderService;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
-import java.util.List;
 import java.util.UUID;
 
 import static com.profcut.ordermanager.domain.enums.MasterStatus.CREATED;
@@ -40,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
     private final CounterpartyService counterpartyService;
     private final OrderItemService orderItemService;
     private final UpdateOrderByPatchMapper updateOrderByPatchMapper;
+    private final ContractService contractService;
 
     @Override
     @Transactional
@@ -55,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
                 .setMasterStatus(CREATED)
                 .setCounterparty(counterpartyService.findById(request.getCounterpartyId()))
                 .setAuthor(currentUserSecurityService.getLogin());
+        ofNullable(request.getContractId()).map(contractService::findById).ifPresent(order::setContract);
         var savedOrder = orderRepository.save(order);
         if (CollectionUtils.isNotEmpty(request.getItemRequests())) {
             request.getItemRequests().forEach(requestItem -> requestItem.setVatInclude(savedOrder.isVatInclude()));
