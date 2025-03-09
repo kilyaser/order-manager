@@ -27,7 +27,7 @@ public class UiMachine {
     /**
      * Тип станка с ЧПУ.
      */
-    @Schema(description = "Тип станка с ЧПУ.")
+    @Schema(description = "Тип станка с ЧПУ.", requiredMode = Schema.RequiredMode.REQUIRED)
     private MachineType machineType;
     /**
      * Наименование станка с ЧПУ.

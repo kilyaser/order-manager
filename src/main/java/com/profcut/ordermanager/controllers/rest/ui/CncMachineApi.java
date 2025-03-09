@@ -3,6 +3,7 @@ package com.profcut.ordermanager.controllers.rest.ui;
 import com.profcut.ordermanager.controllers.rest.mapper.UiMachineMapper;
 import com.profcut.ordermanager.domain.dto.machine.CreateMachineRequest;
 import com.profcut.ordermanager.domain.dto.machine.UiMachine;
+import com.profcut.ordermanager.domain.dto.machine.UiMachines;
 import com.profcut.ordermanager.domain.dto.machine.UpdateMachineRequest;
 import com.profcut.ordermanager.service.CncMachineService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,6 +35,14 @@ public class CncMachineApi {
     @Operation(description = "Поиск станка по id")
     public UiMachine getMachine(@PathVariable UUID machineId) {
         return uiMachineMapper.apply(cncMachineService.findById(machineId));
+    }
+
+    @GetMapping
+    @Operation(description = "Получение списка оборудования")
+    public UiMachines getAllMachines() {
+        return cncMachineService.findAll().stream()
+                .map(uiMachineMapper)
+                .collect(Collectors.collectingAndThen(Collectors.toList(), UiMachines::new));
     }
 
     @PostMapping

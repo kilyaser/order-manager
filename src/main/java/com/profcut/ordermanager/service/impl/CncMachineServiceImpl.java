@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 import static java.util.Optional.ofNullable;
@@ -28,6 +29,11 @@ public class CncMachineServiceImpl implements CncMachineService {
     @Transactional(readOnly = true)
     public CncMachineEntity findById(UUID machineId) {
         return cncMachineRepository.findById(machineId).orElseThrow(() -> CncMachineNotFoundException.byMachineId(machineId));
+    }
+
+    @Override
+    public List<CncMachineEntity> findAll() {
+        return cncMachineRepository.findAll();
     }
 
     @Override
