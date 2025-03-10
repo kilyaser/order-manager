@@ -2,7 +2,7 @@ package com.profcut.ordermanager.service.validator;
 
 public record ValidationResult(RuntimeException validationError) {
 
-    boolean isInvalid() {
+    public boolean isInvalid() {
         return validationError != null;
     }
 

@@ -21,6 +21,7 @@
 		<springdoc.version>2.1.0</springdoc.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
+		<instacio.version>5.4.0</instacio.version>
 	</properties>
 
 	<dependencies>
@@ -115,6 +116,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-testcontainers</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.instancio</groupId>
+			<artifactId>instancio-junit</artifactId>
+			<version>${instacio.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
