@@ -5,6 +5,7 @@ import com.profcut.ordermanager.domain.dto.order.UiOrderItems;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderItemRequest;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.service.OrderService;
+import com.profcut.ordermanager.service.validator.OrderItemFieldsPatchValidator;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +21,15 @@ public class UpdateOrderItemHandler {
     private final OrderItemService orderItemService;
     private final UiOrderItemMapper uiOrderItemMapper;
     private final EntityManager entityManager;
+    private final OrderItemFieldsPatchValidator fieldsPatchValidator;
 
     @Transactional
     public UiOrderItems handle(UpdateOrderItemRequest request) {
         log.info("invoke UpdateOrderItemHandler#handle by request: {}", request);
         var order = orderService.findOrderById(request.getOrderId());
-        request.getPatch().forEach(orderItemService::updateOrderItem);
+        request.getPatch().stream()
+                .map(fieldsPatchValidator::validate)
+                .forEach(orderItemService::updateOrderItem);
         entityManager.refresh(order);
         order.recalculateOrderSum();
         var uiItems = order.getOrderItems().stream()
