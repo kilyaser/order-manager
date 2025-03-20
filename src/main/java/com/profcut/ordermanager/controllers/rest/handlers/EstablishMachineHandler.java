@@ -5,6 +5,7 @@ import com.profcut.ordermanager.domain.dto.material.UiEstablishMachineRequest;
 import com.profcut.ordermanager.domain.dto.order.UiOrderItem;
 import com.profcut.ordermanager.service.CncMachineService;
 import com.profcut.ordermanager.service.OrderItemService;
+import com.profcut.ordermanager.service.validator.EstablishMachineValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,10 +20,12 @@ public class EstablishMachineHandler {
     private final CncMachineService machineService;
     private final OrderItemService orderItemService;
     private final UiOrderItemMapper uiOrderItemMapper;
+    private final EstablishMachineValidator validator;
 
     @Transactional
     public UiOrderItem handle(UiEstablishMachineRequest request) {
         log.info("Назначение станка request={}", request);
+        validator.validate(request);
         var item = orderItemService.findById(request.getOrderItemId());
         item.clearMachine();
         if (CollectionUtils.isEmpty(request.getMachineIds())) {
