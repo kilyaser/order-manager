@@ -3,11 +3,13 @@ package com.profcut.ordermanager.controllers.rest.handlers;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderItemMapper;
 import com.profcut.ordermanager.domain.dto.material.UiEstablishMachineRequest;
 import com.profcut.ordermanager.domain.dto.order.UiOrderItem;
+import com.profcut.ordermanager.massaging.events.OrderItemChangeEvent;
 import com.profcut.ordermanager.service.CncMachineService;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.service.validator.EstablishMachineValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -21,6 +23,7 @@ public class EstablishMachineHandler {
     private final OrderItemService orderItemService;
     private final UiOrderItemMapper uiOrderItemMapper;
     private final EstablishMachineValidator validator;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public UiOrderItem handle(UiEstablishMachineRequest request) {
@@ -33,6 +36,7 @@ public class EstablishMachineHandler {
         }
         var machines = machineService.findAllByMachineIds(request.getMachineIds());
         item.addMachine(machines);
+        eventPublisher.publishEvent(new OrderItemChangeEvent(item));
         orderItemService.saveItem(item);
         return uiOrderItemMapper.apply(item);
     }
