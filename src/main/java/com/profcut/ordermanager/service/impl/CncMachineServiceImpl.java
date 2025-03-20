@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static java.util.Optional.ofNullable;
@@ -22,18 +23,29 @@ import static java.util.Optional.ofNullable;
 @RequiredArgsConstructor
 public class CncMachineServiceImpl implements CncMachineService {
 
-    private final CncMachineRepository cncMachineRepository;
+    private final CncMachineRepository machineRepository;
     private final CncMachineCreateMapper cncMachineCreateMapper;
 
     @Override
     @Transactional(readOnly = true)
     public CncMachineEntity findById(UUID machineId) {
-        return cncMachineRepository.findById(machineId).orElseThrow(() -> CncMachineNotFoundException.byMachineId(machineId));
+        return machineRepository.findById(machineId).orElseThrow(() -> CncMachineNotFoundException.byMachineId(machineId));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CncMachineEntity> findAll() {
-        return cncMachineRepository.findAll();
+        return machineRepository.findAll();
+    }
+
+    @Override
+    public List<CncMachineEntity> findOccupiedByOrderItemId(UUID orderItemId) {
+        return machineRepository.findCncMachineEntitiesByOrderItemId(orderItemId);
+    }
+
+    @Override
+    public List<CncMachineEntity> saveAll(List<CncMachineEntity> machines) {
+        return machineRepository.saveAll(machines);
     }
 
     @Override
@@ -41,9 +53,10 @@ public class CncMachineServiceImpl implements CncMachineService {
     public CncMachineEntity createMachine(CreateMachineRequest createRequest) {
         log.info("invoke 'CncMachineServiceImpl#createMachine' with createRequest={}", createRequest);
         var machine = cncMachineCreateMapper.apply(createRequest);
-        return cncMachineRepository.save(machine);
+        return machineRepository.save(machine);
     }
 
+    //TODO: убрать реализацию в handler
     @Override
     @Transactional
     public CncMachineEntity updateMachine(UpdateMachineRequest updateRequest) {
@@ -51,12 +64,19 @@ public class CncMachineServiceImpl implements CncMachineService {
         var machine = findById(updateRequest.getMachineId());
         ofNullable(updateRequest.getMachineType()).ifPresent(machine::setMachineType);
         ofNullable(updateRequest.getName()).ifPresent(machine::setName);
-        return cncMachineRepository.save(machine);
+        return machineRepository.save(machine);
     }
 
     @Override
+    @Transactional
     public void deleteMachineById(UUID machineId) {
         log.info("invoke 'CncMachineServiceImpl#deleteMachineById' with id:{}", machineId);
-        cncMachineRepository.deleteById(machineId);
+        machineRepository.deleteById(machineId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CncMachineEntity> findAllByMachineIds(Set<UUID> machineIds) {
+        return machineRepository.findAllByMachineIds(machineIds);
     }
 }

@@ -66,7 +66,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         var item = findById(patch.getItemId());
         updateItemMapper.updateOrderItem(patch, item);
         setPropertyIfPresent(patch.getProductId(), productService::getProductById, item::setProduct);
-        setPropertyIfPresent(patch.getMachineId(), materialService::findById, item::setMaterial);
+        setPropertyIfPresent(patch.getMaterialId(), materialService::findById, item::setMaterial);
         orderItemRepository.save(item);
     }
 
@@ -87,7 +87,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     private OrderItemEntity createOrderItem(OrderItemRequest itemRequest) {
         var itemEntity = orderItemCreateMapper.apply(itemRequest);
         setPropertyIfPresent(itemRequest.getProductId(), productService::getProductById, itemEntity::setProduct);
-        setPropertyIfPresent(itemRequest.getMachineId(), materialService::findById, itemEntity::setMaterial);
+        setPropertyIfPresent(itemRequest.getMaterialId(), materialService::findById, itemEntity::setMaterial);
         itemEntity.calculateTotalPrice();
         return itemEntity;
     }

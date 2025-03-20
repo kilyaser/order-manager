@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -92,8 +93,10 @@ public class OrderItemEntity {
     /**
      * id станка.
      */
-    @OneToMany(mappedBy = "orderItem")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy = "orderItem")
     private Set<CncMachineEntity> machines = new HashSet<>();
     /**
      * Дата завершения изготовления.
@@ -107,6 +110,8 @@ public class OrderItemEntity {
     /**
      * Тип материала.
      */
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "material_id")
     private MaterialEntity material;
@@ -128,8 +133,18 @@ public class OrderItemEntity {
         machines.forEach(machine -> {
             machine.setOrderItem(this);
             machine.setOrder(this.order);
-            this.machines.addAll(machines);
+            machine.setOccupied(true);
+            this.machines.add(machine);
         });
+    }
+
+    public void clearMachine() {
+        machines.forEach(machine -> {
+            machine.setOccupied(false);
+            machine.setOrderItem(null);
+            machine.setOrder(null);
+        });
+        machines.clear();
     }
 
     public void calculateCurrentSum() {

@@ -1,5 +1,6 @@
 package com.profcut.ordermanager.service.handlers;
 
+import com.profcut.ordermanager.controllers.rest.handlers.UpdateOrderItemHandler;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderItemMapper;
 import com.profcut.ordermanager.domain.dto.order.OrderItemFieldsPatch;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderItemRequest;

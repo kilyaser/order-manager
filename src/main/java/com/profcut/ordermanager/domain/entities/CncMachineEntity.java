@@ -9,7 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -44,12 +46,16 @@ public class CncMachineEntity {
      * Заказ.
      */
     @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "order_id")
     private OrderEntity order;
     /**
      * Идентификатор позиции заказа.
      */
     @ManyToOne
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "order_item_id")
     private OrderItemEntity orderItem;
 }

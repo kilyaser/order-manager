@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/ui/machines")
@@ -42,7 +44,15 @@ public class CncMachineApi {
     public UiMachines getAllMachines() {
         return cncMachineService.findAll().stream()
                 .map(uiMachineMapper)
-                .collect(Collectors.collectingAndThen(Collectors.toList(), UiMachines::new));
+                .collect(Collectors.collectingAndThen(toList(), UiMachines::new));
+    }
+
+    @GetMapping("/order-item/{itemId}")
+    @Operation(description = "Полчить список занятных станков по id позиции заказа")
+    public UiMachines getByOrderItemId(@PathVariable UUID itemId) {
+        return cncMachineService.findOccupiedByOrderItemId(itemId).stream()
+                .map(uiMachineMapper)
+                .collect(Collectors.collectingAndThen(toList(), UiMachines::new));
     }
 
     @PostMapping

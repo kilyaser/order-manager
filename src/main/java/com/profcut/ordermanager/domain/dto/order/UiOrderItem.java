@@ -1,6 +1,6 @@
 package com.profcut.ordermanager.domain.dto.order;
 
-import com.profcut.ordermanager.domain.dto.machine.UiMachine;
+import com.profcut.ordermanager.domain.dto.machine.UiMachineShort;
 import com.profcut.ordermanager.domain.dto.material.UiMaterial;
 import com.profcut.ordermanager.domain.dto.product.UiProduct;
 import com.profcut.ordermanager.domain.enums.PreparationState;
@@ -75,13 +75,14 @@ public class UiOrderItem {
     /**
      * Признак написания управляющей программы.
      */
-    @Schema(description = "Признак написания управляющей программы.", requiredMode = Schema.RequiredMode.REQUIRED)
+    @Schema(description = "Признак написания управляющей программы.",
+            requiredMode = Schema.RequiredMode.REQUIRED)
     private boolean isProgramWritten;
     /**
      * id станка.
      */
     @Schema(description = "id станка.")
-    private List<UiMachine> machines;
+    private List<UiMachineShort> machines;
     /**
      * Дата завершения изготовления.
      */

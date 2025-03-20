@@ -2,15 +2,16 @@ package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
+import com.profcut.ordermanager.controllers.rest.handlers.EstablishMachineHandler;
 import com.profcut.ordermanager.domain.dto.order.AddOrderItemsRequest;
 import com.profcut.ordermanager.domain.dto.order.DeleteOrderItemRequest;
 import com.profcut.ordermanager.domain.dto.order.OrderItemFieldsPatch;
 import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderItemRequest;
 import com.profcut.ordermanager.security.service.JwtUserService;
-import com.profcut.ordermanager.service.handlers.AddOrderItemsHandler;
-import com.profcut.ordermanager.service.handlers.DeleteOrderItemHandler;
-import com.profcut.ordermanager.service.handlers.UpdateOrderItemHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.AddOrderItemsHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.DeleteOrderItemHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.UpdateOrderItemHandler;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,6 +53,8 @@ public class OrderItemApiTest {
     AddOrderItemsHandler addOrderItemsHandler;
     @MockBean
     JwtUserService jwtUserService;
+    @MockBean
+    EstablishMachineHandler establishMachineHandler;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired

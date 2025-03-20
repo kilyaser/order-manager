@@ -1,5 +1,6 @@
 package com.profcut.ordermanager.service.handlers;
 
+import com.profcut.ordermanager.controllers.rest.handlers.DeleteOrderItemHandler;
 import com.profcut.ordermanager.domain.dto.order.DeleteOrderItemRequest;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.service.OrderService;

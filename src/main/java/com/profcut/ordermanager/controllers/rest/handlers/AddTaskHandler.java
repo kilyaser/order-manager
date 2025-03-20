@@ -1,4 +1,4 @@
-package com.profcut.ordermanager.service.handlers;
+package com.profcut.ordermanager.controllers.rest.handlers;
 
 import com.profcut.ordermanager.controllers.rest.mapper.UiTaskMapper;
 import com.profcut.ordermanager.domain.dto.task.CreateTaskRequest;

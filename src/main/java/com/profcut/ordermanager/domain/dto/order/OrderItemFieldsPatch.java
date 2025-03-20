@@ -59,11 +59,6 @@ public class OrderItemFieldsPatch {
     @Schema(description = "Тип изделия.")
     private ProductType productType;
     /**
-     * id станка.
-     */
-    @Schema(description = "id станка.")
-    private UUID machineId;
-    /**
      * Дата завершения изготовления.
      */
     @Schema(description = "Дата завершения изготовления.")

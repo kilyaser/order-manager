@@ -1,12 +1,15 @@
 package com.profcut.ordermanager.controllers.rest.ui;
 
+import com.profcut.ordermanager.controllers.rest.handlers.EstablishMachineHandler;
+import com.profcut.ordermanager.domain.dto.material.UiEstablishMachineRequest;
 import com.profcut.ordermanager.domain.dto.order.AddOrderItemsRequest;
 import com.profcut.ordermanager.domain.dto.order.DeleteOrderItemRequest;
+import com.profcut.ordermanager.domain.dto.order.UiOrderItem;
 import com.profcut.ordermanager.domain.dto.order.UiOrderItems;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderItemRequest;
-import com.profcut.ordermanager.service.handlers.AddOrderItemsHandler;
-import com.profcut.ordermanager.service.handlers.DeleteOrderItemHandler;
-import com.profcut.ordermanager.service.handlers.UpdateOrderItemHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.AddOrderItemsHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.DeleteOrderItemHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.UpdateOrderItemHandler;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -29,6 +32,7 @@ public class OrderItemApi {
     private final UpdateOrderItemHandler updateOrderItemHandler;
     private final DeleteOrderItemHandler deleteOrderItemHandler;
     private final AddOrderItemsHandler addOrderItemsHandler;
+    private final EstablishMachineHandler establishMachineHandler;
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
@@ -49,5 +53,10 @@ public class OrderItemApi {
     @Operation(description = "Удалить позицию заказа")
     public void deleteOrderItems(@Valid @RequestBody DeleteOrderItemRequest request) {
         deleteOrderItemHandler.handle(request);
+    }
+
+    @PutMapping("/machine/establish")
+    public UiOrderItem establishMachines(@Valid @RequestBody UiEstablishMachineRequest request) {
+        return establishMachineHandler.handle(request);
     }
 }
