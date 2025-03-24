@@ -1,10 +1,12 @@
 package com.profcut.ordermanager.controllers.rest.ui;
 
+import com.profcut.ordermanager.controllers.rest.handlers.GetAvailableOrderStateHandler;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderShortMapper;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
 import com.profcut.ordermanager.domain.dto.order.CreateOrderRequest;
 import com.profcut.ordermanager.domain.dto.order.UiOrder;
+import com.profcut.ordermanager.domain.dto.order.UiOrderAvailableStateAction;
 import com.profcut.ordermanager.domain.dto.order.UiOrderShort;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderRequest;
 import com.profcut.ordermanager.domain.enums.OrderState;
@@ -38,6 +40,7 @@ public class OrderApi {
     private final OrderService orderService;
     private final UiOrderMapper orderMapper;
     private final UiOrderShortMapper orderShortMapper;
+    private final GetAvailableOrderStateHandler getAvailableOrderStateHandler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -74,6 +77,12 @@ public class OrderApi {
     @Operation(description = "Получить заказ по id")
     public UiOrder getOrderById(@PathVariable UUID orderId) {
         return orderMapper.apply(orderService.findOrderById(orderId));
+    }
+
+    @GetMapping("/{orderId}/action")
+    @Operation(description = "Получить доступные статусы заказа для установки")
+    public UiOrderAvailableStateAction getAvailableAction(@PathVariable UUID orderId) {
+        return getAvailableOrderStateHandler.handle(orderId);
     }
 
     @PutMapping("/{orderId}")
