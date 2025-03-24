@@ -2,21 +2,19 @@ package com.profcut.ordermanager.stateprocessor.itemprocessor;
 
 import com.profcut.ordermanager.domain.entities.OrderItemEntity;
 import com.profcut.ordermanager.domain.enums.PreparationState;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.profcut.ordermanager.domain.enums.PreparationState.DONE;
 import static com.profcut.ordermanager.domain.enums.PreparationState.IN_PROCESS;
-import static com.profcut.ordermanager.domain.enums.PreparationState.NOT_STARTED;
 
 @Component
-@RequiredArgsConstructor
-public class NotStartedItemProcessor implements ItemStateProcessor {
+public class DoneItemProcessor implements ItemStateProcessor {
 
     @Override
     @Transactional
     public boolean changeState(OrderItemEntity item) {
-        if(!item.getMachines().isEmpty()) {
+        if (item.getQuantity() > item.getQuantityShipped()) {
             item.setPreparationState(IN_PROCESS);
             return true;
         }
@@ -25,6 +23,6 @@ public class NotStartedItemProcessor implements ItemStateProcessor {
 
     @Override
     public boolean supportedState(PreparationState state) {
-        return NOT_STARTED == state;
+        return DONE == state;
     }
 }

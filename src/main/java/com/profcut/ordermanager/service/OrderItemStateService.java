@@ -15,10 +15,11 @@ public class OrderItemStateService {
     private final List<ItemStateProcessor> stateProcessors;
 
     @Transactional
-    public void execute(OrderItemEntity item){
-        stateProcessors.stream()
+    public boolean execute(OrderItemEntity item){
+        return stateProcessors.stream()
                 .filter(processor -> processor.supportedState(item.getPreparationState()))
                 .findFirst()
-                .ifPresent(processor -> processor.changeState(item));
+                .map(processor -> processor.changeState(item))
+                .orElse(false);
     }
 }

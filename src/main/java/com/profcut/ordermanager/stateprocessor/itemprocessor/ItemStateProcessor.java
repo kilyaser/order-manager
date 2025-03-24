@@ -5,7 +5,7 @@ import com.profcut.ordermanager.domain.enums.PreparationState;
 
 public interface ItemStateProcessor {
 
-    void changeState(OrderItemEntity item);
+    boolean changeState(OrderItemEntity item);
 
     boolean supportedState(PreparationState state);
 }

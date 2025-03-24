@@ -21,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -49,6 +50,8 @@ public class OrderItemServiceTest {
     MaterialService materialService;
     @Mock
     OrderItemCreateMapper orderItemCreateMapper;
+    @Mock
+    ApplicationEventPublisher eventPublisher;
     @Spy
     UpdateItemMapper updateItemMapper = Mappers.getMapper(UpdateItemMapper.class);
     @InjectMocks

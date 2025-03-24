@@ -19,6 +19,10 @@ public class OrderSpecification {
     }
 
     public static Specification<OrderEntity> byIsDeletedFalse() {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.isFalse(root.get("isDeleted"));
+        return (root, query, criteriaBuilder) -> {
+            query.where(criteriaBuilder.isFalse(root.get("isDeleted")));
+            query.orderBy(criteriaBuilder.desc(root.get("modifiedDate")));
+            return query.getRestriction();
+        };
     }
 }

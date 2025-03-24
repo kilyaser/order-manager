@@ -7,11 +7,13 @@ import com.profcut.ordermanager.domain.dto.order.OrderItemRequest;
 import com.profcut.ordermanager.domain.entities.OrderItemEntity;
 import com.profcut.ordermanager.domain.exceptions.OrderItemNotFoundException;
 import com.profcut.ordermanager.domain.repository.OrderItemRepository;
+import com.profcut.ordermanager.massaging.events.OrderItemChangeEvent;
 import com.profcut.ordermanager.service.MaterialService;
 import com.profcut.ordermanager.service.OrderItemService;
 import com.profcut.ordermanager.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +35,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final MaterialService materialService;
     private final OrderItemCreateMapper orderItemCreateMapper;
     private final UpdateItemMapper updateItemMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional(readOnly = true)
@@ -67,6 +70,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         updateItemMapper.updateOrderItem(patch, item);
         setPropertyIfPresent(patch.getProductId(), productService::getProductById, item::setProduct);
         setPropertyIfPresent(patch.getMaterialId(), materialService::findById, item::setMaterial);
+        eventPublisher.publishEvent(new OrderItemChangeEvent(item));
         orderItemRepository.save(item);
     }
 
