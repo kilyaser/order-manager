@@ -33,6 +33,10 @@ public class OrderConstraintService extends ConstraintService {
         return hasAllowedRole() || author.equalsIgnoreCase(currentUserSecurityService.getLogin());
     }
 
+    public boolean canChangeStateTo(UUID orderId, OrderState toState) {
+        return getAvailableOrderStates(orderId).contains(toState);
+    }
+
     public List<OrderState> getAvailableOrderStates(UUID orderId) {
         var order = orderService.findOrderById(orderId);
         return switch (order.getOrderState()) {

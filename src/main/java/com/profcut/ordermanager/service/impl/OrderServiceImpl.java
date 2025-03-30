@@ -44,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderEntity createOrder(CreateOrderRequest request) {
-        log.info("invoke OrderServiceImpl#createOrder with request: {}", request);
+        log.info("Создание заказа request: {}", request);
         var order = new OrderEntity()
                 .setOrderNumber(getNextOrderNumber())
                 .setOrderName(ofNullable(request.getOrderName()).orElse(""))
@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderEntity updateOrder(UpdateOrderRequest request) {
-        log.info("invoke OrderServiceImpl#updateOrder by request: {}", request);
+        log.info("Изменение заказа по запросу request: {}", request);
         var order = findOrderById(request.getId());
         updateOrderByPatchMapper.updateOrder(request.getPatch(), order);
         return orderRepository.save(order);
@@ -104,10 +104,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderEntity changeState(UUID orderId, OrderState state) {
-        log.info("invoke OrderServiceImpl#changeState orderId: {}, newState: {}", orderId, state);
+    public OrderEntity changeState(UUID orderId, OrderState toState) {
         var order = findOrderById(orderId);
-        order.setOrderState(state);
+        log.info("Изменение статуса ордера {} с {} на {}", orderId, order.getOrderState(), toState);
+        order.setOrderState(toState);
         return orderRepository.save(order);
     }
 

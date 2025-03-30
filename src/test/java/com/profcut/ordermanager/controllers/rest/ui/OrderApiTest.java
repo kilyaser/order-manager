@@ -3,6 +3,7 @@ package com.profcut.ordermanager.controllers.rest.ui;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
 import com.profcut.ordermanager.controllers.rest.handlers.GetAvailableOrderStateHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.OrderStateChangeHandler;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderShortMapper;
 import com.profcut.ordermanager.domain.dto.order.OrderFieldsPatch;
@@ -16,6 +17,7 @@ import com.profcut.ordermanager.service.OrderService;
 import com.profcut.ordermanager.testData.utils.helper.TestDataHelper;
 import com.profcut.ordermanager.utils.jpa.specification.PageConverter;
 import lombok.SneakyThrows;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,7 @@ import java.util.UUID;
 
 import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.buildDefaultOrder;
 import static com.profcut.ordermanager.testData.utils.helper.TestDataHelper.getDefaultCreateOrderRequest;
+import static org.instancio.Select.field;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -61,6 +64,8 @@ public class OrderApiTest {
     JwtUserService jwtUserService;
     @MockBean
     GetAvailableOrderStateHandler getAvailableOrderStateHandler;
+    @MockBean
+    OrderStateChangeHandler stateChangeHandler;
     @Autowired
     ObjectMapper objectMapper;
     @Autowired
@@ -195,19 +200,19 @@ public class OrderApiTest {
     @DisplayName("Обнолвение статуса заказа")
     void changeState_success() {
         var orderId = UUID.randomUUID();
-        var state = OrderState.READY;
-        var order = TestDataHelper.buildDefaultOrder();
+        var state = OrderState.SHIPPED;
+        var order = Instancio.of(UiOrder.class)
+                .supply(field(UiOrder::getOrderState), () -> state).create();
 
-        when(orderService.changeState(orderId, state)).thenReturn(order);
+        when(stateChangeHandler.handle(orderId, state)).thenReturn(order);
 
-        mockMvc.perform(put("/api/v1/ui/orders/{orderId}", orderId)
+        mockMvc.perform(put("/api/v1/ui/orders/{orderId}/state", orderId)
                         .with(csrf())
-                        .param("state", state.name())
+                        .param("toState", state.name())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(orderService).changeState(orderId, state);
-        verify(uiOrderMapper).apply(any());
+        verify(stateChangeHandler).handle(orderId, state);
     }
 
     @Test

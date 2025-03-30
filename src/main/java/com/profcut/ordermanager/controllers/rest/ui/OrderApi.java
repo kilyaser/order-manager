@@ -1,6 +1,7 @@
 package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.profcut.ordermanager.controllers.rest.handlers.GetAvailableOrderStateHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.OrderStateChangeHandler;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderShortMapper;
 import com.profcut.ordermanager.domain.dto.filter.PageRequest;
@@ -41,6 +42,7 @@ public class OrderApi {
     private final UiOrderMapper orderMapper;
     private final UiOrderShortMapper orderShortMapper;
     private final GetAvailableOrderStateHandler getAvailableOrderStateHandler;
+    private final OrderStateChangeHandler stateChangeHandler;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -72,6 +74,14 @@ public class OrderApi {
         return orderMapper.apply(orderService.updateOrder(request));
     }
 
+    @PutMapping("/{orderId}/state")
+    @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("@orderConstraintService.canChangeStateTo(#orderId, #toState)")
+    @Operation(description = "Изменить статус заказа")
+    public UiOrder changeState(@PathVariable UUID orderId, @RequestParam("toState") OrderState toState) {
+        return stateChangeHandler.handle(orderId, toState);
+    }
+
     @GetMapping("/{orderId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Получить заказ по id")
@@ -83,14 +93,6 @@ public class OrderApi {
     @Operation(description = "Получить доступные статусы заказа для установки")
     public UiOrderAvailableStateAction getAvailableAction(@PathVariable UUID orderId) {
         return getAvailableOrderStateHandler.handle(orderId);
-    }
-
-    @PutMapping("/{orderId}")
-    @ResponseStatus(HttpStatus.OK)
-    @Operation(description = "Изменить позицию заказа")
-    public UiOrder changeOrderSate(@PathVariable UUID orderId,
-                                   @RequestParam("state") OrderState state) {
-        return orderMapper.apply(orderService.changeState(orderId, state));
     }
 
     @DeleteMapping("/{orderId}")
