@@ -22,6 +22,7 @@
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<validation-api.version>2.0.1.Final</validation-api.version>
 		<instacio.version>5.4.0</instacio.version>
+		<xdocreport.version>2.1.0</xdocreport.version>
 	</properties>
 
 	<dependencies>
@@ -90,6 +91,23 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Reporting -->
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>fr.opensagres.xdocreport.document.docx</artifactId>
+			<version>${xdocreport.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>fr.opensagres.xdocreport.template.velocity</artifactId>
+			<version>${xdocreport.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.opensagres.xdocreport</groupId>
+			<artifactId>fr.opensagres.xdocreport.converter.docx.xwpf</artifactId>
+			<version>${xdocreport.version}</version>
 		</dependency>
 
 		<!-- Testing -->

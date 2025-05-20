@@ -36,6 +36,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(c -> c.requestMatchers(WHITE_LIST_URL).permitAll()
                         .requestMatchers("/ui/technologists").hasRole("MANAGER")
+                        .requestMatchers("/api/v1/ui/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(configure -> configure.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
