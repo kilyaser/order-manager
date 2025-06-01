@@ -10,6 +10,7 @@ import java.util.function.Function;
 @Mapper
 public interface OmUserCreateMapper extends Function<RegisterRequest, OmUserEntity> {
 
+    @Override
     @Mapping(target = "password", ignore = true)
     @Mapping(target = "roles", ignore = true)
     OmUserEntity apply(RegisterRequest request);
