@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.profcut.ordermanager.domain.enums.OrderState.CANCELLED;
@@ -35,6 +36,10 @@ public class OrderConstraintService extends ConstraintService {
 
     public boolean canChangeStateTo(UUID orderId, OrderState toState) {
         return getAvailableOrderStates(orderId).contains(toState);
+    }
+
+    public boolean canChangeOrder(UUID orderId) {
+        return !Set.of(COMPLETED, CANCELLED).contains(orderService.findOrderById(orderId).getOrderState());
     }
 
     public List<OrderState> getAvailableOrderStates(UUID orderId) {

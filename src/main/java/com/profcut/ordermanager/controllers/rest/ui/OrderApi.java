@@ -1,6 +1,7 @@
 package com.profcut.ordermanager.controllers.rest.ui;
 
 import com.profcut.ordermanager.controllers.rest.handlers.GetAvailableOrderStateHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.GetOrderConstraintHandler;
 import com.profcut.ordermanager.controllers.rest.handlers.OrderStateChangeHandler;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderShortMapper;
@@ -8,6 +9,7 @@ import com.profcut.ordermanager.domain.dto.filter.PageRequest;
 import com.profcut.ordermanager.domain.dto.order.CreateOrderRequest;
 import com.profcut.ordermanager.domain.dto.order.UiOrder;
 import com.profcut.ordermanager.domain.dto.order.UiOrderAvailableStateAction;
+import com.profcut.ordermanager.domain.dto.order.UiOrderConstraint;
 import com.profcut.ordermanager.domain.dto.order.UiOrderShort;
 import com.profcut.ordermanager.domain.dto.order.UpdateOrderRequest;
 import com.profcut.ordermanager.domain.enums.OrderState;
@@ -43,6 +45,12 @@ public class OrderApi {
     private final UiOrderShortMapper orderShortMapper;
     private final GetAvailableOrderStateHandler getAvailableOrderStateHandler;
     private final OrderStateChangeHandler stateChangeHandler;
+    private final GetOrderConstraintHandler constraintHandler;
+
+    @GetMapping("/{orderId}/constraints")
+    public UiOrderConstraint getConstraints(@PathVariable("orderId") UUID orderId) {
+        return constraintHandler.handle(orderId);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -61,7 +69,7 @@ public class OrderApi {
     @PostMapping("/{counterpartyId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Получиение всех заказав по Контрегенту")
-    public Page<UiOrder> getAllOrdersByCounterparty(@PathVariable UUID counterpartyId,
+    public Page<UiOrder> getAllOrdersByCounterparty(@PathVariable("counterpartyId") UUID counterpartyId,
                                                     @RequestBody PageRequest pageRequest) {
         return orderService.findAllOrdersByCounterpartyId(counterpartyId, pageRequest)
                 .map(orderMapper);
@@ -70,6 +78,7 @@ public class OrderApi {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Обновить инофрмацию о заказе")
+    @PreAuthorize("@orderConstraintService.canChangeOrder(#request.id)")
     public UiOrder updateOrder(@Valid @RequestBody UpdateOrderRequest request) {
         return orderMapper.apply(orderService.updateOrder(request));
     }
@@ -78,20 +87,20 @@ public class OrderApi {
     @ResponseStatus(HttpStatus.OK)
     @PreAuthorize("@orderConstraintService.canChangeStateTo(#orderId, #toState)")
     @Operation(description = "Изменить статус заказа")
-    public UiOrder changeState(@PathVariable UUID orderId, @RequestParam("toState") OrderState toState) {
+    public UiOrder changeState(@PathVariable("orderId") UUID orderId, @RequestParam("toState") OrderState toState) {
         return stateChangeHandler.handle(orderId, toState);
     }
 
     @GetMapping("/{orderId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Получить заказ по id")
-    public UiOrder getOrderById(@PathVariable UUID orderId) {
+    public UiOrder getOrderById(@PathVariable("orderId") UUID orderId) {
         return orderMapper.apply(orderService.findOrderById(orderId));
     }
 
     @GetMapping("/{orderId}/action")
     @Operation(description = "Получить доступные статусы заказа для установки")
-    public UiOrderAvailableStateAction getAvailableAction(@PathVariable UUID orderId) {
+    public UiOrderAvailableStateAction getAvailableAction(@PathVariable("orderId") UUID orderId) {
         return getAvailableOrderStateHandler.handle(orderId);
     }
 
@@ -99,7 +108,7 @@ public class OrderApi {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(description = "Удаление заказа по id")
     @PreAuthorize("@orderConstraintService.cadDeleteOrder(#orderId)")
-    void deleteOrder(@PathVariable UUID orderId) {
+    void deleteOrder(@PathVariable("orderId") UUID orderId) {
         orderService.deleteOrderById(orderId);
     }
 }

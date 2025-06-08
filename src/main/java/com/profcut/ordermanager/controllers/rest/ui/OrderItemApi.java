@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,6 +46,7 @@ public class OrderItemApi {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(description = "Обновить позиции заказа")
+    @PreAuthorize("@orderConstraintService.canChangeOrder(#request.orderId)")
     public UiOrderItems updateOrderItems(@Valid @RequestBody UpdateOrderItemRequest request) {
         return updateOrderItemHandler.handle(request);
     }
@@ -57,6 +59,7 @@ public class OrderItemApi {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(description = "Добавить позиции в зказа")
+    @PreAuthorize("@orderConstraintService.canChangeOrder(#request.orderId)")
     public UiOrderItems addOrderItems(@Valid @RequestBody AddOrderItemsRequest request) {
         return addOrderItemsHandler.handle(request);
     }
@@ -69,6 +72,7 @@ public class OrderItemApi {
     }
 
     @PutMapping("/machine/establish")
+    @Operation(description = "Назначит станок на позицию заказа для производства")
     public UiOrderItem establishMachines(@Valid @RequestBody UiEstablishMachineRequest request) {
         return establishMachineHandler.handle(request);
     }

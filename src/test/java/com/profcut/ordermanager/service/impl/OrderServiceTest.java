@@ -10,6 +10,7 @@ import com.profcut.ordermanager.domain.enums.MasterStatus;
 import com.profcut.ordermanager.domain.enums.OrderState;
 import com.profcut.ordermanager.domain.exceptions.OrderNotFoundException;
 import com.profcut.ordermanager.domain.repository.OrderRepository;
+import com.profcut.ordermanager.massaging.events.OrderStateChangeEvent;
 import com.profcut.ordermanager.security.service.CurrentUserSecurityService;
 import com.profcut.ordermanager.service.ContractService;
 import com.profcut.ordermanager.service.CounterpartyService;
@@ -26,6 +27,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -61,6 +63,8 @@ public class OrderServiceTest {
     ContractService contractService;
     @Spy
     UpdateOrderByPatchMapper mapper = Mappers.getMapper(UpdateOrderByPatchMapper.class);
+    @Mock
+    ApplicationEventPublisher eventPublisher;
     @InjectMocks
     OrderServiceImpl orderService;
 
@@ -149,6 +153,7 @@ public class OrderServiceTest {
         assertThatCode(() -> orderService.changeState(order.getOrderId(), state)).doesNotThrowAnyException();
 
         verify(orderRepository).save(captor.capture());
+        verify(eventPublisher).publishEvent(any(OrderStateChangeEvent.class));
 
         assertEquals(state, captor.getValue().getOrderState());
     }

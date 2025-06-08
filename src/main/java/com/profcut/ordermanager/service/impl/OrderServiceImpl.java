@@ -8,6 +8,7 @@ import com.profcut.ordermanager.domain.entities.OrderEntity;
 import com.profcut.ordermanager.domain.enums.OrderState;
 import com.profcut.ordermanager.domain.exceptions.OrderNotFoundException;
 import com.profcut.ordermanager.domain.repository.OrderRepository;
+import com.profcut.ordermanager.massaging.events.OrderStateChangeEvent;
 import com.profcut.ordermanager.security.service.CurrentUserSecurityService;
 import com.profcut.ordermanager.service.ContractService;
 import com.profcut.ordermanager.service.CounterpartyService;
@@ -18,6 +19,7 @@ import com.profcut.ordermanager.utils.jpa.specification.PageConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +42,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderItemService orderItemService;
     private final UpdateOrderByPatchMapper updateOrderByPatchMapper;
     private final ContractService contractService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -106,8 +109,10 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderEntity changeState(UUID orderId, OrderState toState) {
         var order = findOrderById(orderId);
-        log.info("Изменение статуса ордера {} с {} на {}", orderId, order.getOrderState(), toState);
+        var oldState = order.getOrderState();
+        log.info("Изменение статуса ордера {} с {} на {}", orderId, oldState, toState);
         order.setOrderState(toState);
+        eventPublisher.publishEvent(new OrderStateChangeEvent(orderId, oldState, toState));
         return orderRepository.save(order);
     }
 

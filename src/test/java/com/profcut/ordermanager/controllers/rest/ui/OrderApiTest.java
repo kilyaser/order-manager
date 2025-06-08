@@ -3,6 +3,7 @@ package com.profcut.ordermanager.controllers.rest.ui;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.profcut.ordermanager.controllers.exception.ErrorHttpResponseFactory;
 import com.profcut.ordermanager.controllers.rest.handlers.GetAvailableOrderStateHandler;
+import com.profcut.ordermanager.controllers.rest.handlers.GetOrderConstraintHandler;
 import com.profcut.ordermanager.controllers.rest.handlers.OrderStateChangeHandler;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderMapper;
 import com.profcut.ordermanager.controllers.rest.mapper.UiOrderShortMapper;
@@ -60,6 +61,8 @@ public class OrderApiTest {
     UiOrderMapper uiOrderMapper;
     @MockBean
     UiOrderShortMapper uiOrderShortMapper;
+    @MockBean
+    GetOrderConstraintHandler constraintHandler;
     @MockBean
     JwtUserService jwtUserService;
     @MockBean
