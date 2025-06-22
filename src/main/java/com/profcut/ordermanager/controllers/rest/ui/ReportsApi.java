@@ -41,4 +41,18 @@ public class ReportsApi {
                 .contentLength(report.contentLength())
                 .body(report);
     }
+
+    @GetMapping(value = "/orders/{orderId}/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<Resource> generateOrderPdf(@PathVariable("orderId") UUID orderId) {
+        var report = reportService.getPdfReport(orderId);
+
+        var contentDisposition = ContentDisposition.attachment().filename("спецификация.pdf", StandardCharsets.UTF_8).build();
+        var headers = new HttpHeaders();
+        headers.setContentDisposition(contentDisposition);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .contentLength(report.contentLength())
+                .body(report);
+    }
 }

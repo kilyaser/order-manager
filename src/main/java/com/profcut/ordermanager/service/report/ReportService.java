@@ -21,13 +21,16 @@ public class ReportService {
     private final OrderService orderService;
     private final Map<MimeType, ReportExporter> reportExporters;
     private final ReportedOrderMapper reportedOrderMapper;
+    private final PDFGenerator pdfGenerator;
 
     public ReportService(OrderService orderService,
                          List<ReportExporter> reportExporters,
-                         ReportedOrderMapper reportedOrderMapper) {
+                         ReportedOrderMapper reportedOrderMapper,
+                         PDFGenerator pdfGenerator) {
         this.orderService = orderService;
         this.reportExporters = reportExporters.stream().collect(Collectors.toMap(ReportExporter::getSupportedMimeType, Function.identity()));
         this.reportedOrderMapper = reportedOrderMapper;
+        this.pdfGenerator = pdfGenerator;
     }
 
     public ByteArrayResource generateOrderReport(UUID orderId, MimeType exportType) {
@@ -38,5 +41,11 @@ public class ReportService {
         var reportedOrder = reportedOrderMapper.apply(order);
         log.info("Reported order: {}", reportedOrder);
         return reportExporters.get(exportType).generateOrderReport(reportedOrder);
+    }
+
+    public ByteArrayResource getPdfReport(UUID orderId){
+        var order = orderService.findOrderById(orderId);
+        var reportedOrder = reportedOrderMapper.apply(order);
+        return pdfGenerator.generatePdfFromOrder(reportedOrder);
     }
 }
